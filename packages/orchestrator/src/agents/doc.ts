@@ -24,6 +24,6 @@ export const docAgent: AgentCall<DocInput, DocArtifact> = {
     ].join('\n');
   },
   parseResponse(raw) {
-    return safeParseAgentJson<DocArtifact>(raw);
+    return safeParseAgentJson<DocArtifact>(raw, ['readme', 'changelog']);
   },
 };

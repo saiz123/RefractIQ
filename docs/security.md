@@ -1,6 +1,6 @@
 # Security
 
-> Status: Phase 0 stub — implementation begins in Phase 1 (key handling) and Phase 7 (workspace sandbox).
+> Security controls are fully implemented: API key redaction via SecretRedactor, path traversal prevention in workspace-engine, command allowlist in CommandRunner, and shell injection prevention via execFileSync with argument arrays.
 
 ## API key handling
 

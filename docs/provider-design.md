@@ -1,6 +1,6 @@
 # Provider Design
 
-> Status: Phase 0 stub — implementation begins in Phase 2.
+> All provider adapters (Anthropic, OpenAI, Gemini, Ollama, Mock) are fully implemented.
 
 ## ProviderAdapter interface
 

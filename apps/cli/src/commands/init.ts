@@ -31,11 +31,7 @@ const DEFAULT_CONFIG = {
   },
 };
 
-const GITIGNORE_ENTRIES = [
-  '.agentforge/*.db',
-  '.agentforge/logs/',
-  '.agentforge/cache/',
-];
+const GITIGNORE_ENTRIES = ['.agentforge/'];
 
 export const initCommand = new Command('init')
   .description('Initialize AgentForge in the current directory')

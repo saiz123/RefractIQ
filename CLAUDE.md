@@ -9,8 +9,8 @@ AgentForge is an open-source self-hosted AI software team platform. Users regist
 ```
 packages/   shared libraries — no CLI or HTTP concerns
 apps/cli/   Commander.js CLI (primary user interface)
-apps/web/   Next.js dashboard (Phase 9, not yet implemented)
-services/   HTTP API + worker (Phase 9, not yet implemented)
+apps/web/   Next.js dashboard
+services/   HTTP API + worker
 docs/       architecture documentation
 tests/e2e/  end-to-end tests using MockAdapter (zero real API calls)
 ```

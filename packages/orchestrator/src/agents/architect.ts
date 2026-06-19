@@ -10,6 +10,6 @@ export const architectAgent: AgentCall<RequirementsArtifact, ArchitectureArtifac
     return `<requirements>${JSON.stringify(requirements, null, 2)}</requirements>\n\nProduce the architecture JSON.`;
   },
   parseResponse(raw) {
-    return safeParseAgentJson<ArchitectureArtifact>(raw);
+    return safeParseAgentJson<ArchitectureArtifact>(raw, ['fileTree', 'buildOrder']);
   },
 };

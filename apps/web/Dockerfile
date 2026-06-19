@@ -1,16 +1,20 @@
+# syntax=docker/dockerfile:1
+
+# ── Stage 1: deps ─────────────────────────────────────────────────────────────
 FROM node:20-alpine AS deps
-RUN npm install -g pnpm@9
 WORKDIR /app
 COPY package.json ./
-RUN pnpm install --frozen-lockfile
+RUN npm install --legacy-peer-deps
 
+# ── Stage 2: builder ───────────────────────────────────────────────────────────
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN npx next build
+RUN npm run build
 
+# ── Stage 3: runner ────────────────────────────────────────────────────────────
 FROM node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production

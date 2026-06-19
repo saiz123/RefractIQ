@@ -32,6 +32,6 @@ export const builderAgent: AgentCall<BuilderInput, CodeDiffArtifact> = {
     ].join('\n');
   },
   parseResponse(raw) {
-    return safeParseAgentJson<CodeDiffArtifact>(raw);
+    return safeParseAgentJson<CodeDiffArtifact>(raw, ['files', 'explanation']);
   },
 };

@@ -22,6 +22,6 @@ export const reviewerAgent: AgentCall<ReviewerInput, ReviewArtifact> = {
     ].join('\n');
   },
   parseResponse(raw) {
-    return safeParseAgentJson<ReviewArtifact>(raw);
+    return safeParseAgentJson<ReviewArtifact>(raw, ['issues', 'verdict']);
   },
 };

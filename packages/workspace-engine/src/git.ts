@@ -1,4 +1,5 @@
-import { execSync } from 'node:child_process';
+import { execSync, execFileSync } from 'node:child_process';
+import { CommandBlockedError } from '@agentforge/shared';
 
 export interface GitStatus {
   modified: string[];
@@ -26,14 +27,14 @@ export class GitManager {
   }
 
   add(pathSpec = '.'): void {
-    execSync(`git add ${pathSpec}`, { cwd: this.cwd, stdio: 'pipe' });
+    execFileSync('git', ['add', pathSpec], { cwd: this.cwd, stdio: 'pipe' });
   }
 
   commit(message: string): string {
     // Stage all changes
     this.add('.');
     try {
-      execSync(`git commit -m ${JSON.stringify(message)}`, { cwd: this.cwd, stdio: 'pipe' });
+      execFileSync('git', ['commit', '-m', message], { cwd: this.cwd, stdio: 'pipe' });
     } catch {
       // Nothing to commit is not an error
     }
@@ -54,9 +55,9 @@ export class GitManager {
         return execSync('git diff HEAD', { cwd: this.cwd, stdio: 'pipe' }).toString();
       }
       if (from && !to) {
-        return execSync(`git diff ${from}`, { cwd: this.cwd, stdio: 'pipe' }).toString();
+        return execFileSync('git', ['diff', from], { cwd: this.cwd, stdio: 'pipe' }).toString();
       }
-      return execSync(`git diff ${from} ${to}`, { cwd: this.cwd, stdio: 'pipe' }).toString();
+      return execFileSync('git', ['diff', from!, to!], { cwd: this.cwd, stdio: 'pipe' }).toString();
     } catch {
       return '';
     }
@@ -86,8 +87,15 @@ export class GitManager {
     }
   }
 
+  public validateBranchName(name: string): void {
+    if (/\.\.|[ ;`$|&><]/.test(name)) {
+      throw new CommandBlockedError(`Invalid branch name: ${name}`);
+    }
+  }
+
   createBranch(name: string): void {
-    execSync(`git checkout -b ${name}`, { cwd: this.cwd, stdio: 'pipe' });
+    this.validateBranchName(name);
+    execFileSync('git', ['checkout', '-b', name], { cwd: this.cwd, stdio: 'pipe' });
   }
 
   getCurrentBranch(): string {

@@ -1,6 +1,6 @@
 # Architecture
 
-> Status: Phase 0 stub — will be expanded as phases are implemented.
+> All packages and pipeline stages are implemented and tested.
 
 ## Overview
 
@@ -19,9 +19,9 @@ packages/workspace-engine File I/O, Git, sandboxed command execution
 packages/evaluator       Test runner, log compression
 packages/orchestrator    Pipeline state machine, artifact handoffs
 apps/cli                 Commander.js CLI
-apps/web                 Next.js dashboard (Phase 9)
-services/api             Hono HTTP API (Phase 9)
-services/worker          Long-running worker (Phase 9)
+apps/web                 Next.js dashboard
+services/api             Hono HTTP API
+services/worker          Long-running worker
 ```
 
 ## Pipeline stages

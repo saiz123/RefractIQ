@@ -1,6 +1,6 @@
 # Evaluation
 
-> Status: Phase 0 stub — implementation begins in Phase 7 (evaluator package).
+> The evaluator package is fully implemented, including test runner, log compression, and repair loop integration.
 
 ## What the evaluator does
 

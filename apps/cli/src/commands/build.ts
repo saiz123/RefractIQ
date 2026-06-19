@@ -14,7 +14,7 @@ export const buildCommand = new Command('build')
   .option('--model <id>', 'Force a specific model for all stages')
   .option('--max-repair-loops <n>', 'Maximum repair loop iterations', '3')
   .option('--output <dir>', 'Output directory for generated files', './output')
-  .option('--dry-run', 'Plan only — no model calls', false)
+  .option('--dry-run', 'Plan only — runs intake + architecture, no file writes or commands', false)
   .option('--test-command <cmd>', 'Command to run tests (e.g. "npx vitest run")')
   .action(async (idea: string, options) => {
     const spinner = ora('Starting AgentForge pipeline...').start();

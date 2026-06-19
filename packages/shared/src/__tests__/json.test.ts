@@ -25,4 +25,13 @@ describe('safeParseAgentJson', () => {
     const result = safeParseAgentJson<{ ok: boolean }>('  ```json  \n{"ok":true}\n```  ');
     expect(result.ok).toBe(true);
   });
+
+  it('throws when required key is missing', () => {
+    expect(() => safeParseAgentJson('{"x": 1}', ['x', 'y'])).toThrow('missing required field: "y"');
+  });
+
+  it('passes when all required keys are present', () => {
+    const result = safeParseAgentJson<{x: number; y: string}>('{"x": 1, "y": "ok"}', ['x', 'y']);
+    expect(result.x).toBe(1);
+  });
 });
