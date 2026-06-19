@@ -18,7 +18,7 @@ export function calculateCallCost(
   inputTokens: number,
   outputTokens: number,
   cacheReadTokens = 0,
-  cacheWriteTokens = 0,
+  cacheWriteTokens = 0
 ): CallCost {
   const inputCostUsd = (inputTokens / 1_000_000) * model.inputCostPer1M;
   const outputCostUsd = (outputTokens / 1_000_000) * model.outputCostPer1M;
@@ -32,10 +32,7 @@ export function calculateCallCost(
  * Estimate the cost of a call before it is made, using only input token count.
  * Assumes output ≈ 30% of input tokens (conservative planning estimate).
  */
-export function estimateCallCost(
-  model: ModelInfo,
-  estimatedInputTokens: number,
-): number {
+export function estimateCallCost(model: ModelInfo, estimatedInputTokens: number): number {
   const estimatedOutputTokens = Math.ceil(estimatedInputTokens * 0.3);
   return calculateCallCost(model, estimatedInputTokens, estimatedOutputTokens).totalCostUsd;
 }

@@ -22,7 +22,7 @@ const providersAddCommand = new Command('add')
 
     console.log(chalk.bold('\nAdd AI Provider\n'));
 
-    const type = await select({
+    const type = (await select({
       message: 'Provider type:',
       choices: [
         { name: 'Anthropic (Claude)', value: 'anthropic' },
@@ -31,7 +31,7 @@ const providersAddCommand = new Command('add')
         { name: 'Ollama (local)', value: 'ollama' },
         { name: 'OpenRouter (multi-provider gateway)', value: 'openrouter' },
       ],
-    }) as ProviderConfig['type'];
+    })) as ProviderConfig['type'];
 
     const name = await input({
       message: 'Display name:',
@@ -75,7 +75,11 @@ const providersAddCommand = new Command('add')
       console.log(chalk.bold(`\nNext: set your API key in .env or your shell:`));
       console.log(chalk.cyan(`  ${envVar}=your-key-here`));
     } else {
-      console.log(chalk.dim(`\nOllama needs no API key — just make sure Ollama is running at ${endpoint ?? 'http://localhost:11434'}`));
+      console.log(
+        chalk.dim(
+          `\nOllama needs no API key — just make sure Ollama is running at ${endpoint ?? 'http://localhost:11434'}`
+        )
+      );
     }
 
     console.log(chalk.dim('\nRun "agentforge doctor" to verify connectivity.'));
@@ -98,26 +102,26 @@ const providersListCommand = new Command('list')
     }
 
     if (config.providers.length === 0) {
-      console.log(chalk.yellow('No providers configured. Run "agentforge providers add" to add one.'));
+      console.log(
+        chalk.yellow('No providers configured. Run "agentforge providers add" to add one.')
+      );
       return;
     }
 
     const colW = [16, 14, 40];
-    const header = [
-      'ID'.padEnd(colW[0]),
-      'TYPE'.padEnd(colW[1]),
-      'ENDPOINT',
-    ].join('  ');
+    const header = ['ID'.padEnd(colW[0]), 'TYPE'.padEnd(colW[1]), 'ENDPOINT'].join('  ');
     console.log(chalk.bold('\nConfigured Providers\n'));
     console.log(chalk.dim(header));
     console.log(chalk.dim('─'.repeat(header.length)));
 
     for (const p of config.providers) {
-      console.log([
-        p.id.padEnd(colW[0]),
-        p.type.padEnd(colW[1]),
-        (p.endpoint ?? chalk.dim('(default)')).padEnd(colW[2]),
-      ].join('  '));
+      console.log(
+        [
+          p.id.padEnd(colW[0]),
+          p.type.padEnd(colW[1]),
+          (p.endpoint ?? chalk.dim('(default)')).padEnd(colW[2]),
+        ].join('  ')
+      );
     }
   });
 

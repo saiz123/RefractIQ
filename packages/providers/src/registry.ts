@@ -29,7 +29,7 @@ export class ProviderRegistry {
       this.listAll().map(async (adapter) => {
         const available = await adapter.isAvailable();
         return available ? adapter : null;
-      }),
+      })
     );
     return results.filter((a): a is ProviderAdapter => a !== null);
   }
@@ -40,9 +40,7 @@ export class ProviderRegistry {
    * The name getAllModels is kept per spec; the async variant is canonical.
    */
   async getAllModels(): Promise<ModelInfo[]> {
-    const allNested = await Promise.all(
-      this.listAll().map((adapter) => adapter.listModels()),
-    );
+    const allNested = await Promise.all(this.listAll().map((adapter) => adapter.listModels()));
     return allNested.flat();
   }
 }

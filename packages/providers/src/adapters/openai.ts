@@ -1,4 +1,10 @@
-import type { ModelInfo, ChatRequest, ChatResponse, Message, ProviderConfig } from '@agentforge/shared';
+import type {
+  ModelInfo,
+  ChatRequest,
+  ChatResponse,
+  Message,
+  ProviderConfig,
+} from '@agentforge/shared';
 import { ProviderError } from '@agentforge/shared';
 import type { ProviderAdapter } from '../types.js';
 import { loadOpenAIModels } from '../modelLoader.js';
@@ -50,7 +56,9 @@ export class OpenAIAdapter implements ProviderAdapter {
       max_tokens: request.maxTokens,
       stream: false,
       ...(request.temperature !== undefined ? { temperature: request.temperature } : {}),
-      ...(request.responseFormat === 'json' ? { response_format: { type: 'json_object' as const } } : {}),
+      ...(request.responseFormat === 'json'
+        ? { response_format: { type: 'json_object' as const } }
+        : {}),
     });
     const latencyMs = Date.now() - startMs;
 

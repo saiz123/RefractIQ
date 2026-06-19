@@ -15,20 +15,14 @@ describe('buildFileIndex', () => {
   });
 
   it('filters files inside node_modules/', () => {
-    const files = [
-      makeFile('node_modules/lodash/index.js', 100),
-      makeFile('src/index.ts', 100),
-    ];
+    const files = [makeFile('node_modules/lodash/index.js', 100), makeFile('src/index.ts', 100)];
     const index = buildFileIndex(files);
     expect(index.files).toHaveLength(1);
     expect(index.files[0].path).toBe('src/index.ts');
   });
 
   it('filters files inside dist/', () => {
-    const files = [
-      makeFile('dist/index.js', 200),
-      makeFile('src/app.ts', 200),
-    ];
+    const files = [makeFile('dist/index.js', 200), makeFile('src/app.ts', 200)];
     const index = buildFileIndex(files);
     expect(index.files).toHaveLength(1);
     expect(index.files[0].path).toBe('src/app.ts');

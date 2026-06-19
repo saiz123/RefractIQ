@@ -6,8 +6,8 @@ const mockModel: ModelInfo = {
   id: 'test-model',
   provider: 'test-provider',
   contextWindow: 200_000,
-  inputCostPer1M: 3.00,
-  outputCostPer1M: 15.00,
+  inputCostPer1M: 3.0,
+  outputCostPer1M: 15.0,
   capabilities: ['code', 'json'],
   maxOutputTokens: 4096,
 };
@@ -24,18 +24,18 @@ describe('calculateCallCost', () => {
 
   it('calculates input cost correctly for 1M tokens at $3.00/1M', () => {
     const cost = calculateCallCost(mockModel, 1_000_000, 0);
-    expect(cost.inputCostUsd).toBe(3.00);
+    expect(cost.inputCostUsd).toBe(3.0);
   });
 
   it('calculates output cost correctly for 1M tokens at $15.00/1M', () => {
     const cost = calculateCallCost(mockModel, 0, 1_000_000);
-    expect(cost.outputCostUsd).toBe(15.00);
+    expect(cost.outputCostUsd).toBe(15.0);
   });
 
   it('cache read tokens cost 10% of input price', () => {
     const cost = calculateCallCost(mockModel, 0, 0, 1_000_000, 0);
     // 1M cache read tokens * $3.00/1M * 0.1 = $0.30
-    expect(cost.cacheReadCostUsd).toBeCloseTo(0.30, 10);
+    expect(cost.cacheReadCostUsd).toBeCloseTo(0.3, 10);
   });
 
   it('cache write tokens cost 125% of input price', () => {

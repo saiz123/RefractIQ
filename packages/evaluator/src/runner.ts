@@ -9,7 +9,7 @@ export class WorkspaceTestRunner implements TestRunner {
 
   constructor(
     private readonly cwd: string,
-    private readonly allowedCommands?: Set<string>,
+    private readonly allowedCommands?: Set<string>
   ) {
     this.runner = new CommandRunner();
   }

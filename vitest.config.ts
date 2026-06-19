@@ -20,6 +20,7 @@ export default defineConfig({
       'packages/*/src/**/*.test.ts',
       'apps/*/src/**/*.test.ts',
       'tests/**/*.test.ts',
+      'services/*/src/**/*.test.ts',
     ],
     coverage: {
       provider: 'v8',

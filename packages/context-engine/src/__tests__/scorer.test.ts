@@ -2,11 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { scoreFile, extractKeywords } from '../scorer.js';
 import type { FileEntry } from '../types.js';
 
-function makeFile(
-  path: string,
-  content: string,
-  lastModifiedMs?: number,
-): FileEntry {
+function makeFile(path: string, content: string, lastModifiedMs?: number): FileEntry {
   return { path, content, sizeBytes: content.length, lastModifiedMs };
 }
 

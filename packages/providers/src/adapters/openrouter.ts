@@ -1,4 +1,10 @@
-import type { ModelInfo, ChatRequest, ChatResponse, Message, ProviderConfig } from '@agentforge/shared';
+import type {
+  ModelInfo,
+  ChatRequest,
+  ChatResponse,
+  Message,
+  ProviderConfig,
+} from '@agentforge/shared';
 import { ProviderError } from '@agentforge/shared';
 import type { ProviderAdapter } from '../types.js';
 import { loadOpenRouterModels } from '../modelLoader.js';
@@ -26,7 +32,8 @@ export class OpenRouterAdapter implements ProviderAdapter {
     const startMs = Date.now();
 
     const apiMessages = request.messages.map((m) => ({ role: m.role, content: m.content }));
-    if (request.systemPrompt) apiMessages.unshift({ role: 'system', content: request.systemPrompt });
+    if (request.systemPrompt)
+      apiMessages.unshift({ role: 'system', content: request.systemPrompt });
 
     const response = await client.chat.completions.create({
       model: request.model,
@@ -34,7 +41,9 @@ export class OpenRouterAdapter implements ProviderAdapter {
       max_tokens: request.maxTokens,
       stream: false,
       ...(request.temperature !== undefined ? { temperature: request.temperature } : {}),
-      ...(request.responseFormat === 'json' ? { response_format: { type: 'json_object' as const } } : {}),
+      ...(request.responseFormat === 'json'
+        ? { response_format: { type: 'json_object' as const } }
+        : {}),
     });
 
     return {
@@ -53,6 +62,11 @@ export class OpenRouterAdapter implements ProviderAdapter {
 
   async isAvailable(): Promise<boolean> {
     if (!this.apiKey) return false;
-    try { await this.listModels(); return true; } catch { return false; }
+    try {
+      await this.listModels();
+      return true;
+    } catch {
+      return false;
+    }
   }
 }

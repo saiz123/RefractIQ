@@ -21,7 +21,7 @@ describe('BudgetEnforcer', () => {
     });
 
     it('returns false when cost exceeds the intake stage limit (0.10 > 0.05)', () => {
-      expect(enforcer.isStageWithinBudget('intake', 0.10)).toBe(false);
+      expect(enforcer.isStageWithinBudget('intake', 0.1)).toBe(false);
     });
 
     it('returns true when cost is within the build stage limit (0.19 < 0.20)', () => {
@@ -30,35 +30,39 @@ describe('BudgetEnforcer', () => {
 
     it('returns true for a task type with no configured limit', () => {
       // Create an enforcer with no perStageUsd entries
-      const e = new BudgetEnforcer({ maxCallInputTokens: 32_000, perStageUsd: {}, runLimitUsd: 1.0 });
+      const e = new BudgetEnforcer({
+        maxCallInputTokens: 32_000,
+        perStageUsd: {},
+        runLimitUsd: 1.0,
+      });
       expect(e.isStageWithinBudget('build', 999)).toBe(true);
     });
   });
 
   describe('assertRunBudget', () => {
     it('does not throw when projected spend is within run limit (0.40 + 0.05 = 0.45 < 0.50)', () => {
-      expect(() => enforcer.assertRunBudget(0.40, 0.05)).not.toThrow();
+      expect(() => enforcer.assertRunBudget(0.4, 0.05)).not.toThrow();
     });
 
     it('throws BudgetExceededError when projected spend exceeds run limit (0.45 + 0.10 = 0.55 > 0.50)', () => {
-      expect(() => enforcer.assertRunBudget(0.45, 0.10)).toThrow(BudgetExceededError);
+      expect(() => enforcer.assertRunBudget(0.45, 0.1)).toThrow(BudgetExceededError);
     });
 
     it('thrown BudgetExceededError has correct limitUsd', () => {
       let caught: BudgetExceededError | null = null;
       try {
-        enforcer.assertRunBudget(0.45, 0.10);
+        enforcer.assertRunBudget(0.45, 0.1);
       } catch (e) {
         caught = e as BudgetExceededError;
       }
       expect(caught).not.toBeNull();
-      expect(caught!.limitUsd).toBe(0.50);
+      expect(caught!.limitUsd).toBe(0.5);
     });
 
     it('thrown BudgetExceededError has correct estimatedUsd', () => {
       let caught: BudgetExceededError | null = null;
       try {
-        enforcer.assertRunBudget(0.45, 0.10);
+        enforcer.assertRunBudget(0.45, 0.1);
       } catch (e) {
         caught = e as BudgetExceededError;
       }

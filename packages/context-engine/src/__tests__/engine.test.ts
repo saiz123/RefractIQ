@@ -2,11 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { ContextEngine } from '../engine.js';
 import type { FileEntry } from '../types.js';
 
-function makeFile(
-  path: string,
-  content: string,
-  sizeBytes?: number,
-): FileEntry {
+function makeFile(path: string, content: string, sizeBytes?: number): FileEntry {
   return { path, content, sizeBytes: sizeBytes ?? content.length };
 }
 
@@ -30,17 +26,11 @@ describe('ContextEngine.buildContextPack', () => {
 
   it('file with keyword in path ranked higher than file without', async () => {
     const engine = new ContextEngine({ topK: 2 });
-    const highRelevance = makeFile(
-      'src/todostore.ts',
-      'export class TodoStore {}',
-    );
-    const lowRelevance = makeFile(
-      'src/unrelated.ts',
-      'export function helper() { return 42; }',
-    );
+    const highRelevance = makeFile('src/todostore.ts', 'export class TodoStore {}');
+    const lowRelevance = makeFile('src/unrelated.ts', 'export function helper() { return 42; }');
     const pack = await engine.buildContextPack(
       [lowRelevance, highRelevance],
-      'implement TodoStore',
+      'implement TodoStore'
     );
     // Both may be included, but todostore.ts should be in filesIncluded
     expect(pack.filesIncluded).toContain('src/todostore.ts');
@@ -50,7 +40,7 @@ describe('ContextEngine.buildContextPack', () => {
     const engine = new ContextEngine({ topK: 3, maxTotalTokens: 100_000 });
     // Create 20 files, all containing the keyword "widget"
     const files = Array.from({ length: 20 }, (_, i) =>
-      makeFile(`src/widget${i}.ts`, `export function widget${i}() { return ${i}; }`),
+      makeFile(`src/widget${i}.ts`, `export function widget${i}() { return ${i}; }`)
     );
     const pack = await engine.buildContextPack(files, 'widget component');
     expect(pack.filesIncluded.length).toBeLessThanOrEqual(3);
@@ -89,7 +79,7 @@ describe('ContextEngine.buildContextPack', () => {
       topK: 10,
     });
     const files = Array.from({ length: 5 }, (_, i) =>
-      makeFile(`src/mod${i}.ts`, `export function mod${i}() { return ${'x'.repeat(50)}; }`),
+      makeFile(`src/mod${i}.ts`, `export function mod${i}() { return ${'x'.repeat(50)}; }`)
     );
     const pack = await engine.buildContextPack(files, 'mod component');
     expect(pack.totalTokenEstimate).toBeLessThanOrEqual(20);

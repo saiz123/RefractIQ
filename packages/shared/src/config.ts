@@ -26,7 +26,7 @@ export function loadConfig(agentForgeDir: string): AgentForgeConfig {
     raw = readFileSync(configPath, 'utf8');
   } catch {
     throw new InitError(
-      `No AgentForge config found at "${configPath}". Run "agentforge init" first.`,
+      `No AgentForge config found at "${configPath}". Run "agentforge init" first.`
     );
   }
   return JSON.parse(raw) as AgentForgeConfig;

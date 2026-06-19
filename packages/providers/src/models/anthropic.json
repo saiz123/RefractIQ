@@ -4,8 +4,8 @@
       "id": "claude-sonnet-4-6",
       "provider": "anthropic",
       "contextWindow": 200000,
-      "inputCostPer1M": 3.00,
-      "outputCostPer1M": 15.00,
+      "inputCostPer1M": 3.0,
+      "outputCostPer1M": 15.0,
       "capabilities": ["code", "json", "reasoning"],
       "maxOutputTokens": 64000
     },
@@ -13,8 +13,8 @@
       "id": "claude-haiku-4-5-20251001",
       "provider": "anthropic",
       "contextWindow": 200000,
-      "inputCostPer1M": 0.80,
-      "outputCostPer1M": 4.00,
+      "inputCostPer1M": 0.8,
+      "outputCostPer1M": 4.0,
       "capabilities": ["code", "json", "fast"],
       "maxOutputTokens": 16000
     }

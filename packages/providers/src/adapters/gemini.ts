@@ -1,4 +1,10 @@
-import type { ModelInfo, ChatRequest, ChatResponse, Message, ProviderConfig } from '@agentforge/shared';
+import type {
+  ModelInfo,
+  ChatRequest,
+  ChatResponse,
+  Message,
+  ProviderConfig,
+} from '@agentforge/shared';
 import { ProviderError } from '@agentforge/shared';
 import type { ProviderAdapter } from '../types.js';
 import { loadGeminiModels } from '../modelLoader.js';
@@ -43,8 +49,7 @@ export class GeminiAdapter implements ProviderAdapter {
     }
 
     const systemPrompt =
-      request.systemPrompt ??
-      request.messages.find((m) => m.role === 'system')?.content;
+      request.systemPrompt ?? request.messages.find((m) => m.role === 'system')?.content;
 
     const chatSession = model.startChat({
       history,

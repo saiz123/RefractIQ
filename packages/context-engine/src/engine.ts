@@ -1,4 +1,10 @@
-import type { FileEntry, FileIndex, ContextPackResult, ContextEngineOptions, FileChunkResult } from './types.js';
+import type {
+  FileEntry,
+  FileIndex,
+  ContextPackResult,
+  ContextEngineOptions,
+  FileChunkResult,
+} from './types.js';
 import { DEFAULT_CONTEXT_OPTIONS } from './types.js';
 import { buildFileIndex, shouldSkip } from './indexer.js';
 import { scoreFile } from './scorer.js';
@@ -13,7 +19,7 @@ export class ContextEngine {
 
   constructor(
     options: Partial<ContextEngineOptions> = {},
-    summarizer: FileSummarizerFn = stubSummarizer,
+    summarizer: FileSummarizerFn = stubSummarizer
   ) {
     this.options = { ...DEFAULT_CONTEXT_OPTIONS, ...options };
     this.summarizer = summarizer;
@@ -31,10 +37,7 @@ export class ContextEngine {
    *    b. Else → chunk at function level, include chunks until maxTotalTokens reached
    * 5. Return ContextPackResult with included chunks + excluded file list
    */
-  async buildContextPack(
-    files: FileEntry[],
-    taskDescription: string,
-  ): Promise<ContextPackResult> {
+  async buildContextPack(files: FileEntry[], taskDescription: string): Promise<ContextPackResult> {
     const index = buildFileIndex(files);
 
     // Score and rank
@@ -46,9 +49,7 @@ export class ContextEngine {
     const topFiles = scored.slice(0, this.options.topK);
     const excludedFiles = [
       ...scored.slice(this.options.topK).map((s) => s.file.path),
-      ...index.files
-        .filter((f) => shouldSkip(f))
-        .map((f) => f.path),
+      ...index.files.filter((f) => shouldSkip(f)).map((f) => f.path),
     ];
 
     const chunks: FileChunkResult[] = [];

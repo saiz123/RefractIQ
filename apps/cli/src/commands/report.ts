@@ -35,17 +35,29 @@ export const reportCommand = new Command('report')
         if (stages.length > 0) {
           console.log(chalk.bold('\nStages:'));
           const colW = [18, 16, 18, 10, 10];
-          console.log(chalk.dim(['STAGE'.padEnd(colW[0]), 'PROVIDER'.padEnd(colW[1]), 'MODEL'.padEnd(colW[2]), 'IN TOK'.padEnd(colW[3]), 'COST'].join('  ')));
+          console.log(
+            chalk.dim(
+              [
+                'STAGE'.padEnd(colW[0]),
+                'PROVIDER'.padEnd(colW[1]),
+                'MODEL'.padEnd(colW[2]),
+                'IN TOK'.padEnd(colW[3]),
+                'COST',
+              ].join('  ')
+            )
+          );
           for (const stage of stages) {
             if (!stage.provider) continue;
             const label = stage.iteration > 0 ? `${stage.stage}[${stage.iteration}]` : stage.stage;
-            console.log([
-              label.padEnd(colW[0]),
-              stage.provider.padEnd(colW[1]),
-              (stage.model ?? '').slice(0, 17).padEnd(colW[2]),
-              String(stage.inputTokens).padEnd(colW[3]),
-              `$${stage.costUsd.toFixed(4)}`,
-            ].join('  '));
+            console.log(
+              [
+                label.padEnd(colW[0]),
+                stage.provider.padEnd(colW[1]),
+                (stage.model ?? '').slice(0, 17).padEnd(colW[2]),
+                String(stage.inputTokens).padEnd(colW[3]),
+                `$${stage.costUsd.toFixed(4)}`,
+              ].join('  ')
+            );
           }
         }
       } else {
@@ -64,17 +76,33 @@ export const reportCommand = new Command('report')
 
         console.log(chalk.bold('\nRecent Runs\n'));
         const colW = [38, 10, 8, 10];
-        console.log(chalk.dim(['RUN ID'.padEnd(colW[0]), 'STATUS'.padEnd(colW[1]), 'STAGES'.padEnd(colW[2]), 'COST'].join('  ')));
+        console.log(
+          chalk.dim(
+            [
+              'RUN ID'.padEnd(colW[0]),
+              'STATUS'.padEnd(colW[1]),
+              'STAGES'.padEnd(colW[2]),
+              'COST',
+            ].join('  ')
+          )
+        );
         console.log(chalk.dim('─'.repeat(70)));
 
         for (const run of recentRuns.reverse()) {
-          const statusColor = run.status === 'complete' ? chalk.green : run.status === 'aborted' ? chalk.yellow : chalk.red;
-          console.log([
-            run.id.padEnd(colW[0]),
-            statusColor(run.status).padEnd(colW[1] + 10),
-            ''.padEnd(colW[2]),
-            `$${run.totalCostUsd.toFixed(4)}`,
-          ].join('  '));
+          const statusColor =
+            run.status === 'complete'
+              ? chalk.green
+              : run.status === 'aborted'
+                ? chalk.yellow
+                : chalk.red;
+          console.log(
+            [
+              run.id.padEnd(colW[0]),
+              statusColor(run.status).padEnd(colW[1] + 10),
+              ''.padEnd(colW[2]),
+              `$${run.totalCostUsd.toFixed(4)}`,
+            ].join('  ')
+          );
         }
       }
     } catch (err) {

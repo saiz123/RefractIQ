@@ -169,6 +169,17 @@ docker compose run --rm cli build "your project idea"
 
 ---
 
+## Known Limitations
+
+- **Command execution is allowlisted, not sandboxed** — generated project commands run locally with an allowlist. Docker process isolation is a planned future hardening milestone.
+- **Dry-run calls intake + architect** — planning stages make real model calls even in dry-run. File writes, git commits, and test/build commands are skipped.
+- **API has no auth by default** — set `AGENTFORGE_API_TOKEN` in `.env` before exposing the API beyond localhost.
+- **Cloud provider E2E requires real keys** — may incur costs. Not run in CI.
+- **Provider model pricing is static** — update `packages/providers/src/models/*.json` when provider prices change.
+- **Web Dockerfile uses npm** — standalone build context, does not use the root pnpm workspace.
+
+---
+
 ## Documentation
 
 - [Architecture](docs/architecture.md) — system design and data flow

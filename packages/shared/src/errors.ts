@@ -1,7 +1,7 @@
 export class AgentForgeError extends Error {
   constructor(
     message: string,
-    public readonly code: string,
+    public readonly code: string
   ) {
     super(message);
     this.name = 'AgentForgeError';
@@ -11,7 +11,7 @@ export class AgentForgeError extends Error {
 export class ProviderError extends AgentForgeError {
   constructor(
     message: string,
-    public readonly provider: string,
+    public readonly provider: string
   ) {
     super(message, 'PROVIDER_ERROR');
     this.name = 'ProviderError';
@@ -21,11 +21,11 @@ export class ProviderError extends AgentForgeError {
 export class NoCapableModelError extends AgentForgeError {
   constructor(
     public readonly taskType: string,
-    public readonly tried: string[],
+    public readonly tried: string[]
   ) {
     super(
       `No capable model found for task "${taskType}". Tried: ${tried.join(', ')}`,
-      'NO_CAPABLE_MODEL',
+      'NO_CAPABLE_MODEL'
     );
     this.name = 'NoCapableModelError';
   }
@@ -34,11 +34,11 @@ export class NoCapableModelError extends AgentForgeError {
 export class BudgetExceededError extends AgentForgeError {
   constructor(
     public readonly limitUsd: number,
-    public readonly estimatedUsd: number,
+    public readonly estimatedUsd: number
   ) {
     super(
       `Budget limit $${limitUsd} would be exceeded (estimated $${estimatedUsd.toFixed(4)})`,
-      'BUDGET_EXCEEDED',
+      'BUDGET_EXCEEDED'
     );
     this.name = 'BudgetExceededError';
   }

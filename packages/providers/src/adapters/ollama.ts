@@ -1,4 +1,10 @@
-import type { ModelInfo, ChatRequest, ChatResponse, Message, ProviderConfig } from '@agentforge/shared';
+import type {
+  ModelInfo,
+  ChatRequest,
+  ChatResponse,
+  Message,
+  ProviderConfig,
+} from '@agentforge/shared';
 import { ProviderError } from '@agentforge/shared';
 import type { ProviderAdapter } from '../types.js';
 import { loadOllamaModels } from '../modelLoader.js';
@@ -33,9 +39,7 @@ export class OllamaAdapter implements ProviderAdapter {
   private endpoint: string;
 
   constructor(config?: ProviderConfig) {
-    this.endpoint = config?.endpoint
-      ?? process.env['OLLAMA_ENDPOINT']
-      ?? 'http://localhost:11434';
+    this.endpoint = config?.endpoint ?? process.env['OLLAMA_ENDPOINT'] ?? 'http://localhost:11434';
   }
 
   async listModels(): Promise<ModelInfo[]> {
@@ -104,15 +108,12 @@ export class OllamaAdapter implements ProviderAdapter {
     } catch (err) {
       throw new ProviderError(
         `Ollama request failed: ${err instanceof Error ? err.message : String(err)}`,
-        this.id,
+        this.id
       );
     }
 
     if (!response.ok) {
-      throw new ProviderError(
-        `Ollama returned HTTP ${response.status}`,
-        this.id,
-      );
+      throw new ProviderError(`Ollama returned HTTP ${response.status}`, this.id);
     }
 
     const data = (await response.json()) as OllamaChatResponse;

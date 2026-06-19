@@ -12,7 +12,9 @@ function StatusBadge({ status }: { status: string }) {
     running: 'bg-blue-900 text-blue-300',
   };
   return (
-    <span className={`px-2 py-0.5 rounded text-xs font-medium ${colors[status] ?? 'bg-gray-800 text-gray-400'}`}>
+    <span
+      className={`px-2 py-0.5 rounded text-xs font-medium ${colors[status] ?? 'bg-gray-800 text-gray-400'}`}
+    >
       {status}
     </span>
   );
@@ -43,7 +45,13 @@ export default async function HomePage() {
       {runs.length === 0 && !error ? (
         <div className="text-center py-20 text-gray-500">
           <p className="text-lg mb-2">No runs yet</p>
-          <p className="text-sm">Run <code className="bg-gray-800 px-1.5 py-0.5 rounded">agentforge build &quot;your idea&quot;</code> to get started</p>
+          <p className="text-sm">
+            Run{' '}
+            <code className="bg-gray-800 px-1.5 py-0.5 rounded">
+              agentforge build &quot;your idea&quot;
+            </code>{' '}
+            to get started
+          </p>
         </div>
       ) : (
         <div className="overflow-hidden rounded-lg border border-gray-800">
@@ -60,16 +68,31 @@ export default async function HomePage() {
             </thead>
             <tbody>
               {runs.map((run, i) => (
-                <tr key={run.id} className={`border-b border-gray-800 hover:bg-gray-900 transition-colors ${i % 2 === 0 ? '' : 'bg-gray-900/30'}`}>
+                <tr
+                  key={run.id}
+                  className={`border-b border-gray-800 hover:bg-gray-900 transition-colors ${i % 2 === 0 ? '' : 'bg-gray-900/30'}`}
+                >
                   <td className="px-4 py-3">
-                    <Link href={`/runs/${run.id}`} className="text-blue-400 hover:text-blue-300 transition-colors">
-                      {run.userPrompt.slice(0, 60)}{run.userPrompt.length > 60 ? '…' : ''}
+                    <Link
+                      href={`/runs/${run.id}`}
+                      className="text-blue-400 hover:text-blue-300 transition-colors"
+                    >
+                      {run.userPrompt.slice(0, 60)}
+                      {run.userPrompt.length > 60 ? '…' : ''}
                     </Link>
                   </td>
-                  <td className="px-4 py-3"><StatusBadge status={run.status} /></td>
-                  <td className="px-4 py-3 text-right text-gray-300 font-mono">{run.totalInputTokens.toLocaleString()}</td>
-                  <td className="px-4 py-3 text-right text-gray-300 font-mono">{run.totalOutputTokens.toLocaleString()}</td>
-                  <td className="px-4 py-3 text-right text-gray-300 font-mono">${run.totalCostUsd.toFixed(4)}</td>
+                  <td className="px-4 py-3">
+                    <StatusBadge status={run.status} />
+                  </td>
+                  <td className="px-4 py-3 text-right text-gray-300 font-mono">
+                    {run.totalInputTokens.toLocaleString()}
+                  </td>
+                  <td className="px-4 py-3 text-right text-gray-300 font-mono">
+                    {run.totalOutputTokens.toLocaleString()}
+                  </td>
+                  <td className="px-4 py-3 text-right text-gray-300 font-mono">
+                    ${run.totalCostUsd.toFixed(4)}
+                  </td>
                   <td className="px-4 py-3 text-right text-gray-500 text-xs">
                     {new Date(run.createdAt).toLocaleDateString()}
                   </td>

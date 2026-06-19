@@ -42,8 +42,8 @@ export const initCommand = new Command('init')
     if (existsSync(agentforgeDir)) {
       console.log(
         chalk.yellow(
-          'Warning: .agentforge/ already exists. Skipping initialization to avoid overwriting.',
-        ),
+          'Warning: .agentforge/ already exists. Skipping initialization to avoid overwriting.'
+        )
       );
       process.exit(0);
     }
@@ -84,6 +84,10 @@ export const initCommand = new Command('init')
     console.log(chalk.bold('Next steps:'));
     console.log(`  1. Add a provider:  ${chalk.cyan('agentforge providers add')}`);
     console.log(`  2. Check health:    ${chalk.cyan('agentforge doctor')}`);
-    console.log(`  3. Plan a feature:  ${chalk.cyan('agentforge plan "your feature description"')}`);
-    console.log(`  4. Build it:        ${chalk.cyan('agentforge build "your feature description"')}`);
+    console.log(
+      `  3. Plan a feature:  ${chalk.cyan('agentforge plan "your feature description"')}`
+    );
+    console.log(
+      `  4. Build it:        ${chalk.cyan('agentforge build "your feature description"')}`
+    );
   });

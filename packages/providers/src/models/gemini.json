@@ -4,8 +4,8 @@
       "id": "gemini-1.5-pro",
       "provider": "gemini",
       "contextWindow": 2000000,
-      "inputCostPer1M": 3.50,
-      "outputCostPer1M": 10.50,
+      "inputCostPer1M": 3.5,
+      "outputCostPer1M": 10.5,
       "capabilities": ["code", "json", "reasoning", "long-context"],
       "maxOutputTokens": 8192
     },
@@ -14,7 +14,7 @@
       "provider": "gemini",
       "contextWindow": 1000000,
       "inputCostPer1M": 0.075,
-      "outputCostPer1M": 0.30,
+      "outputCostPer1M": 0.3,
       "capabilities": ["code", "json", "fast"],
       "maxOutputTokens": 8192
     }

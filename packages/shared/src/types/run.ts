@@ -9,14 +9,7 @@ export type StageType =
   | 'repair'
   | 'doc'
   | 'report';
-export type TaskType =
-  | 'intake'
-  | 'architect'
-  | 'build'
-  | 'review'
-  | 'doc'
-  | 'summarize'
-  | 'repair';
+export type TaskType = 'intake' | 'architect' | 'build' | 'review' | 'doc' | 'summarize' | 'repair';
 
 export interface RunConfig {
   userPrompt: string;

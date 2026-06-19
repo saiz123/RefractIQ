@@ -1,476 +1,852 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AgentForge — Self-Hosted AI Software Team</title>
-  <meta name="description" content="Open-source, self-hosted AI software team platform. Route each agent task to the cheapest capable model across all your AI subscriptions."/>
-  <meta property="og:title" content="AgentForge"/>
-  <meta property="og:description" content="Cross-provider AI agents. Structured artifact handoffs. Token-optimized."/>
-  <meta property="og:image" content="https://saiz123.github.io/AgentForge/logo.svg"/>
-  <link rel="icon" href="logo.svg" type="image/svg+xml"/>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgentForge — Self-Hosted AI Software Team</title>
+    <meta
+      name="description"
+      content="Open-source, self-hosted AI software team platform. Route each agent task to the cheapest capable model across all your AI subscriptions."
+    />
+    <meta property="og:title" content="AgentForge" />
+    <meta
+      property="og:description"
+      content="Cross-provider AI agents. Structured artifact handoffs. Token-optimized."
+    />
+    <meta property="og:image" content="https://saiz123.github.io/AgentForge/logo.svg" />
+    <link rel="icon" href="logo.svg" type="image/svg+xml" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-    :root {
-      --bg:        #09090f;
-      --bg-card:   #0f0f1a;
-      --bg-card2:  #13131f;
-      --border:    #1e1b3a;
-      --border-hi: #4c1d95;
-      --purple:    #7c3aed;
-      --purple-l:  #a78bfa;
-      --blue:      #3b82f6;
-      --blue-l:    #93c5fd;
-      --green:     #10b981;
-      --amber:     #f59e0b;
-      --cyan:      #06b6d4;
-      --rose:      #f43f5e;
-      --text:      #e2e8f0;
-      --muted:     #64748b;
-      --dimmed:    #334155;
-    }
+      :root {
+        --bg: #09090f;
+        --bg-card: #0f0f1a;
+        --bg-card2: #13131f;
+        --border: #1e1b3a;
+        --border-hi: #4c1d95;
+        --purple: #7c3aed;
+        --purple-l: #a78bfa;
+        --blue: #3b82f6;
+        --blue-l: #93c5fd;
+        --green: #10b981;
+        --amber: #f59e0b;
+        --cyan: #06b6d4;
+        --rose: #f43f5e;
+        --text: #e2e8f0;
+        --muted: #64748b;
+        --dimmed: #334155;
+      }
 
-    html { scroll-behavior: smooth; }
+      html {
+        scroll-behavior: smooth;
+      }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
 
-    /* ── Nav ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0.875rem 2rem;
-      background: rgba(9,9,15,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo { display: flex; align-items: center; gap: 0.625rem; text-decoration: none; }
-    .nav-logo img { width: 32px; height: 32px; }
-    .nav-logo span { font-weight: 700; font-size: 1.1rem; color: var(--text); letter-spacing: -0.02em; }
-    .nav-links { display: flex; align-items: center; gap: 1.75rem; }
-    .nav-links a {
-      text-decoration: none; color: var(--muted); font-size: 0.9rem;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .btn-gh {
-      display: flex; align-items: center; gap: 0.45rem;
-      padding: 0.45rem 1rem;
-      background: var(--border); border: 1px solid var(--border-hi);
-      border-radius: 0.5rem; color: var(--text); text-decoration: none;
-      font-size: 0.85rem; font-weight: 500; transition: background 0.2s;
-    }
-    .btn-gh:hover { background: #1e1b4b; }
+      /* ── Nav ── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.875rem 2rem;
+        background: rgba(9, 9, 15, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        text-decoration: none;
+      }
+      .nav-logo img {
+        width: 32px;
+        height: 32px;
+      }
+      .nav-logo span {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--text);
+        letter-spacing: -0.02em;
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 1.75rem;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--muted);
+        font-size: 0.9rem;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+      .btn-gh {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.45rem 1rem;
+        background: var(--border);
+        border: 1px solid var(--border-hi);
+        border-radius: 0.5rem;
+        color: var(--text);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: background 0.2s;
+      }
+      .btn-gh:hover {
+        background: #1e1b4b;
+      }
 
-    /* ── Hero ── */
-    .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 6rem 1.5rem 4rem;
-      position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(124,58,237,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.3rem 0.875rem;
-      background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.35);
-      border-radius: 999px; font-size: 0.8rem; color: var(--purple-l);
-      margin-bottom: 2rem; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600;
-    }
-    .hero-logo {
-      width: 140px; height: 140px; margin-bottom: 2rem;
-      filter: drop-shadow(0 0 40px rgba(124,58,237,0.4));
-      animation: float 6s ease-in-out infinite;
-    }
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-10px); }
-    }
-    .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 800; letter-spacing: -0.04em; line-height: 1.1;
-      margin-bottom: 1.25rem;
-      background: linear-gradient(135deg, #fff 0%, var(--purple-l) 60%, var(--blue-l) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero p {
-      font-size: clamp(1rem, 2vw, 1.25rem); color: var(--muted);
-      max-width: 640px; margin: 0 auto 2.5rem;
-    }
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-    .btn-primary {
-      padding: 0.75rem 1.75rem;
-      background: linear-gradient(135deg, var(--purple), var(--blue));
-      border-radius: 0.625rem; color: #fff; text-decoration: none;
-      font-weight: 600; font-size: 0.95rem; transition: opacity 0.2s;
-      border: none; cursor: pointer;
-    }
-    .btn-primary:hover { opacity: 0.88; }
-    .btn-outline {
-      padding: 0.75rem 1.75rem;
-      background: transparent; border: 1px solid var(--border-hi);
-      border-radius: 0.625rem; color: var(--purple-l); text-decoration: none;
-      font-weight: 600; font-size: 0.95rem; transition: background 0.2s;
-    }
-    .btn-outline:hover { background: rgba(124,58,237,0.1); }
+      /* ── Hero ── */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 6rem 1.5rem 4rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 70% 60% at 50% 40%,
+          rgba(124, 58, 237, 0.12) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.3rem 0.875rem;
+        background: rgba(124, 58, 237, 0.12);
+        border: 1px solid rgba(124, 58, 237, 0.35);
+        border-radius: 999px;
+        font-size: 0.8rem;
+        color: var(--purple-l);
+        margin-bottom: 2rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+      .hero-logo {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 2rem;
+        filter: drop-shadow(0 0 40px rgba(124, 58, 237, 0.4));
+        animation: float 6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+      .hero h1 {
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        line-height: 1.1;
+        margin-bottom: 1.25rem;
+        background: linear-gradient(135deg, #fff 0%, var(--purple-l) 60%, var(--blue-l) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .hero p {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        color: var(--muted);
+        max-width: 640px;
+        margin: 0 auto 2.5rem;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .btn-primary {
+        padding: 0.75rem 1.75rem;
+        background: linear-gradient(135deg, var(--purple), var(--blue));
+        border-radius: 0.625rem;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: opacity 0.2s;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-primary:hover {
+        opacity: 0.88;
+      }
+      .btn-outline {
+        padding: 0.75rem 1.75rem;
+        background: transparent;
+        border: 1px solid var(--border-hi);
+        border-radius: 0.625rem;
+        color: var(--purple-l);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: background 0.2s;
+      }
+      .btn-outline:hover {
+        background: rgba(124, 58, 237, 0.1);
+      }
 
-    .hero-stats {
-      display: flex; gap: 3rem; justify-content: center; margin-top: 4rem;
-      flex-wrap: wrap;
-    }
-    .stat { text-align: center; }
-    .stat-num { font-size: 2rem; font-weight: 800; color: var(--purple-l); letter-spacing: -0.03em; }
-    .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.15rem; }
+      .hero-stats {
+        display: flex;
+        gap: 3rem;
+        justify-content: center;
+        margin-top: 4rem;
+        flex-wrap: wrap;
+      }
+      .stat {
+        text-align: center;
+      }
+      .stat-num {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--purple-l);
+        letter-spacing: -0.03em;
+      }
+      .stat-label {
+        font-size: 0.8rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-top: 0.15rem;
+      }
 
-    /* ── Section shared ── */
-    section { padding: 5rem 1.5rem; }
-    .container { max-width: 1100px; margin: 0 auto; }
-    .section-tag {
-      display: inline-block; padding: 0.25rem 0.75rem;
-      background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.25);
-      border-radius: 999px; font-size: 0.75rem; color: var(--purple-l);
-      letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600;
-      margin-bottom: 1rem;
-    }
-    h2 {
-      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-      font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem;
-    }
-    .section-sub { color: var(--muted); font-size: 1.05rem; max-width: 540px; }
+      /* ── Section shared ── */
+      section {
+        padding: 5rem 1.5rem;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .section-tag {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background: rgba(124, 58, 237, 0.1);
+        border: 1px solid rgba(124, 58, 237, 0.25);
+        border-radius: 999px;
+        font-size: 0.75rem;
+        color: var(--purple-l);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      h2 {
+        font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        margin-bottom: 1rem;
+      }
+      .section-sub {
+        color: var(--muted);
+        font-size: 1.05rem;
+        max-width: 540px;
+      }
 
-    /* ── Pipeline section ── */
-    .pipeline-section { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .pipeline-flow {
-      display: flex; align-items: center; flex-wrap: wrap;
-      gap: 0; margin-top: 3rem; justify-content: center;
-    }
-    .pipeline-step {
-      display: flex; flex-direction: column; align-items: center;
-      text-align: center; padding: 1.25rem 0.75rem; min-width: 90px;
-    }
-    .step-dot {
-      width: 48px; height: 48px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.25rem; margin-bottom: 0.75rem;
-      border: 2px solid transparent;
-    }
-    .step-name { font-size: 0.75rem; font-weight: 600; color: var(--text); text-transform: uppercase; letter-spacing: 0.06em; }
-    .step-artifact { font-size: 0.65rem; color: var(--muted); margin-top: 0.2rem; font-family: monospace; }
-    .pipeline-arrow {
-      color: var(--dimmed); font-size: 1.25rem; padding: 0 0.25rem;
-      align-self: flex-start; margin-top: 1.5rem;
-    }
-    .step-intake   { background: rgba(59,130,246,0.15); border-color: var(--blue); }
-    .step-arch     { background: rgba(124,58,237,0.15); border-color: var(--purple); }
-    .step-tasks    { background: rgba(124,58,237,0.1);  border-color: var(--purple-l); }
-    .step-build    { background: rgba(16,185,129,0.15); border-color: var(--green); }
-    .step-test     { background: rgba(6,182,212,0.15);  border-color: var(--cyan); }
-    .step-review   { background: rgba(245,158,11,0.15); border-color: var(--amber); }
-    .step-repair   { background: rgba(244,63,94,0.15);  border-color: var(--rose); }
-    .step-doc      { background: rgba(248,113,113,0.15); border-color: #f87171; }
+      /* ── Pipeline section ── */
+      .pipeline-section {
+        background: var(--bg-card);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+      .pipeline-flow {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0;
+        margin-top: 3rem;
+        justify-content: center;
+      }
+      .pipeline-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.25rem 0.75rem;
+        min-width: 90px;
+      }
+      .step-dot {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+        border: 2px solid transparent;
+      }
+      .step-name {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .step-artifact {
+        font-size: 0.65rem;
+        color: var(--muted);
+        margin-top: 0.2rem;
+        font-family: monospace;
+      }
+      .pipeline-arrow {
+        color: var(--dimmed);
+        font-size: 1.25rem;
+        padding: 0 0.25rem;
+        align-self: flex-start;
+        margin-top: 1.5rem;
+      }
+      .step-intake {
+        background: rgba(59, 130, 246, 0.15);
+        border-color: var(--blue);
+      }
+      .step-arch {
+        background: rgba(124, 58, 237, 0.15);
+        border-color: var(--purple);
+      }
+      .step-tasks {
+        background: rgba(124, 58, 237, 0.1);
+        border-color: var(--purple-l);
+      }
+      .step-build {
+        background: rgba(16, 185, 129, 0.15);
+        border-color: var(--green);
+      }
+      .step-test {
+        background: rgba(6, 182, 212, 0.15);
+        border-color: var(--cyan);
+      }
+      .step-review {
+        background: rgba(245, 158, 11, 0.15);
+        border-color: var(--amber);
+      }
+      .step-repair {
+        background: rgba(244, 63, 94, 0.15);
+        border-color: var(--rose);
+      }
+      .step-doc {
+        background: rgba(248, 113, 113, 0.15);
+        border-color: #f87171;
+      }
 
-    /* ── Features grid ── */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem; margin-top: 3rem;
-    }
-    .feature-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 1rem; padding: 1.75rem;
-      transition: border-color 0.25s, transform 0.25s;
-    }
-    .feature-card:hover { border-color: var(--border-hi); transform: translateY(-2px); }
-    .feature-icon {
-      width: 44px; height: 44px; border-radius: 0.625rem;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.35rem; margin-bottom: 1rem;
-    }
-    .feature-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .feature-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+      /* ── Features grid ── */
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 3rem;
+      }
+      .feature-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 1rem;
+        padding: 1.75rem;
+        transition:
+          border-color 0.25s,
+          transform 0.25s;
+      }
+      .feature-card:hover {
+        border-color: var(--border-hi);
+        transform: translateY(-2px);
+      }
+      .feature-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 0.625rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+        margin-bottom: 1rem;
+      }
+      .feature-card h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      .feature-card p {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
 
-    /* ── Providers ── */
-    .providers-section { text-align: center; }
-    .providers-grid {
-      display: flex; flex-wrap: wrap; justify-content: center;
-      gap: 1rem; margin-top: 2.5rem;
-    }
-    .provider-pill {
-      display: flex; align-items: center; gap: 0.5rem;
-      padding: 0.6rem 1.25rem;
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 999px; font-size: 0.9rem; font-weight: 600;
-      transition: border-color 0.2s;
-    }
-    .provider-pill:hover { border-color: var(--purple); }
-    .provider-dot { width: 10px; height: 10px; border-radius: 50%; }
+      /* ── Providers ── */
+      .providers-section {
+        text-align: center;
+      }
+      .providers-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2.5rem;
+      }
+      .provider-pill {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.25rem;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: border-color 0.2s;
+      }
+      .provider-pill:hover {
+        border-color: var(--purple);
+      }
+      .provider-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
 
-    /* ── Quick start ── */
-    .quickstart-section { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .quickstart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; }
-    @media (max-width: 700px) { .quickstart-grid { grid-template-columns: 1fr; } }
-    .qs-step { margin-bottom: 1.5rem; }
-    .qs-num {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 28px; height: 28px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--purple), var(--blue));
-      font-size: 0.8rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem;
-    }
-    .qs-step h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.35rem; }
-    .qs-step p { font-size: 0.85rem; color: var(--muted); }
-    pre {
-      background: #060610; border: 1px solid var(--border);
-      border-radius: 0.75rem; padding: 1.5rem;
-      overflow-x: auto; font-size: 0.85rem; line-height: 1.7;
-      font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
-    }
-    .code-comment { color: #475569; }
-    .code-cmd     { color: #93c5fd; }
-    .code-arg     { color: #fbbf24; }
-    .code-string  { color: #86efac; }
+      /* ── Quick start ── */
+      .quickstart-section {
+        background: var(--bg-card);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+      .quickstart-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        margin-top: 3rem;
+      }
+      @media (max-width: 700px) {
+        .quickstart-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .qs-step {
+        margin-bottom: 1.5rem;
+      }
+      .qs-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--purple), var(--blue));
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 0.5rem;
+      }
+      .qs-step h4 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 0.35rem;
+      }
+      .qs-step p {
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      pre {
+        background: #060610;
+        border: 1px solid var(--border);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        overflow-x: auto;
+        font-size: 0.85rem;
+        line-height: 1.7;
+        font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+      }
+      .code-comment {
+        color: #475569;
+      }
+      .code-cmd {
+        color: #93c5fd;
+      }
+      .code-arg {
+        color: #fbbf24;
+      }
+      .code-string {
+        color: #86efac;
+      }
 
-    /* ── CTA ── */
-    .cta-section {
-      text-align: center;
-      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(124,58,237,0.08) 0%, transparent 70%);
-    }
-    .cta-section h2 { margin-bottom: 1rem; }
-    .cta-section p { color: var(--muted); margin-bottom: 2rem; }
-    .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+      /* ── CTA ── */
+      .cta-section {
+        text-align: center;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 50%,
+          rgba(124, 58, 237, 0.08) 0%,
+          transparent 70%
+        );
+      }
+      .cta-section h2 {
+        margin-bottom: 1rem;
+      }
+      .cta-section p {
+        color: var(--muted);
+        margin-bottom: 2rem;
+      }
+      .cta-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
 
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border); padding: 2rem 1.5rem;
-      text-align: center; color: var(--muted); font-size: 0.85rem;
-    }
-    footer a { color: var(--purple-l); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+      /* ── Footer ── */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 2rem 1.5rem;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+      footer a {
+        color: var(--purple-l);
+        text-decoration: none;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
 
-    /* ── WIP banner ── */
-    .wip-banner {
-      background: linear-gradient(90deg, rgba(245,158,11,0.12), rgba(239,68,68,0.08));
-      border-bottom: 1px solid rgba(245,158,11,0.3);
-      padding: 0.5rem 1rem; text-align: center;
-      font-size: 0.8rem; color: #fcd34d;
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-    }
-    nav { top: 34px; }
+      /* ── WIP banner ── */
+      .wip-banner {
+        background: linear-gradient(90deg, rgba(245, 158, 11, 0.12), rgba(239, 68, 68, 0.08));
+        border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+        padding: 0.5rem 1rem;
+        text-align: center;
+        font-size: 0.8rem;
+        color: #fcd34d;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+      }
+      nav {
+        top: 34px;
+      }
 
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .hero-stats { gap: 2rem; }
-      .pipeline-arrow { display: none; }
-    }
-  </style>
-</head>
-<body>
-
-<!-- Work-in-progress banner -->
-<div class="wip-banner">
-  🔨 &nbsp;<strong>Work in Progress</strong> — AgentForge v0.1 is an active alpha. Feedback welcome on <a href="https://github.com/saiz123/AgentForge/issues">GitHub Issues</a>.
-</div>
-
-<!-- Nav -->
-<nav>
-  <a class="nav-logo" href="#">
-    <img src="logo.svg" alt="AgentForge logo"/>
-    <span>AgentForge</span>
-  </a>
-  <div class="nav-links">
-    <a href="#how-it-works">How it works</a>
-    <a href="#features">Features</a>
-    <a href="#quickstart">Quick start</a>
-    <a href="https://github.com/saiz123/AgentForge/tree/main/docs" target="_blank">Docs</a>
-    <a class="btn-gh" href="https://github.com/saiz123/AgentForge" target="_blank">
-      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.93.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
-      GitHub
-    </a>
-  </div>
-</nav>
-
-<!-- Hero -->
-<section class="hero">
-  <div class="hero-badge">⚡ Open Source &nbsp;·&nbsp; Self-Hosted &nbsp;·&nbsp; MIT License</div>
-  <img class="hero-logo" src="logo.svg" alt="AgentForge"/>
-  <h1>Your AI Software Team.<br/>Your API Keys. Your Rules.</h1>
-  <p>AgentForge routes each agent role — Intake, Architect, Builder, Reviewer, Documentation — to the cheapest capable model across all your AI subscriptions. Structured artifacts. No free-form chat. Token-optimized.</p>
-  <div class="hero-actions">
-    <a class="btn-primary" href="#quickstart">Get started</a>
-    <a class="btn-outline" href="https://github.com/saiz123/AgentForge" target="_blank">View on GitHub</a>
-  </div>
-  <div class="hero-stats">
-    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Agent Roles</div></div>
-    <div class="stat"><div class="stat-num">5+</div><div class="stat-label">AI Providers</div></div>
-    <div class="stat"><div class="stat-num">230</div><div class="stat-label">Tests Passing</div></div>
-    <div class="stat"><div class="stat-num">MIT</div><div class="stat-label">License</div></div>
-  </div>
-</section>
-
-<!-- How it works -->
-<section class="pipeline-section" id="how-it-works">
-  <div class="container">
-    <div class="section-tag">Pipeline</div>
-    <h2>Structured artifacts.<br/>Orchestrator-controlled.</h2>
-    <p class="section-sub">Agents never chat freely. Each stage produces a JSON artifact that the next stage consumes. The orchestrator controls every handoff.</p>
-    <div class="pipeline-flow">
-      <div class="pipeline-step">
-        <div class="step-dot step-intake">📥</div>
-        <div class="step-name">Intake</div>
-        <div class="step-artifact">requirements.json</div>
-      </div>
-      <div class="pipeline-arrow">→</div>
-      <div class="pipeline-step">
-        <div class="step-dot step-arch">🏗️</div>
-        <div class="step-name">Architect</div>
-        <div class="step-artifact">architecture.json</div>
-      </div>
-      <div class="pipeline-arrow">→</div>
-      <div class="pipeline-step">
-        <div class="step-dot step-tasks">📋</div>
-        <div class="step-name">Tasks</div>
-        <div class="step-artifact">task-list.json</div>
-      </div>
-      <div class="pipeline-arrow">→</div>
-      <div class="pipeline-step">
-        <div class="step-dot step-build">⚒️</div>
-        <div class="step-name">Builder</div>
-        <div class="step-artifact">code-diff</div>
-      </div>
-      <div class="pipeline-arrow">→</div>
-      <div class="pipeline-step">
-        <div class="step-dot step-test">🧪</div>
-        <div class="step-name">Test</div>
-        <div class="step-artifact">test-result.json</div>
-      </div>
-      <div class="pipeline-arrow">→</div>
-      <div class="pipeline-step">
-        <div class="step-dot step-review">🔍</div>
-        <div class="step-name">Reviewer</div>
-        <div class="step-artifact">review.json</div>
-      </div>
-      <div class="pipeline-arrow">→</div>
-      <div class="pipeline-step">
-        <div class="step-dot step-repair">🔧</div>
-        <div class="step-name">Repair</div>
-        <div class="step-artifact">patch (×3 max)</div>
-      </div>
-      <div class="pipeline-arrow">→</div>
-      <div class="pipeline-step">
-        <div class="step-dot step-doc">📄</div>
-        <div class="step-name">Doc</div>
-        <div class="step-artifact">final-report.md</div>
-      </div>
+      @media (max-width: 640px) {
+        .nav-links {
+          display: none;
+        }
+        .hero-stats {
+          gap: 2rem;
+        }
+        .pipeline-arrow {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Work-in-progress banner -->
+    <div class="wip-banner">
+      🔨 &nbsp;<strong>Work in Progress</strong> — AgentForge v0.1 is an active alpha. Feedback
+      welcome on <a href="https://github.com/saiz123/AgentForge/issues">GitHub Issues</a>.
     </div>
-  </div>
-</section>
 
-<!-- Features -->
-<section id="features">
-  <div class="container">
-    <div class="section-tag">Features</div>
-    <h2>Built for people who pay<br/>for multiple AI subscriptions.</h2>
-    <p class="section-sub">AgentForge makes your existing subscriptions work together — not separately.</p>
-    <div class="features-grid">
-
-      <div class="feature-card">
-        <div class="feature-icon" style="background:rgba(124,58,237,0.15)">🎯</div>
-        <h3>Cross-Provider Routing</h3>
-        <p>Each agent role runs on the cheapest capable model across all your registered providers. Intake on Gemini Flash, Architecture on Claude Sonnet, Review on a different provider for a genuine second opinion.</p>
+    <!-- Nav -->
+    <nav>
+      <a class="nav-logo" href="#">
+        <img src="logo.svg" alt="AgentForge logo" />
+        <span>AgentForge</span>
+      </a>
+      <div class="nav-links">
+        <a href="#how-it-works">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#quickstart">Quick start</a>
+        <a href="https://github.com/saiz123/AgentForge/tree/main/docs" target="_blank">Docs</a>
+        <a class="btn-gh" href="https://github.com/saiz123/AgentForge" target="_blank">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.93.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"
+            />
+          </svg>
+          GitHub
+        </a>
       </div>
+    </nav>
 
-      <div class="feature-card">
-        <div class="feature-icon" style="background:rgba(16,185,129,0.15)">💰</div>
-        <h3>Token Optimization</h3>
-        <p>Context engine scores file relevance and sends only what's needed. Diff-only review. Compressed repair loops. Prompt cache layout for Anthropic and OpenAI. Budget limits at call, stage, and run level.</p>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">
+        ⚡ Open Source &nbsp;·&nbsp; Self-Hosted &nbsp;·&nbsp; MIT License
       </div>
-
-      <div class="feature-card">
-        <div class="feature-icon" style="background:rgba(59,130,246,0.15)">🔒</div>
-        <h3>Secure by Design</h3>
-        <p>API keys never touch config files or SQLite. Secret redaction on all log output. Sandboxed command runner with an allowlist. Path traversal prevention on all file operations.</p>
+      <img class="hero-logo" src="logo.svg" alt="AgentForge" />
+      <h1>Your AI Software Team.<br />Your API Keys. Your Rules.</h1>
+      <p>
+        AgentForge routes each agent role — Intake, Architect, Builder, Reviewer, Documentation — to
+        the cheapest capable model across all your AI subscriptions. Structured artifacts. No
+        free-form chat. Token-optimized.
+      </p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#quickstart">Get started</a>
+        <a class="btn-outline" href="https://github.com/saiz123/AgentForge" target="_blank"
+          >View on GitHub</a
+        >
       </div>
-
-      <div class="feature-card">
-        <div class="feature-icon" style="background:rgba(245,158,11,0.15)">🗄️</div>
-        <h3>Local Persistence</h3>
-        <p>Every run is tracked in a local SQLite database — provider, model, tokens, USD cost, duration — per stage. <code>agentforge report</code> shows a full cost breakdown.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon" style="background:rgba(6,182,212,0.15)">🌐</div>
-        <h3>Web Dashboard</h3>
-        <p>Next.js dashboard with run history, per-stage cost tables, and provider status. Served by a Hono API. <code>agentforge serve</code> starts it locally.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon" style="background:rgba(244,63,94,0.15)">🐳</div>
-        <h3>Docker Self-Hosting</h3>
-        <p>One <code>docker compose up</code> starts the API and web dashboard. CLI runs as a one-off container. Named volume persists your run history across restarts.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- Providers -->
-<section class="providers-section">
-  <div class="container">
-    <div class="section-tag">Providers</div>
-    <h2>Connect what you already have.</h2>
-    <p class="section-sub" style="margin: 0 auto 0.5rem">Your API keys. Your subscriptions. AgentForge routes tasks to the cheapest capable model automatically.</p>
-    <div class="providers-grid">
-      <div class="provider-pill"><div class="provider-dot" style="background:#7c3aed"></div>Anthropic Claude</div>
-      <div class="provider-pill"><div class="provider-dot" style="background:#10b981"></div>OpenAI / GPT</div>
-      <div class="provider-pill"><div class="provider-dot" style="background:#3b82f6"></div>Google Gemini</div>
-      <div class="provider-pill"><div class="provider-dot" style="background:#f59e0b"></div>OpenRouter</div>
-      <div class="provider-pill"><div class="provider-dot" style="background:#06b6d4"></div>Ollama (local)</div>
-      <div class="provider-pill"><div class="provider-dot" style="background:#64748b"></div>Any OpenAI-compatible</div>
-    </div>
-  </div>
-</section>
-
-<!-- Quick start -->
-<section class="quickstart-section" id="quickstart">
-  <div class="container">
-    <div class="section-tag">Quick start</div>
-    <h2>From zero to running<br/>in under 5 minutes.</h2>
-    <div class="quickstart-grid">
-      <div>
-        <div class="qs-step">
-          <div class="qs-num">1</div>
-          <h4>Clone and install</h4>
-          <p>Node.js 20+ and pnpm 9+ required.</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">6</div>
+          <div class="stat-label">Agent Roles</div>
         </div>
-        <div class="qs-step">
-          <div class="qs-num">2</div>
-          <h4>Add your API keys</h4>
-          <p>Copy <code>.env.example</code> to <code>.env</code> and fill in at least one provider key.</p>
+        <div class="stat">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">AI Providers</div>
         </div>
-        <div class="qs-step">
-          <div class="qs-num">3</div>
-          <h4>Initialize and build</h4>
-          <p>Run <code>agentforge init</code> then <code>agentforge providers add</code> to register a provider.</p>
+        <div class="stat">
+          <div class="stat-num">230</div>
+          <div class="stat-label">Tests Passing</div>
         </div>
-        <div class="qs-step">
-          <div class="qs-num">4</div>
-          <h4>Build something</h4>
-          <p>Give AgentForge a project idea and watch the pipeline run.</p>
+        <div class="stat">
+          <div class="stat-num">MIT</div>
+          <div class="stat-label">License</div>
         </div>
       </div>
-      <div>
-        <pre><span class="code-comment"># Clone and install</span>
+    </section>
+
+    <!-- How it works -->
+    <section class="pipeline-section" id="how-it-works">
+      <div class="container">
+        <div class="section-tag">Pipeline</div>
+        <h2>Structured artifacts.<br />Orchestrator-controlled.</h2>
+        <p class="section-sub">
+          Agents never chat freely. Each stage produces a JSON artifact that the next stage
+          consumes. The orchestrator controls every handoff.
+        </p>
+        <div class="pipeline-flow">
+          <div class="pipeline-step">
+            <div class="step-dot step-intake">📥</div>
+            <div class="step-name">Intake</div>
+            <div class="step-artifact">requirements.json</div>
+          </div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="step-dot step-arch">🏗️</div>
+            <div class="step-name">Architect</div>
+            <div class="step-artifact">architecture.json</div>
+          </div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="step-dot step-tasks">📋</div>
+            <div class="step-name">Tasks</div>
+            <div class="step-artifact">task-list.json</div>
+          </div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="step-dot step-build">⚒️</div>
+            <div class="step-name">Builder</div>
+            <div class="step-artifact">code-diff</div>
+          </div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="step-dot step-test">🧪</div>
+            <div class="step-name">Test</div>
+            <div class="step-artifact">test-result.json</div>
+          </div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="step-dot step-review">🔍</div>
+            <div class="step-name">Reviewer</div>
+            <div class="step-artifact">review.json</div>
+          </div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="step-dot step-repair">🔧</div>
+            <div class="step-name">Repair</div>
+            <div class="step-artifact">patch (×3 max)</div>
+          </div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="step-dot step-doc">📄</div>
+            <div class="step-name">Doc</div>
+            <div class="step-artifact">final-report.md</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features">
+      <div class="container">
+        <div class="section-tag">Features</div>
+        <h2>Built for people who pay<br />for multiple AI subscriptions.</h2>
+        <p class="section-sub">
+          AgentForge makes your existing subscriptions work together — not separately.
+        </p>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(124, 58, 237, 0.15)">🎯</div>
+            <h3>Cross-Provider Routing</h3>
+            <p>
+              Each agent role runs on the cheapest capable model across all your registered
+              providers. Intake on Gemini Flash, Architecture on Claude Sonnet, Review on a
+              different provider for a genuine second opinion.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(16, 185, 129, 0.15)">💰</div>
+            <h3>Token Optimization</h3>
+            <p>
+              Context engine scores file relevance and sends only what's needed. Diff-only review.
+              Compressed repair loops. Prompt cache layout for Anthropic and OpenAI. Budget limits
+              at call, stage, and run level.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(59, 130, 246, 0.15)">🔒</div>
+            <h3>Secure by Design</h3>
+            <p>
+              API keys never touch config files or SQLite. Secret redaction on all log output.
+              Sandboxed command runner with an allowlist. Path traversal prevention on all file
+              operations.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(245, 158, 11, 0.15)">🗄️</div>
+            <h3>Local Persistence</h3>
+            <p>
+              Every run is tracked in a local SQLite database — provider, model, tokens, USD cost,
+              duration — per stage. <code>agentforge report</code> shows a full cost breakdown.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(6, 182, 212, 0.15)">🌐</div>
+            <h3>Web Dashboard</h3>
+            <p>
+              Next.js dashboard with run history, per-stage cost tables, and provider status. Served
+              by a Hono API. <code>agentforge serve</code> starts it locally.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(244, 63, 94, 0.15)">🐳</div>
+            <h3>Docker Self-Hosting</h3>
+            <p>
+              One <code>docker compose up</code> starts the API and web dashboard. CLI runs as a
+              one-off container. Named volume persists your run history across restarts.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Providers -->
+    <section class="providers-section">
+      <div class="container">
+        <div class="section-tag">Providers</div>
+        <h2>Connect what you already have.</h2>
+        <p class="section-sub" style="margin: 0 auto 0.5rem">
+          Your API keys. Your subscriptions. AgentForge routes tasks to the cheapest capable model
+          automatically.
+        </p>
+        <div class="providers-grid">
+          <div class="provider-pill">
+            <div class="provider-dot" style="background: #7c3aed"></div>
+            Anthropic Claude
+          </div>
+          <div class="provider-pill">
+            <div class="provider-dot" style="background: #10b981"></div>
+            OpenAI / GPT
+          </div>
+          <div class="provider-pill">
+            <div class="provider-dot" style="background: #3b82f6"></div>
+            Google Gemini
+          </div>
+          <div class="provider-pill">
+            <div class="provider-dot" style="background: #f59e0b"></div>
+            OpenRouter
+          </div>
+          <div class="provider-pill">
+            <div class="provider-dot" style="background: #06b6d4"></div>
+            Ollama (local)
+          </div>
+          <div class="provider-pill">
+            <div class="provider-dot" style="background: #64748b"></div>
+            Any OpenAI-compatible
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick start -->
+    <section class="quickstart-section" id="quickstart">
+      <div class="container">
+        <div class="section-tag">Quick start</div>
+        <h2>From zero to running<br />in under 5 minutes.</h2>
+        <div class="quickstart-grid">
+          <div>
+            <div class="qs-step">
+              <div class="qs-num">1</div>
+              <h4>Clone and install</h4>
+              <p>Node.js 20+ and pnpm 9+ required.</p>
+            </div>
+            <div class="qs-step">
+              <div class="qs-num">2</div>
+              <h4>Add your API keys</h4>
+              <p>
+                Copy <code>.env.example</code> to <code>.env</code> and fill in at least one
+                provider key.
+              </p>
+            </div>
+            <div class="qs-step">
+              <div class="qs-num">3</div>
+              <h4>Initialize and build</h4>
+              <p>
+                Run <code>agentforge init</code> then <code>agentforge providers add</code> to
+                register a provider.
+              </p>
+            </div>
+            <div class="qs-step">
+              <div class="qs-num">4</div>
+              <h4>Build something</h4>
+              <p>Give AgentForge a project idea and watch the pipeline run.</p>
+            </div>
+          </div>
+          <div>
+            <pre><span class="code-comment"># Clone and install</span>
 <span class="code-cmd">git</span> clone https://github.com/saiz123/AgentForge
 <span class="code-cmd">cd</span> AgentForge
 <span class="code-cmd">pnpm</span> install && pnpm build
@@ -493,34 +869,44 @@
 
 <span class="code-comment"># Launch web dashboard</span>
 <span class="code-cmd">node</span> apps/cli/dist/bin/cli.js serve</pre>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- CTA -->
-<section class="cta-section">
-  <div class="container">
-    <div class="section-tag">Open Source</div>
-    <h2>Built in public.<br/>MIT licensed.</h2>
-    <p>Star the repo, open an issue, submit a PR. All contributions welcome.</p>
-    <div class="cta-actions">
-      <a class="btn-primary" href="https://github.com/saiz123/AgentForge" target="_blank">⭐ Star on GitHub</a>
-      <a class="btn-outline" href="https://github.com/saiz123/AgentForge/issues" target="_blank">Open an Issue</a>
-    </div>
-  </div>
-</section>
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="section-tag">Open Source</div>
+        <h2>Built in public.<br />MIT licensed.</h2>
+        <p>Star the repo, open an issue, submit a PR. All contributions welcome.</p>
+        <div class="cta-actions">
+          <a class="btn-primary" href="https://github.com/saiz123/AgentForge" target="_blank"
+            >⭐ Star on GitHub</a
+          >
+          <a class="btn-outline" href="https://github.com/saiz123/AgentForge/issues" target="_blank"
+            >Open an Issue</a
+          >
+        </div>
+      </div>
+    </section>
 
-<!-- Footer -->
-<footer>
-  <p>
-    <strong>AgentForge</strong> &nbsp;·&nbsp;
-    <a href="https://github.com/saiz123/AgentForge" target="_blank">GitHub</a> &nbsp;·&nbsp;
-    <a href="https://github.com/saiz123/AgentForge/blob/main/LICENSE" target="_blank">MIT License</a> &nbsp;·&nbsp;
-    <a href="https://github.com/saiz123/AgentForge/tree/main/docs" target="_blank">Documentation</a>
-  </p>
-  <p style="margin-top:0.5rem; color:#334155">Work in progress · Not production-ready · Feedback appreciated</p>
-</footer>
-
-</body>
+    <!-- Footer -->
+    <footer>
+      <p>
+        <strong>AgentForge</strong> &nbsp;·&nbsp;
+        <a href="https://github.com/saiz123/AgentForge" target="_blank">GitHub</a> &nbsp;·&nbsp;
+        <a href="https://github.com/saiz123/AgentForge/blob/main/LICENSE" target="_blank"
+          >MIT License</a
+        >
+        &nbsp;·&nbsp;
+        <a href="https://github.com/saiz123/AgentForge/tree/main/docs" target="_blank"
+          >Documentation</a
+        >
+      </p>
+      <p style="margin-top: 0.5rem; color: #334155">
+        Work in progress · Not production-ready · Feedback appreciated
+      </p>
+    </footer>
+  </body>
 </html>

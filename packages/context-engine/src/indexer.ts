@@ -14,7 +14,24 @@ export function buildFileIndex(files: FileEntry[]): FileIndex {
 }
 
 const SKIP_PATHS = ['node_modules/', 'dist/', '.git/', '.agentforge/', 'coverage/'];
-const SKIP_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.woff', '.woff2', '.ttf', '.eot', '.mp4', '.mp3', '.zip', '.tar', '.gz', '.lock'];
+const SKIP_EXTENSIONS = [
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.gif',
+  '.svg',
+  '.ico',
+  '.woff',
+  '.woff2',
+  '.ttf',
+  '.eot',
+  '.mp4',
+  '.mp3',
+  '.zip',
+  '.tar',
+  '.gz',
+  '.lock',
+];
 const MAX_FILE_BYTES = 500 * 1024; // 500KB
 
 export function shouldSkip(file: FileEntry): boolean {

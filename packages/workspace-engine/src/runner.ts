@@ -37,7 +37,11 @@ export class CommandRunner {
     } catch (err: unknown) {
       exitCode = 1;
       if (err && typeof err === 'object') {
-        const spawnErr = err as { stdout?: Buffer | string; stderr?: Buffer | string; status?: number };
+        const spawnErr = err as {
+          stdout?: Buffer | string;
+          stderr?: Buffer | string;
+          status?: number;
+        };
         stdout = spawnErr.stdout?.toString() ?? '';
         stderr = spawnErr.stderr?.toString() ?? '';
         exitCode = spawnErr.status ?? 1;

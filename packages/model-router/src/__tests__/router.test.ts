@@ -41,7 +41,7 @@ const cheapModel: ModelInfo = {
   provider: 'gemini',
   contextWindow: 1_000_000,
   inputCostPer1M: 0.075,
-  outputCostPer1M: 0.30,
+  outputCostPer1M: 0.3,
   capabilities: ['code', 'json', 'fast'],
   maxOutputTokens: 8192,
 };
@@ -50,8 +50,8 @@ const strongModel: ModelInfo = {
   id: 'claude-sonnet-4-6',
   provider: 'anthropic',
   contextWindow: 200_000,
-  inputCostPer1M: 3.00,
-  outputCostPer1M: 15.00,
+  inputCostPer1M: 3.0,
+  outputCostPer1M: 15.0,
   capabilities: ['code', 'json', 'reasoning'],
   maxOutputTokens: 64000,
 };
@@ -60,8 +60,8 @@ const openaiModel: ModelInfo = {
   id: 'gpt-4o',
   provider: 'openai',
   contextWindow: 128_000,
-  inputCostPer1M: 2.50,
-  outputCostPer1M: 10.00,
+  inputCostPer1M: 2.5,
+  outputCostPer1M: 10.0,
   capabilities: ['code', 'json', 'reasoning'],
   maxOutputTokens: 16384,
 };
@@ -79,7 +79,7 @@ describe('ModelRouter', () => {
     it('routes intake task to cheap model when both cheap and strong are available', async () => {
       const registry = makeRegistry(
         new TestAdapter('gemini', [cheapModel]),
-        new TestAdapter('anthropic', [strongModel]),
+        new TestAdapter('anthropic', [strongModel])
       );
       const router = new ModelRouter(registry);
       const decision = await router.route({
@@ -97,7 +97,7 @@ describe('ModelRouter', () => {
       // strong model gets higher tier bonus for 'strong' task
       const registry = makeRegistry(
         new TestAdapter('gemini', [cheapModel]),
-        new TestAdapter('anthropic', [strongModel]),
+        new TestAdapter('anthropic', [strongModel])
       );
       const router = new ModelRouter(registry);
       const decision = await router.route({
@@ -115,7 +115,7 @@ describe('ModelRouter', () => {
     it('excludes models from preferDifferentProviderFrom', async () => {
       const registry = makeRegistry(
         new TestAdapter('gemini', [cheapModel]),
-        new TestAdapter('anthropic', [strongModel]),
+        new TestAdapter('anthropic', [strongModel])
       );
       const router = new ModelRouter(registry);
       const decision = await router.route({
@@ -135,7 +135,7 @@ describe('ModelRouter', () => {
       const registry = makeRegistry(
         new TestAdapter('gemini', [cheapModel]),
         new TestAdapter('openai', [openaiModel]),
-        new TestAdapter('anthropic', [strongModel]),
+        new TestAdapter('anthropic', [strongModel])
       );
       const router = new ModelRouter(registry);
       const decision = await router.route({
@@ -157,7 +157,7 @@ describe('ModelRouter', () => {
       };
       const registry = makeRegistry(
         new TestAdapter('gemini', [cheapModel]),
-        new TestAdapter('openai', [openaiModelNoFast]),
+        new TestAdapter('openai', [openaiModelNoFast])
       );
       const router = new ModelRouter(registry);
       const decision = await router.route({
@@ -180,7 +180,7 @@ describe('ModelRouter', () => {
       const registry = makeRegistry(
         new TestAdapter('gemini', [cheapModel]),
         new TestAdapter('openai', [openaiModelWithFast]),
-        new TestAdapter('anthropic', [strongModel]),
+        new TestAdapter('anthropic', [strongModel])
       );
       const router = new ModelRouter(registry);
       const decision = await router.route({
@@ -199,7 +199,7 @@ describe('ModelRouter', () => {
       const registry = makeRegistry(
         new TestAdapter('gemini', [cheapModel]),
         new TestAdapter('openai', [openaiModel]),
-        new TestAdapter('anthropic', [strongModel]),
+        new TestAdapter('anthropic', [strongModel])
       );
       const router = new ModelRouter(registry);
       const decision = await router.route({
@@ -218,7 +218,7 @@ describe('ModelRouter', () => {
     it('throws NoCapableModelError when all providers are unavailable', async () => {
       const registry = makeRegistry(
         new TestAdapter('gemini', [cheapModel], false),
-        new TestAdapter('anthropic', [strongModel], false),
+        new TestAdapter('anthropic', [strongModel], false)
       );
       const router = new ModelRouter(registry);
       await expect(
@@ -227,7 +227,7 @@ describe('ModelRouter', () => {
           estimatedInputTokens: 1000,
           requiredCapabilities: ['json', 'fast'],
           budgetRemainingUsd: 100,
-        }),
+        })
       ).rejects.toThrow(NoCapableModelError);
     });
 
@@ -244,7 +244,7 @@ describe('ModelRouter', () => {
           estimatedInputTokens: 1000,
           requiredCapabilities: ['vision'],
           budgetRemainingUsd: 100,
-        }),
+        })
       ).rejects.toThrow(NoCapableModelError);
     });
   });
@@ -279,7 +279,7 @@ describe('ModelRouter', () => {
       };
       const registry = makeRegistry(
         new TestAdapter('gemini', [smallCtxModel]),
-        new TestAdapter('anthropic', [largeCtxModel]),
+        new TestAdapter('anthropic', [largeCtxModel])
       );
       const router = new ModelRouter(registry);
       const decision = await router.route({
@@ -305,7 +305,7 @@ describe('ModelRouter', () => {
           estimatedInputTokens: 5000,
           requiredCapabilities: [],
           budgetRemainingUsd: 100,
-        }),
+        })
       ).rejects.toThrow(NoCapableModelError);
     });
   });

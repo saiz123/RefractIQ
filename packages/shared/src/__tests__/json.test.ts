@@ -31,7 +31,7 @@ describe('safeParseAgentJson', () => {
   });
 
   it('passes when all required keys are present', () => {
-    const result = safeParseAgentJson<{x: number; y: string}>('{"x": 1, "y": "ok"}', ['x', 'y']);
+    const result = safeParseAgentJson<{ x: number; y: string }>('{"x": 1, "y": "ok"}', ['x', 'y']);
     expect(result.x).toBe(1);
   });
 });

@@ -14,14 +14,14 @@ export const DEFAULT_BUDGET_CONFIG: BudgetConfig = {
   maxCallInputTokens: 32_000,
   perStageUsd: {
     intake: 0.05,
-    architect: 0.10,
-    build: 0.20,
-    review: 0.10,
-    repair: 0.20,
+    architect: 0.1,
+    build: 0.2,
+    review: 0.1,
+    repair: 0.2,
     doc: 0.05,
     summarize: 0.02,
   },
-  runLimitUsd: 0.50,
+  runLimitUsd: 0.5,
 };
 
 export class BudgetEnforcer {

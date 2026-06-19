@@ -34,13 +34,9 @@ export class CacheAwareMessageBuilder {
    * Variable sections become user message content.
    */
   build(systemPrompt: string): { systemPrompt: string; messages: Message[] } {
-    const stableParts = this.sections
-      .filter((s) => !s.isVariable)
-      .map((s) => s.content);
+    const stableParts = this.sections.filter((s) => !s.isVariable).map((s) => s.content);
 
-    const variableParts = this.sections
-      .filter((s) => s.isVariable)
-      .map((s) => s.content);
+    const variableParts = this.sections.filter((s) => s.isVariable).map((s) => s.content);
 
     const fullSystem = [systemPrompt, ...stableParts].filter(Boolean).join('\n\n---\n\n');
 
@@ -54,8 +50,6 @@ export class CacheAwareMessageBuilder {
 
   /** Estimate total token count of the built output */
   estimateTokens(): number {
-    return Math.ceil(
-      this.sections.reduce((sum, s) => sum + s.content.length, 0) / 4
-    );
+    return Math.ceil(this.sections.reduce((sum, s) => sum + s.content.length, 0) / 4);
   }
 }

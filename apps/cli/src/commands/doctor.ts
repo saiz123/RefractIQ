@@ -20,7 +20,9 @@ export const doctorCommand = new Command('doctor')
     }
 
     if (config.providers.length === 0) {
-      console.log(chalk.yellow('No providers configured. Run "agentforge providers add" to add one.'));
+      console.log(
+        chalk.yellow('No providers configured. Run "agentforge providers add" to add one.')
+      );
       return;
     }
 
@@ -81,7 +83,9 @@ export const doctorCommand = new Command('doctor')
 
     const anyFailed = rows.some((r) => r.status.includes('unavailable'));
     if (anyFailed) {
-      console.log(chalk.yellow('\nTip: set the required API key env vars and retry. See .env.example'));
+      console.log(
+        chalk.yellow('\nTip: set the required API key env vars and retry. See .env.example')
+      );
       process.exit(1);
     } else {
       console.log(chalk.green('\nAll providers healthy.'));

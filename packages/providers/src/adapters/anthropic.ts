@@ -1,4 +1,10 @@
-import type { ModelInfo, ChatRequest, ChatResponse, Message, ProviderConfig } from '@agentforge/shared';
+import type {
+  ModelInfo,
+  ChatRequest,
+  ChatResponse,
+  Message,
+  ProviderConfig,
+} from '@agentforge/shared';
 import { ProviderError } from '@agentforge/shared';
 import type { ProviderAdapter } from '../types.js';
 import { loadAnthropicModels } from '../modelLoader.js';
@@ -37,8 +43,7 @@ export class AnthropicAdapter implements ProviderAdapter {
 
     // Extract system prompt from messages or use provided one
     const systemMsg =
-      request.systemPrompt ??
-      request.messages.find((m) => m.role === 'system')?.content;
+      request.systemPrompt ?? request.messages.find((m) => m.role === 'system')?.content;
 
     const response = await client.messages.create({
       model: request.model,
@@ -50,8 +55,7 @@ export class AnthropicAdapter implements ProviderAdapter {
     });
     const latencyMs = Date.now() - startMs;
 
-    const content =
-      response.content[0]?.type === 'text' ? response.content[0].text : '';
+    const content = response.content[0]?.type === 'text' ? response.content[0].text : '';
 
     return {
       content,

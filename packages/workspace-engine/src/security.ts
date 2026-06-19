@@ -20,21 +20,35 @@ export function safePath(rootDir: string, userPath: string): string {
  * Only commands whose first token (before any space) appear here are permitted.
  */
 export const DEFAULT_ALLOWED_COMMANDS = new Set([
-  'npm', 'npx', 'pnpm', 'node', 'python', 'python3',
-  'pytest', 'go', 'cargo', 'make', 'vitest', 'jest',
-  'tsc', 'tsx', 'ts-node', 'deno', 'bun',
+  'npm',
+  'npx',
+  'pnpm',
+  'node',
+  'python',
+  'python3',
+  'pytest',
+  'go',
+  'cargo',
+  'make',
+  'vitest',
+  'jest',
+  'tsc',
+  'tsx',
+  'ts-node',
+  'deno',
+  'bun',
 ]);
 
 /** Shell metacharacters that are always blocked regardless of allowlist */
 const BLOCKED_PATTERNS = [
-  /[;&|`$<>]/,          // shell metacharacters
-  /\.\.[/\\]/,          // path traversal
-  /rm\s+-rf/i,          // destructive delete
-  /curl\s/i,            // network
-  /wget\s/i,            // network
-  /powershell/i,        // shell escalation
-  /cmd\.exe/i,          // shell escalation
-  /bash\s+-c/i,         // shell escalation
+  /[;&|`$<>]/, // shell metacharacters
+  /\.\.[/\\]/, // path traversal
+  /rm\s+-rf/i, // destructive delete
+  /curl\s/i, // network
+  /wget\s/i, // network
+  /powershell/i, // shell escalation
+  /cmd\.exe/i, // shell escalation
+  /bash\s+-c/i, // shell escalation
 ];
 
 /**
@@ -43,7 +57,7 @@ const BLOCKED_PATTERNS = [
  */
 export function validateCommand(
   command: string,
-  allowedCommands: Set<string> = DEFAULT_ALLOWED_COMMANDS,
+  allowedCommands: Set<string> = DEFAULT_ALLOWED_COMMANDS
 ): void {
   // Check for blocked patterns first (before any allowlist check)
   for (const pattern of BLOCKED_PATTERNS) {
@@ -61,16 +75,35 @@ export function validateCommand(
 }
 
 const SAFE_ENV_KEYS = new Set([
-  'PATH', 'HOME', 'TMPDIR', 'TEMP', 'TMP', 'NODE_ENV',
-  'LANG', 'LC_ALL', 'LC_CTYPE', 'PWD', 'SHELL',
-  'USERPROFILE', 'SYSTEMROOT', 'WINDIR', // Windows
-  'TERM', 'COLORTERM',
+  'PATH',
+  'HOME',
+  'TMPDIR',
+  'TEMP',
+  'TMP',
+  'NODE_ENV',
+  'LANG',
+  'LC_ALL',
+  'LC_CTYPE',
+  'PWD',
+  'SHELL',
+  'USERPROFILE',
+  'SYSTEMROOT',
+  'WINDIR', // Windows
+  'TERM',
+  'COLORTERM',
 ]);
 
 const SENSITIVE_KEY_PATTERNS = [
-  /KEY$/i, /TOKEN$/i, /SECRET$/i, /PASSWORD$/i,
-  /PASSWD$/i, /AUTH$/i, /CREDENTIAL$/i, /BEARER$/i,
-  /APIKEY/i, /API_KEY/i,
+  /KEY$/i,
+  /TOKEN$/i,
+  /SECRET$/i,
+  /PASSWORD$/i,
+  /PASSWD$/i,
+  /AUTH$/i,
+  /CREDENTIAL$/i,
+  /BEARER$/i,
+  /APIKEY/i,
+  /API_KEY/i,
 ];
 
 /**
@@ -78,9 +111,7 @@ const SENSITIVE_KEY_PATTERNS = [
  * Strips API keys, tokens, and other secrets from process.env.
  * Only passes through a safe allowlist plus explicitly provided extras.
  */
-export function createSanitizedEnv(
-  extra?: Record<string, string>,
-): Record<string, string> {
+export function createSanitizedEnv(extra?: Record<string, string>): Record<string, string> {
   const result: Record<string, string> = {};
 
   for (const [key, value] of Object.entries(process.env)) {

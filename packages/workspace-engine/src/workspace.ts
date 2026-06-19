@@ -1,5 +1,11 @@
 import {
-  readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync, unlinkSync,
+  readFileSync,
+  writeFileSync,
+  mkdirSync,
+  existsSync,
+  readdirSync,
+  statSync,
+  unlinkSync,
 } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { safePath } from './security.js';
@@ -58,13 +64,20 @@ export class Workspace {
    * Recursively list all files in the workspace as WorkspaceFile objects.
    * Skips node_modules, dist, .git, .agentforge by default.
    */
-  listFiles(skipDirs = ['node_modules', 'dist', '.git', '.agentforge', 'coverage']): WorkspaceFile[] {
+  listFiles(
+    skipDirs = ['node_modules', 'dist', '.git', '.agentforge', 'coverage']
+  ): WorkspaceFile[] {
     const entries: WorkspaceFile[] = [];
     this.walkDir(this.rootDir, this.rootDir, skipDirs, entries);
     return entries;
   }
 
-  private walkDir(rootDir: string, currentDir: string, skipDirs: string[], entries: WorkspaceFile[]): void {
+  private walkDir(
+    rootDir: string,
+    currentDir: string,
+    skipDirs: string[],
+    entries: WorkspaceFile[]
+  ): void {
     let items: string[];
     try {
       items = readdirSync(currentDir);

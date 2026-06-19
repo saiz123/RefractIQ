@@ -15,7 +15,9 @@ export default async function RunDetailPage({ params }: { params: Promise<{ id: 
   return (
     <div>
       <div className="mb-6">
-        <Link href="/" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">← Back to runs</Link>
+        <Link href="/" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
+          ← Back to runs
+        </Link>
       </div>
 
       <div className="mb-8">
@@ -52,25 +54,40 @@ export default async function RunDetailPage({ params }: { params: Promise<{ id: 
           </thead>
           <tbody>
             {modelStages.map((stage) => {
-              const label = stage.iteration > 0 ? `${stage.stage}[${stage.iteration}]` : stage.stage;
+              const label =
+                stage.iteration > 0 ? `${stage.stage}[${stage.iteration}]` : stage.stage;
               return (
                 <tr key={stage.id} className="border-b border-gray-800 hover:bg-gray-900/50">
                   <td className="px-4 py-3 font-mono text-blue-300">{label}</td>
                   <td className="px-4 py-3 text-gray-300">{stage.provider}</td>
                   <td className="px-4 py-3 text-gray-400 text-xs font-mono">{stage.model}</td>
-                  <td className="px-4 py-3 text-right font-mono text-gray-300">{stage.inputTokens.toLocaleString()}</td>
-                  <td className="px-4 py-3 text-right font-mono text-gray-300">{stage.outputTokens.toLocaleString()}</td>
-                  <td className="px-4 py-3 text-right font-mono text-green-400">${stage.costUsd.toFixed(4)}</td>
+                  <td className="px-4 py-3 text-right font-mono text-gray-300">
+                    {stage.inputTokens.toLocaleString()}
+                  </td>
+                  <td className="px-4 py-3 text-right font-mono text-gray-300">
+                    {stage.outputTokens.toLocaleString()}
+                  </td>
+                  <td className="px-4 py-3 text-right font-mono text-green-400">
+                    ${stage.costUsd.toFixed(4)}
+                  </td>
                 </tr>
               );
             })}
           </tbody>
           <tfoot>
             <tr className="bg-gray-900 border-t border-gray-700">
-              <td colSpan={3} className="px-4 py-3 font-semibold text-gray-300">Total</td>
-              <td className="px-4 py-3 text-right font-mono font-semibold text-gray-200">{run.totalInputTokens.toLocaleString()}</td>
-              <td className="px-4 py-3 text-right font-mono font-semibold text-gray-200">{run.totalOutputTokens.toLocaleString()}</td>
-              <td className="px-4 py-3 text-right font-mono font-semibold text-green-300">${run.totalCostUsd.toFixed(4)}</td>
+              <td colSpan={3} className="px-4 py-3 font-semibold text-gray-300">
+                Total
+              </td>
+              <td className="px-4 py-3 text-right font-mono font-semibold text-gray-200">
+                {run.totalInputTokens.toLocaleString()}
+              </td>
+              <td className="px-4 py-3 text-right font-mono font-semibold text-gray-200">
+                {run.totalOutputTokens.toLocaleString()}
+              </td>
+              <td className="px-4 py-3 text-right font-mono font-semibold text-green-300">
+                ${run.totalCostUsd.toFixed(4)}
+              </td>
             </tr>
           </tfoot>
         </table>

@@ -15,13 +15,15 @@ export function chunkFile(file: FileEntry, maxTokens: number): FileChunkResult[]
   const totalTokens = estimateTokens(file.content);
 
   if (totalTokens <= maxTokens) {
-    return [{
-      path: file.path,
-      content: file.content,
-      startLine: 1,
-      endLine: file.content.split('\n').length,
-      tokenEstimate: totalTokens,
-    }];
+    return [
+      {
+        path: file.path,
+        content: file.content,
+        startLine: 1,
+        endLine: file.content.split('\n').length,
+        tokenEstimate: totalTokens,
+      },
+    ];
   }
 
   const lines = file.content.split('\n');
@@ -67,13 +69,17 @@ export function chunkFile(file: FileEntry, maxTokens: number): FileChunkResult[]
     currentStart = splitPoint;
   }
 
-  return chunks.length > 0 ? chunks : [{
-    path: file.path,
-    content: file.content.slice(0, maxTokens * 4) + '\n// ... (truncated)',
-    startLine: 1,
-    endLine: lines.length,
-    tokenEstimate: maxTokens,
-  }];
+  return chunks.length > 0
+    ? chunks
+    : [
+        {
+          path: file.path,
+          content: file.content.slice(0, maxTokens * 4) + '\n// ... (truncated)',
+          startLine: 1,
+          endLine: lines.length,
+          tokenEstimate: maxTokens,
+        },
+      ];
 }
 
 /**
@@ -84,7 +90,8 @@ export function chunkFile(file: FileEntry, maxTokens: number): FileChunkResult[]
  */
 function findSplitPoints(lines: string[]): number[] {
   const points: number[] = [];
-  const DECLARATION_PATTERN = /^(export\s+)?(async\s+)?(function|class|const|let|var|interface|type|enum|def |func |pub fn )/;
+  const DECLARATION_PATTERN =
+    /^(export\s+)?(async\s+)?(function|class|const|let|var|interface|type|enum|def |func |pub fn )/;
 
   for (let i = 1; i < lines.length; i++) {
     const prevLine = lines[i - 1]?.trim();

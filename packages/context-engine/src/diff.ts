@@ -25,9 +25,7 @@ export function extractFailingSummary(testOutput: string): string {
 
   for (const line of lines) {
     // Keep lines that indicate failures or errors
-    if (
-      /FAIL|FAILED|Error:|error:|✗|×|AssertionError|Expected|Received|at\s+\w/.test(line)
-    ) {
+    if (/FAIL|FAILED|Error:|error:|✗|×|AssertionError|Expected|Received|at\s+\w/.test(line)) {
       relevant.push(line);
     }
   }

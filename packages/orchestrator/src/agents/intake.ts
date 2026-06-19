@@ -10,6 +10,11 @@ export const intakeAgent: AgentCall<{ userPrompt: string }, RequirementsArtifact
     return `<user_input>${userPrompt}</user_input>\n\nProduce the requirements JSON.`;
   },
   parseResponse(raw) {
-    return safeParseAgentJson<RequirementsArtifact>(raw, ['clarifiedGoal', 'targetLanguage', 'techStack', 'suggestedTestCommand']);
+    return safeParseAgentJson<RequirementsArtifact>(raw, [
+      'clarifiedGoal',
+      'targetLanguage',
+      'techStack',
+      'suggestedTestCommand',
+    ]);
   },
 };

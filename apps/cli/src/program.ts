@@ -9,10 +9,7 @@ import { serveCommand } from './commands/serve.js';
 
 export const program = new Command();
 
-program
-  .name('agentforge')
-  .version('0.1.0')
-  .description('Open-source self-hosted AI software team');
+program.name('agentforge').version('0.1.0').description('Open-source self-hosted AI software team');
 
 program.addCommand(initCommand);
 program.addCommand(doctorCommand);

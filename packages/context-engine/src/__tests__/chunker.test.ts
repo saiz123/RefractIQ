@@ -22,8 +22,7 @@ describe('chunkFile', () => {
 
   it('large file returns multiple chunks', () => {
     // Create a file with clearly separated function declarations
-    const fn = (name: string) =>
-      `function ${name}() {\n  return '${name.repeat(10)}';\n}\n`;
+    const fn = (name: string) => `function ${name}() {\n  return '${name.repeat(10)}';\n}\n`;
     // Each function will be ~100 chars, so ~25 tokens. maxTokens=30 should split.
     const parts = [fn('alpha'), fn('beta'), fn('gamma'), fn('delta')];
     const content = parts[0] + '\n' + parts[1] + '\n' + parts[2] + '\n' + parts[3];

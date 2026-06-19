@@ -1,5 +1,10 @@
 import type { AgentCall } from './types.js';
-import type { RequirementsArtifact, ArchitectureArtifact, TestArtifact, DocArtifact } from '@agentforge/shared';
+import type {
+  RequirementsArtifact,
+  ArchitectureArtifact,
+  TestArtifact,
+  DocArtifact,
+} from '@agentforge/shared';
 import { safeParseAgentJson } from '@agentforge/shared';
 import { DOC_SYSTEM } from './prompts.js';
 

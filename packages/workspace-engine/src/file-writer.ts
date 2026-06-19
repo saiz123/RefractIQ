@@ -29,7 +29,9 @@ export class WorkspaceFileWriter implements FileWriter {
     this.git.commit(message);
   }
 
-  async listFiles(): Promise<Array<{ path: string; content: string; sizeBytes: number; lastModifiedMs?: number }>> {
+  async listFiles(): Promise<
+    Array<{ path: string; content: string; sizeBytes: number; lastModifiedMs?: number }>
+  > {
     return this.workspace.listFiles();
   }
 }

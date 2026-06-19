@@ -35,12 +35,7 @@ describe('compressLog', () => {
   });
 
   it('deduplicates identical consecutive lines', () => {
-    const lines = [
-      'Error: repeated',
-      'Error: repeated',
-      'Error: repeated',
-      'Different line',
-    ];
+    const lines = ['Error: repeated', 'Error: repeated', 'Error: repeated', 'Different line'];
     const result = compressLog(lines.join('\n'));
     const occurrences = (result.match(/Error: repeated/g) ?? []).length;
     expect(occurrences).toBe(1);

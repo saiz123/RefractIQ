@@ -11,9 +11,7 @@ export const serveCommand = new Command('serve')
   .option('--dir <dir>', 'Path to .agentforge directory (defaults to current directory)')
   .action((options) => {
     const cwd = process.cwd();
-    const agentForgeDir = options.dir
-      ? resolve(options.dir)
-      : getAgentForgeDir(cwd);
+    const agentForgeDir = options.dir ? resolve(options.dir) : getAgentForgeDir(cwd);
 
     if (!existsSync(agentForgeDir)) {
       console.error(chalk.red(`✗ No .agentforge directory found. Run "agentforge init" first.`));
@@ -23,7 +21,14 @@ export const serveCommand = new Command('serve')
     // Find the API server entry point
     const apiEntry = join(
       new URL(import.meta.url).pathname.replace(/\/dist\/commands\/serve\.js$/, ''),
-      '..', '..', '..', '..', 'services', 'api', 'dist', 'index.js'
+      '..',
+      '..',
+      '..',
+      '..',
+      'services',
+      'api',
+      'dist',
+      'index.js'
     );
 
     const resolvedApiEntry = resolve(apiEntry);

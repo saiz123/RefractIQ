@@ -30,7 +30,13 @@ const ARCHITECTURE_JSON = JSON.stringify({
 });
 
 const BUILD_JSON = JSON.stringify({
-  files: [{ path: 'src/index.ts', content: '#!/usr/bin/env node\nconsole.log("hello")', action: 'create' }],
+  files: [
+    {
+      path: 'src/index.ts',
+      content: '#!/usr/bin/env node\nconsole.log("hello")',
+      action: 'create',
+    },
+  ],
   explanation: 'Created entry point',
   assumptions: [],
 });
@@ -52,8 +58,8 @@ const TEST_MODEL: ModelInfo = {
   id: 'mock-model',
   provider: 'mock',
   contextWindow: 200_000,
-  inputCostPer1M: 0.10,
-  outputCostPer1M: 0.30,
+  inputCostPer1M: 0.1,
+  outputCostPer1M: 0.3,
   capabilities: ['code', 'json', 'fast', 'reasoning'],
   maxOutputTokens: 8192,
 };
@@ -73,12 +79,25 @@ class SequentialMockAdapter implements ProviderAdapter {
   async chat(_req: ChatRequest): Promise<ChatResponse> {
     const content = this.responses[this.index % this.responses.length] ?? '{}';
     this.index++;
-    return { content, inputTokens: 100, outputTokens: 50, model: TEST_MODEL.id, provider: this.id, latencyMs: 5 };
+    return {
+      content,
+      inputTokens: 100,
+      outputTokens: 50,
+      model: TEST_MODEL.id,
+      provider: this.id,
+      latencyMs: 5,
+    };
   }
 
-  async countTokens(_msgs: Message[]): Promise<number> { return 100; }
-  async isAvailable(): Promise<boolean> { return true; }
-  async listModels(): Promise<ModelInfo[]> { return [TEST_MODEL]; }
+  async countTokens(_msgs: Message[]): Promise<number> {
+    return 100;
+  }
+  async isAvailable(): Promise<boolean> {
+    return true;
+  }
+  async listModels(): Promise<ModelInfo[]> {
+    return [TEST_MODEL];
+  }
 }
 
 // --- Tests ---
@@ -99,7 +118,7 @@ describe('E2E: hello-world pipeline', () => {
     registry.register(new SequentialMockAdapter('mock', responses));
 
     const router = new ModelRouter(registry);
-    const budgetEnforcer = new BudgetEnforcer({ ...DEFAULT_BUDGET_CONFIG, runLimitUsd: 10.00 });
+    const budgetEnforcer = new BudgetEnforcer({ ...DEFAULT_BUDGET_CONFIG, runLimitUsd: 10.0 });
     const costTracker = new RunCostTracker();
 
     return new Orchestrator({
@@ -116,16 +135,16 @@ describe('E2E: hello-world pipeline', () => {
 
   it('completes a full pipeline run with mock provider', async () => {
     const orchestrator = buildOrchestrator([
-      REQUIREMENTS_JSON,   // intake
-      ARCHITECTURE_JSON,   // architect
-      BUILD_JSON,          // build task-1
-      REVIEW_JSON,         // review
-      DOC_JSON,            // doc
+      REQUIREMENTS_JSON, // intake
+      ARCHITECTURE_JSON, // architect
+      BUILD_JSON, // build task-1
+      REVIEW_JSON, // review
+      DOC_JSON, // doc
     ]);
 
     const result = await orchestrator.run('reverse a string CLI', {
       userPrompt: 'reverse a string CLI',
-      budgetUsd: 10.00,
+      budgetUsd: 10.0,
       maxRepairLoops: 3,
       outputDir: tmpDir,
       dryRun: false,
@@ -138,12 +157,16 @@ describe('E2E: hello-world pipeline', () => {
 
   it('tracks token usage across stages', async () => {
     const orchestrator = buildOrchestrator([
-      REQUIREMENTS_JSON, ARCHITECTURE_JSON, BUILD_JSON, REVIEW_JSON, DOC_JSON,
+      REQUIREMENTS_JSON,
+      ARCHITECTURE_JSON,
+      BUILD_JSON,
+      REVIEW_JSON,
+      DOC_JSON,
     ]);
 
     const result = await orchestrator.run('reverse a string CLI', {
       userPrompt: 'reverse a string CLI',
-      budgetUsd: 10.00,
+      budgetUsd: 10.0,
       maxRepairLoops: 3,
       outputDir: tmpDir,
       dryRun: false,
@@ -157,7 +180,15 @@ describe('E2E: hello-world pipeline', () => {
   it('returns aborted status when budget is exceeded', async () => {
     // Create orchestrator with an impossibly small budget to trigger abort
     const registry = new ProviderRegistry();
-    registry.register(new SequentialMockAdapter('mock', [REQUIREMENTS_JSON, ARCHITECTURE_JSON, BUILD_JSON, REVIEW_JSON, DOC_JSON]));
+    registry.register(
+      new SequentialMockAdapter('mock', [
+        REQUIREMENTS_JSON,
+        ARCHITECTURE_JSON,
+        BUILD_JSON,
+        REVIEW_JSON,
+        DOC_JSON,
+      ])
+    );
     const router = new ModelRouter(registry);
     const budgetEnforcer = new BudgetEnforcer({ ...DEFAULT_BUDGET_CONFIG, runLimitUsd: 0.000001 });
     const costTracker = new RunCostTracker();
@@ -184,12 +215,16 @@ describe('E2E: hello-world pipeline', () => {
 
   it('does not trigger repair loop when review passes', async () => {
     const orchestrator = buildOrchestrator([
-      REQUIREMENTS_JSON, ARCHITECTURE_JSON, BUILD_JSON, REVIEW_JSON, DOC_JSON,
+      REQUIREMENTS_JSON,
+      ARCHITECTURE_JSON,
+      BUILD_JSON,
+      REVIEW_JSON,
+      DOC_JSON,
     ]);
 
     const result = await orchestrator.run('reverse a string', {
       userPrompt: 'reverse a string',
-      budgetUsd: 10.00,
+      budgetUsd: 10.0,
       maxRepairLoops: 3,
       outputDir: tmpDir,
       dryRun: false,
@@ -201,12 +236,16 @@ describe('E2E: hello-world pipeline', () => {
 
   it('all stage results have required fields', async () => {
     const orchestrator = buildOrchestrator([
-      REQUIREMENTS_JSON, ARCHITECTURE_JSON, BUILD_JSON, REVIEW_JSON, DOC_JSON,
+      REQUIREMENTS_JSON,
+      ARCHITECTURE_JSON,
+      BUILD_JSON,
+      REVIEW_JSON,
+      DOC_JSON,
     ]);
 
     const result = await orchestrator.run('reverse a string', {
       userPrompt: 'reverse a string',
-      budgetUsd: 10.00,
+      budgetUsd: 10.0,
       maxRepairLoops: 3,
       outputDir: tmpDir,
       dryRun: false,
@@ -225,12 +264,16 @@ describe('E2E: hello-world pipeline', () => {
 
   it('no API keys appear in result', async () => {
     const orchestrator = buildOrchestrator([
-      REQUIREMENTS_JSON, ARCHITECTURE_JSON, BUILD_JSON, REVIEW_JSON, DOC_JSON,
+      REQUIREMENTS_JSON,
+      ARCHITECTURE_JSON,
+      BUILD_JSON,
+      REVIEW_JSON,
+      DOC_JSON,
     ]);
 
     const result = await orchestrator.run('reverse a string', {
       userPrompt: 'reverse a string',
-      budgetUsd: 10.00,
+      budgetUsd: 10.0,
       maxRepairLoops: 3,
       outputDir: tmpDir,
       dryRun: false,

@@ -6,7 +6,9 @@ export interface FileWriter {
   applyWrites(writes: FileWrite[]): Promise<void>;
   getDiff(from?: string, to?: string): Promise<string>;
   commitStage(message: string): Promise<void>;
-  listFiles?(): Promise<Array<{ path: string; content: string; sizeBytes: number; lastModifiedMs?: number }>>;
+  listFiles?(): Promise<
+    Array<{ path: string; content: string; sizeBytes: number; lastModifiedMs?: number }>
+  >;
 }
 
 /** Implemented by evaluator. Injected into Orchestrator. */

@@ -129,7 +129,7 @@ function makeRunConfig(overrides: Partial<RunConfig> = {}): RunConfig {
 function makeConfig(
   responses: string[],
   budgetOverride?: Partial<typeof DEFAULT_BUDGET_CONFIG>,
-  maxRepairLoops = 2,
+  maxRepairLoops = 2
 ): OrchestratorConfig {
   const model = makeMockModel();
   const adapter = new SequentialMockAdapter('mock', [model], responses);
@@ -150,6 +150,15 @@ function makeConfig(
 }
 
 // ────────────────────────────────────────────────────────────
+// Constants for dry-run test
+// ────────────────────────────────────────────────────────────
+
+const REQUIREMENTS_JSON = MOCK_REQUIREMENTS;
+const ARCHITECTURE_JSON = MOCK_ARCHITECTURE;
+const TEST_MODEL: ModelInfo = makeMockModel('counting-model', 'counting');
+const tmpDir = '/tmp/agentforge-test';
+
+// ────────────────────────────────────────────────────────────
 // Tests
 // ────────────────────────────────────────────────────────────
 
@@ -158,9 +167,9 @@ describe('Orchestrator pipeline', () => {
     const responses = [
       MOCK_REQUIREMENTS, // intake
       MOCK_ARCHITECTURE, // architect
-      MOCK_BUILD,        // build (task-1)
-      MOCK_REVIEW,       // review
-      MOCK_DOC,          // doc
+      MOCK_BUILD, // build (task-1)
+      MOCK_REVIEW, // review
+      MOCK_DOC, // doc
     ];
 
     const config = makeConfig(responses);
@@ -182,7 +191,10 @@ describe('Orchestrator pipeline', () => {
     const config = makeConfig(responses, { runLimitUsd: 0.000001 });
     const orchestrator = new Orchestrator(config);
 
-    const result = await orchestrator.run('reverse a string', makeRunConfig({ budgetUsd: 0.000001 }));
+    const result = await orchestrator.run(
+      'reverse a string',
+      makeRunConfig({ budgetUsd: 0.000001 })
+    );
 
     expect(result.status).toBe('aborted');
   });
@@ -222,5 +234,73 @@ describe('Orchestrator pipeline', () => {
 
     const repairStages = result.stages.filter((s) => s.stage === 'repair');
     expect(repairStages).toHaveLength(0);
+  });
+
+  it('dry-run does not invoke provider beyond intake + architect', async () => {
+    let callCount = 0;
+
+    class CountingAdapter implements ProviderAdapter {
+      readonly id = 'counting';
+      readonly name = 'counting';
+      private models: ModelInfo[] = [TEST_MODEL];
+
+      async chat(_req: ChatRequest): Promise<ChatResponse> {
+        callCount++;
+        // Return appropriate response based on call order
+        const responses = [REQUIREMENTS_JSON, ARCHITECTURE_JSON];
+        const content = responses[(callCount - 1) % responses.length] ?? '{}';
+        return {
+          content,
+          inputTokens: 50,
+          outputTokens: 30,
+          model: TEST_MODEL.id,
+          provider: this.id,
+          latencyMs: 5,
+        };
+      }
+      async countTokens(_msgs: Message[]): Promise<number> {
+        return 100;
+      }
+      async isAvailable(): Promise<boolean> {
+        return true;
+      }
+      async listModels(): Promise<ModelInfo[]> {
+        return this.models;
+      }
+    }
+
+    const registry = new ProviderRegistry();
+    registry.register(new CountingAdapter());
+    const router = new ModelRouter(registry);
+    const budgetEnforcer = new BudgetEnforcer({ ...DEFAULT_BUDGET_CONFIG, runLimitUsd: 10.0 });
+    const costTracker = new RunCostTracker();
+
+    const orchestrator = new Orchestrator({
+      registry,
+      router,
+      budgetEnforcer,
+      costTracker,
+      outputDir: tmpDir,
+      maxRepairLoops: 3,
+      dryRun: false, // dryRun is in runConfig, not OrchestratorConfig
+    });
+
+    const result = await orchestrator.run('reverse a string', {
+      userPrompt: 'reverse a string',
+      budgetUsd: 10.0,
+      maxRepairLoops: 3,
+      outputDir: tmpDir,
+      dryRun: true, // dry-run via RunConfig
+    });
+
+    expect(result.status).toBe('complete');
+    // Dry-run should only call intake + architect = max 2 provider calls
+    expect(callCount).toBeLessThanOrEqual(2);
+    // No build/review/repair/doc stages should appear
+    const stageNames = result.stages.filter((s) => s.provider).map((s) => s.stage);
+    expect(stageNames).not.toContain('build');
+    expect(stageNames).not.toContain('review');
+    expect(stageNames).not.toContain('doc');
+    expect(stageNames).not.toContain('repair');
   });
 });

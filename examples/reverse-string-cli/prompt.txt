@@ -1,0 +1,1 @@
+A CLI tool that takes a string argument and prints it reversed, written in TypeScript with Commander.js. Include a --uppercase flag to also convert to uppercase. Add vitest tests.

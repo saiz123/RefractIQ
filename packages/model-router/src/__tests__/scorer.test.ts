@@ -7,7 +7,7 @@ const cheapModel: ModelInfo = {
   provider: 'gemini',
   contextWindow: 1_000_000,
   inputCostPer1M: 0.075,
-  outputCostPer1M: 0.30,
+  outputCostPer1M: 0.3,
   capabilities: ['code', 'json', 'fast'],
   maxOutputTokens: 8192,
 };
@@ -16,8 +16,8 @@ const strongModel: ModelInfo = {
   id: 'claude-sonnet-4-6',
   provider: 'anthropic',
   contextWindow: 200_000,
-  inputCostPer1M: 3.00,
-  outputCostPer1M: 15.00,
+  inputCostPer1M: 3.0,
+  outputCostPer1M: 15.0,
   capabilities: ['code', 'json', 'reasoning'],
   maxOutputTokens: 64000,
 };
@@ -27,7 +27,7 @@ const midModel: ModelInfo = {
   provider: 'openai',
   contextWindow: 128_000,
   inputCostPer1M: 0.15,
-  outputCostPer1M: 0.60,
+  outputCostPer1M: 0.6,
   capabilities: ['code', 'json', 'fast'],
   maxOutputTokens: 16384,
 };

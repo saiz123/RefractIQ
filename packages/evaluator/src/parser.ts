@@ -8,7 +8,11 @@ export interface ParsedTestOutput {
   errors: number;
 }
 
-export function parseTestOutput(stdout: string, stderr: string, exitCode: number): ParsedTestOutput {
+export function parseTestOutput(
+  stdout: string,
+  stderr: string,
+  exitCode: number
+): ParsedTestOutput {
   const combined = stdout + '\n' + stderr;
 
   // Try Go test pattern first (most distinctive — uses "ok  \t" tab notation)

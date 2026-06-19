@@ -1,4 +1,10 @@
-import type { RouterRequest, RouterDecision, TaskType, TaskTier, ModelInfo } from '@agentforge/shared';
+import type {
+  RouterRequest,
+  RouterDecision,
+  TaskType,
+  TaskTier,
+  ModelInfo,
+} from '@agentforge/shared';
 import { NoCapableModelError } from '@agentforge/shared';
 import type { ProviderRegistry } from '@agentforge/providers';
 import { estimateCallCost } from '@agentforge/cost-engine';
@@ -69,9 +75,7 @@ export class ModelRouter {
 
     // Step 5: If userPreferredProvider set (and no model override), restrict to that provider
     if (request.userPreferredProvider !== undefined) {
-      candidates = candidates.filter(
-        (c) => c.model.provider === request.userPreferredProvider,
-      );
+      candidates = candidates.filter((c) => c.model.provider === request.userPreferredProvider);
     }
 
     // Step 6: Sort by score descending
@@ -115,5 +119,4 @@ export class ModelRouter {
   getTierForTask(taskType: TaskType): TaskTier {
     return TASK_TIERS[taskType];
   }
-
 }

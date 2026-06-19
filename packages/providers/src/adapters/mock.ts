@@ -1,4 +1,10 @@
-import type { ModelInfo, ChatRequest, ChatResponse, Message, ProviderConfig } from '@agentforge/shared';
+import type {
+  ModelInfo,
+  ChatRequest,
+  ChatResponse,
+  Message,
+  ProviderConfig,
+} from '@agentforge/shared';
 import type { ProviderAdapter } from '../types.js';
 
 export interface MockFixture {
@@ -17,7 +23,10 @@ export class MockAdapter implements ProviderAdapter {
   readonly id = 'mock';
   readonly name = 'Mock Provider';
 
-  constructor(private fixtures: MockFixtures, _config?: ProviderConfig) {}
+  constructor(
+    private fixtures: MockFixtures,
+    _config?: ProviderConfig
+  ) {}
 
   async chat(request: ChatRequest): Promise<ChatResponse> {
     const fixture = this.fixtures[request.model] ?? this.fixtures['default'];
