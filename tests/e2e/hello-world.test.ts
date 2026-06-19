@@ -281,8 +281,8 @@ describe('E2E: hello-world pipeline', () => {
 
     const resultStr = JSON.stringify(result);
     // No OpenAI-style keys
-    expect(resultStr).not.toMatch(/sk-[A-Za-z0-9\-]{20,}/);
+    expect(resultStr).not.toMatch(/sk-[A-Za-z0-9-]{20,}/);
     // No Anthropic-style keys
-    expect(resultStr).not.toMatch(/sk-ant-[A-Za-z0-9\-]{20,}/);
+    expect(resultStr).not.toMatch(/sk-ant-[A-Za-z0-9-]{20,}/);
   });
 });
