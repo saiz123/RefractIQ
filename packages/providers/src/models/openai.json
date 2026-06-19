@@ -1,0 +1,31 @@
+{
+  "models": [
+    {
+      "id": "gpt-4o",
+      "provider": "openai",
+      "contextWindow": 128000,
+      "inputCostPer1M": 2.50,
+      "outputCostPer1M": 10.00,
+      "capabilities": ["code", "json", "reasoning"],
+      "maxOutputTokens": 16384
+    },
+    {
+      "id": "gpt-4o-mini",
+      "provider": "openai",
+      "contextWindow": 128000,
+      "inputCostPer1M": 0.15,
+      "outputCostPer1M": 0.60,
+      "capabilities": ["code", "json", "fast"],
+      "maxOutputTokens": 16384
+    },
+    {
+      "id": "o4-mini",
+      "provider": "openai",
+      "contextWindow": 200000,
+      "inputCostPer1M": 1.10,
+      "outputCostPer1M": 4.40,
+      "capabilities": ["code", "json", "reasoning"],
+      "maxOutputTokens": 100000
+    }
+  ]
+}

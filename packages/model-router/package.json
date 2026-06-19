@@ -1,0 +1,32 @@
+{
+  "name": "@agentforge/model-router",
+  "version": "0.1.0",
+  "description": "Cross-provider cheapest-capable-model selection",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@agentforge/cost-engine": "workspace:*",
+    "@agentforge/providers": "workspace:*",
+    "@agentforge/shared": "workspace:*",
+    "@agentforge/token-engine": "workspace:*"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}

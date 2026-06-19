@@ -1,0 +1,22 @@
+{
+  "models": [
+    {
+      "id": "llama3.2",
+      "provider": "ollama",
+      "contextWindow": 128000,
+      "inputCostPer1M": 0,
+      "outputCostPer1M": 0,
+      "capabilities": ["code", "json"],
+      "maxOutputTokens": 4096
+    },
+    {
+      "id": "codestral",
+      "provider": "ollama",
+      "contextWindow": 32000,
+      "inputCostPer1M": 0,
+      "outputCostPer1M": 0,
+      "capabilities": ["code", "json"],
+      "maxOutputTokens": 4096
+    }
+  ]
+}

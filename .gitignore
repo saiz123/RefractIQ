@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+.next/
+out/
+
+# pnpm lock (optional — remove if you want to commit it)
+# pnpm-lock.yaml
+
+# Environment — never commit API keys
+.env
+.env.local
+.env.*.local
+
+# AgentForge local state
+.agentforge/*.db
+.agentforge/logs/
+.agentforge/cache/
+
+# Generated output
+output/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
