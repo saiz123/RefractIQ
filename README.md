@@ -18,21 +18,23 @@ Agents communicate through structured JSON artifacts only. No free-form agent ch
 
 ## Status
 
-**v0.1 — under active development.**
+**v0.1 — complete and working.**
 
 | Phase | Status | Description |
 |---|---|---|
 | 0 — Scaffold | ✅ Done | Monorepo structure, tooling, docs |
-| 1 — CLI Skeleton | 🔜 Next | Commander.js commands, `agentforge init` |
-| 2 — Provider Interface | ⬜ | Adapters for Anthropic, OpenAI, Gemini, Ollama |
-| 3 — Model Router | ⬜ | Cross-provider cheapest-model selection |
-| 4 — Token/Cost Engine | ⬜ | Budget enforcement, USD tracking |
-| 5 — Orchestrator | ⬜ | Pipeline state machine, artifact handoffs |
-| 6 — Context Engine | ⬜ | File relevance scoring, repo pruning |
-| 7 — Workspace Engine | ⬜ | File I/O, Git, sandboxed commands |
-| 8 — Real Build | ⬜ | End-to-end working `agentforge build` |
-| 9 — Web Dashboard | ⬜ | Next.js UI, run history, cost charts |
-| 10 — Docker | ⬜ | Full Docker Compose self-hosting |
+| 1 — CLI Skeleton | ✅ Done | Commander.js commands, `agentforge init` |
+| 2 — Provider Interface | ✅ Done | Adapters for Anthropic, OpenAI, Gemini, Ollama |
+| 3 — Model Router | ✅ Done | Cross-provider cheapest-model selection |
+| 4 — Token/Cost Engine | ✅ Done | Budget enforcement, USD tracking |
+| 5 — Orchestrator | ✅ Done | Pipeline state machine, artifact handoffs |
+| 6 — Context Engine | ✅ Done | File relevance scoring, repo pruning |
+| 7 — Workspace Engine | ✅ Done | File I/O, Git, sandboxed commands |
+| 8 — Real Build | ✅ Done | End-to-end working `agentforge build` |
+| 9 — Web Dashboard | ✅ Done | Next.js UI, run history, cost charts |
+| 10 — Docker | ✅ Done | Full Docker Compose self-hosting |
+
+218 tests passing across 26 test files.
 
 ## Requirements
 
@@ -43,18 +45,41 @@ Agents communicate through structured JSON artifacts only. No free-form agent ch
 ## Quick start
 
 ```bash
-git clone https://github.com/your-username/agentforge
-cd agentforge
+git clone https://github.com/saiz123/AgentForge.git
+cd AgentForge
 pnpm install
+pnpm build
+
 cp .env.example .env
 # Add your API keys to .env
 
-pnpm build
-pnpm agentforge init
-pnpm agentforge providers add
-pnpm agentforge doctor
-pnpm agentforge build "a CLI that reverses a string"
-pnpm agentforge report
+node apps/cli/dist/bin/cli.js init
+node apps/cli/dist/bin/cli.js providers add
+node apps/cli/dist/bin/cli.js doctor
+node apps/cli/dist/bin/cli.js build "a CLI that reverses a string"
+node apps/cli/dist/bin/cli.js report
+```
+
+### Web dashboard
+
+```bash
+node apps/cli/dist/bin/cli.js serve   # API on http://localhost:3001
+pnpm --filter @agentforge/web dev     # UI on http://localhost:3000
+```
+
+### Docker (self-hosted)
+
+```bash
+cp .env.example .env
+# Add your API keys to .env
+
+docker compose run --rm cli init
+docker compose run --rm cli providers add
+docker compose up -d
+
+# Web UI at http://localhost:3000
+# Then run builds with:
+docker compose run --rm cli build "a CLI that reverses a string"
 ```
 
 ## Documentation
