@@ -53,5 +53,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Create .env from example
+        run: cp .env.example .env
       - name: Docker Compose build
         run: docker compose build
