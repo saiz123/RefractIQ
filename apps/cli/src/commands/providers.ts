@@ -29,6 +29,7 @@ const providersAddCommand = new Command('add')
         { name: 'OpenAI (GPT / o-series)', value: 'openai' },
         { name: 'Google Gemini', value: 'gemini' },
         { name: 'Ollama (local)', value: 'ollama' },
+        { name: 'OpenRouter (multi-provider gateway)', value: 'openrouter' },
       ],
     }) as ProviderConfig['type'];
 
@@ -38,7 +39,7 @@ const providersAddCommand = new Command('add')
     });
 
     let endpoint: string | undefined;
-    if (type === 'openai' || type === 'ollama') {
+    if (type === 'openai' || type === 'ollama' || type === 'openrouter') {
       const defaultEndpoint = type === 'ollama' ? 'http://localhost:11434' : '';
       const endpointInput = await input({
         message: `Custom endpoint URL (leave blank for default${defaultEndpoint ? ` "${defaultEndpoint}"` : ''}):`,
@@ -64,6 +65,7 @@ const providersAddCommand = new Command('add')
       openai: 'OPENAI_API_KEY',
       gemini: 'GEMINI_API_KEY',
       ollama: '',
+      openrouter: 'OPENROUTER_API_KEY',
     };
 
     console.log(chalk.green(`\n✓ Provider "${name}" saved to ${agentForgeDir}/config.json`));

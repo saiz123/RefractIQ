@@ -57,4 +57,17 @@ describe('Workspace', () => {
     expect(workspace.readFile('a.ts')).toBe('A');
     expect(workspace.readFile('b.ts')).toBe('B');
   });
+
+  it('applyWrites deletes files with action delete', () => {
+    workspace.writeFile('to-delete.ts', 'content');
+    expect(workspace.exists('to-delete.ts')).toBe(true);
+    workspace.applyWrites([{ path: 'to-delete.ts', content: '', action: 'delete' }]);
+    expect(workspace.exists('to-delete.ts')).toBe(false);
+  });
+
+  it('applyWrites delete with path traversal throws WorkspaceSecurityError', () => {
+    expect(() =>
+      workspace.applyWrites([{ path: '../escape.ts', content: '', action: 'delete' }])
+    ).toThrow(WorkspaceSecurityError);
+  });
 });

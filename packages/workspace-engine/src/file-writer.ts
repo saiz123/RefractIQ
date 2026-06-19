@@ -28,4 +28,8 @@ export class WorkspaceFileWriter implements FileWriter {
   async commitStage(message: string): Promise<void> {
     this.git.commit(message);
   }
+
+  async listFiles(): Promise<Array<{ path: string; content: string; sizeBytes: number; lastModifiedMs?: number }>> {
+    return this.workspace.listFiles();
+  }
 }

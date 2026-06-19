@@ -1,4 +1,4 @@
-import type { ModelInfo, ChatRequest, ChatResponse, Message } from '@agentforge/shared';
+import type { ModelInfo, ChatRequest, ChatResponse, Message, ProviderConfig } from '@agentforge/shared';
 import { ProviderError } from '@agentforge/shared';
 import type { ProviderAdapter } from '../types.js';
 import { loadGeminiModels } from '../modelLoader.js';
@@ -9,7 +9,7 @@ export class GeminiAdapter implements ProviderAdapter {
 
   private apiKey: string | undefined;
 
-  constructor() {
+  constructor(_config?: ProviderConfig) {
     this.apiKey = process.env['GEMINI_API_KEY'];
   }
 

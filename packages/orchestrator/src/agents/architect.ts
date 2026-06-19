@@ -1,5 +1,6 @@
 import type { AgentCall } from './types.js';
 import type { RequirementsArtifact, ArchitectureArtifact } from '@agentforge/shared';
+import { safeParseAgentJson } from '@agentforge/shared';
 import { ARCHITECT_SYSTEM } from './prompts.js';
 
 export const architectAgent: AgentCall<RequirementsArtifact, ArchitectureArtifact> = {
@@ -9,6 +10,6 @@ export const architectAgent: AgentCall<RequirementsArtifact, ArchitectureArtifac
     return `<requirements>${JSON.stringify(requirements, null, 2)}</requirements>\n\nProduce the architecture JSON.`;
   },
   parseResponse(raw) {
-    return JSON.parse(raw) as ArchitectureArtifact;
+    return safeParseAgentJson<ArchitectureArtifact>(raw);
   },
 };

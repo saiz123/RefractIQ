@@ -1,5 +1,6 @@
 import type { AgentCall } from './types.js';
 import type { RequirementsArtifact, TestArtifact, ReviewArtifact } from '@agentforge/shared';
+import { safeParseAgentJson } from '@agentforge/shared';
 import { REVIEWER_SYSTEM } from './prompts.js';
 
 export interface ReviewerInput {
@@ -21,6 +22,6 @@ export const reviewerAgent: AgentCall<ReviewerInput, ReviewArtifact> = {
     ].join('\n');
   },
   parseResponse(raw) {
-    return JSON.parse(raw) as ReviewArtifact;
+    return safeParseAgentJson<ReviewArtifact>(raw);
   },
 };

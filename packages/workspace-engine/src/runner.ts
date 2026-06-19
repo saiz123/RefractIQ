@@ -1,5 +1,5 @@
 import { execSync } from 'node:child_process';
-import { validateCommand } from './security.js';
+import { validateCommand, createSanitizedEnv } from './security.js';
 
 export interface RunOptions {
   cwd: string;
@@ -29,7 +29,7 @@ export class CommandRunner {
       const output = execSync(command, {
         cwd: opts.cwd,
         timeout: opts.timeoutMs ?? 30_000,
-        env: { ...process.env, ...opts.env },
+        env: createSanitizedEnv(opts.env),
         stdio: 'pipe',
         encoding: 'utf8',
       });

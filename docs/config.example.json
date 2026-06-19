@@ -1,0 +1,15 @@
+{
+  "version": "0.1.0",
+  "providers": [],
+  "budget": {
+    "defaultRunUsd": 0.50
+  },
+  "tiers": {
+    "cheap": { "tasks": ["intake", "summarize", "doc"] },
+    "mid": { "tasks": ["architect", "review"] },
+    "strong": { "tasks": ["build", "repair"] }
+  },
+  "security": {
+    "allowedCommands": ["npm", "npx", "pnpm", "node", "python", "python3", "pytest", "go", "cargo", "make", "vitest", "jest"]
+  }
+}

@@ -1,5 +1,6 @@
 import type { AgentCall } from './types.js';
 import type { BuildTask, CodeDiffArtifact } from '@agentforge/shared';
+import { safeParseAgentJson } from '@agentforge/shared';
 import { BUILDER_SYSTEM } from './prompts.js';
 
 export interface BuilderInput {
@@ -31,6 +32,6 @@ export const builderAgent: AgentCall<BuilderInput, CodeDiffArtifact> = {
     ].join('\n');
   },
   parseResponse(raw) {
-    return JSON.parse(raw) as CodeDiffArtifact;
+    return safeParseAgentJson<CodeDiffArtifact>(raw);
   },
 };

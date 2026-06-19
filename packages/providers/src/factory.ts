@@ -4,18 +4,21 @@ import { AnthropicAdapter } from './adapters/anthropic.js';
 import { OpenAIAdapter } from './adapters/openai.js';
 import { GeminiAdapter } from './adapters/gemini.js';
 import { OllamaAdapter } from './adapters/ollama.js';
+import { OpenRouterAdapter } from './adapters/openrouter.js';
 import { MockAdapter } from './adapters/mock.js';
 
 export function createAdapter(config: ProviderConfig): ProviderAdapter {
   switch (config.type) {
     case 'anthropic':
-      return new AnthropicAdapter();
+      return new AnthropicAdapter(config);
     case 'openai':
-      return new OpenAIAdapter();
+      return new OpenAIAdapter(config);
     case 'gemini':
-      return new GeminiAdapter();
+      return new GeminiAdapter(config);
     case 'ollama':
-      return new OllamaAdapter();
+      return new OllamaAdapter(config);
+    case 'openrouter':
+      return new OpenRouterAdapter(config);
     case 'mock':
       return new MockAdapter({
         default: {

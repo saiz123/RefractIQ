@@ -18,10 +18,8 @@ out/
 .env.local
 .env.*.local
 
-# AgentForge local state
-.agentforge/*.db
-.agentforge/logs/
-.agentforge/cache/
+# AgentForge local state (never commit user config or runtime state)
+.agentforge/
 
 # Generated output
 output/

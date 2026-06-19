@@ -39,7 +39,7 @@ export interface ChatResponse {
 
 export interface ProviderConfig {
   id: string;
-  type: 'anthropic' | 'openai' | 'gemini' | 'ollama' | 'mock';
+  type: 'anthropic' | 'openai' | 'gemini' | 'ollama' | 'openrouter' | 'mock';
   name: string;
   endpoint?: string;
   modelOverrides?: Partial<ModelInfo>[];

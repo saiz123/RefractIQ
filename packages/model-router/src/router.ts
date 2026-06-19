@@ -77,6 +77,18 @@ export class ModelRouter {
     // Step 6: Sort by score descending
     candidates.sort((a, b) => b.score - a.score);
 
+    // Step 6b: Pre-filter by budget — exclude models whose estimated cost exceeds remaining budget
+    // Fall back to all candidates if budget filter removes everything
+    if (request.budgetRemainingUsd > 0) {
+      const withinBudget = candidates.filter(({ model }) => {
+        const est = estimateCallCost(model, request.estimatedInputTokens);
+        return est <= request.budgetRemainingUsd;
+      });
+      if (withinBudget.length > 0) {
+        candidates = withinBudget;
+      }
+    }
+
     // Step 7: No candidates → throw
     if (candidates.length === 0) {
       throw new NoCapableModelError(request.taskType, Array.from(triedProviders));

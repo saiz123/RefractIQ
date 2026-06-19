@@ -7,6 +7,7 @@ import { RunCostTracker } from '@agentforge/cost-engine';
 import { Orchestrator } from '@agentforge/orchestrator';
 import { WorkspaceFileWriter } from '@agentforge/workspace-engine';
 import { WorkspaceTestRunner } from '@agentforge/evaluator';
+import { ContextEngine } from '@agentforge/context-engine';
 import { loadConfig, getAgentForgeDir, type RunResult } from '@agentforge/shared';
 
 export interface BuildOptions {
@@ -15,6 +16,7 @@ export interface BuildOptions {
   outputDir: string;
   preferredProvider?: string;
   preferredModel?: string;
+  testCommand?: string;
   dryRun: boolean;
   cwd?: string;
 }
@@ -50,6 +52,7 @@ export async function runBuild(userPrompt: string, opts: BuildOptions): Promise<
 
   const fileWriter = new WorkspaceFileWriter(outputDir);
   const testRunner = new WorkspaceTestRunner(outputDir, new Set(config.security.allowedCommands));
+  const contextEngine = new ContextEngine();
 
   const orchestrator = new Orchestrator({
     registry,
@@ -61,6 +64,7 @@ export async function runBuild(userPrompt: string, opts: BuildOptions): Promise<
     dryRun: opts.dryRun,
     fileWriter,
     testRunner,
+    contextEngine,
   });
 
   const runConfig = {
@@ -70,6 +74,7 @@ export async function runBuild(userPrompt: string, opts: BuildOptions): Promise<
     outputDir,
     preferredProvider: opts.preferredProvider,
     preferredModel: opts.preferredModel,
+    testCommand: opts.testCommand,
     dryRun: opts.dryRun,
   };
 

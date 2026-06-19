@@ -59,3 +59,45 @@ export function validateCommand(
     throw new CommandBlockedError(command);
   }
 }
+
+const SAFE_ENV_KEYS = new Set([
+  'PATH', 'HOME', 'TMPDIR', 'TEMP', 'TMP', 'NODE_ENV',
+  'LANG', 'LC_ALL', 'LC_CTYPE', 'PWD', 'SHELL',
+  'USERPROFILE', 'SYSTEMROOT', 'WINDIR', // Windows
+  'TERM', 'COLORTERM',
+]);
+
+const SENSITIVE_KEY_PATTERNS = [
+  /KEY$/i, /TOKEN$/i, /SECRET$/i, /PASSWORD$/i,
+  /PASSWD$/i, /AUTH$/i, /CREDENTIAL$/i, /BEARER$/i,
+  /APIKEY/i, /API_KEY/i,
+];
+
+/**
+ * Returns a sanitized environment for child process execution.
+ * Strips API keys, tokens, and other secrets from process.env.
+ * Only passes through a safe allowlist plus explicitly provided extras.
+ */
+export function createSanitizedEnv(
+  extra?: Record<string, string>,
+): Record<string, string> {
+  const result: Record<string, string> = {};
+
+  for (const [key, value] of Object.entries(process.env)) {
+    if (!value) continue;
+    if (SAFE_ENV_KEYS.has(key)) {
+      result[key] = value;
+    } else if (!SENSITIVE_KEY_PATTERNS.some((p) => p.test(key))) {
+      result[key] = value;
+    }
+  }
+
+  // Merge in extra vars (e.g. NODE_PATH for the generated project)
+  if (extra) {
+    for (const [key, value] of Object.entries(extra)) {
+      result[key] = value;
+    }
+  }
+
+  return result;
+}

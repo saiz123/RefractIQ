@@ -28,3 +28,7 @@ export function loadGeminiModels(): ModelInfo[] {
 export function loadOllamaModels(): ModelInfo[] {
   return loadModelFile('./models/ollama.json');
 }
+
+export function loadOpenRouterModels(): ModelInfo[] {
+  return loadModelFile('./models/openrouter.json');
+}

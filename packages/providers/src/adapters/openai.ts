@@ -1,4 +1,4 @@
-import type { ModelInfo, ChatRequest, ChatResponse, Message } from '@agentforge/shared';
+import type { ModelInfo, ChatRequest, ChatResponse, Message, ProviderConfig } from '@agentforge/shared';
 import { ProviderError } from '@agentforge/shared';
 import type { ProviderAdapter } from '../types.js';
 import { loadOpenAIModels } from '../modelLoader.js';
@@ -10,9 +10,9 @@ export class OpenAIAdapter implements ProviderAdapter {
   private apiKey: string | undefined;
   private endpoint: string | undefined;
 
-  constructor() {
+  constructor(private config?: ProviderConfig) {
     this.apiKey = process.env['OPENAI_API_KEY'];
-    this.endpoint = process.env['OPENAI_COMPATIBLE_ENDPOINT'];
+    this.endpoint = config?.endpoint ?? process.env['OPENAI_COMPATIBLE_ENDPOINT'];
   }
 
   async listModels(): Promise<ModelInfo[]> {

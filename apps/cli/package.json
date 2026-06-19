@@ -14,6 +14,7 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
+    "@agentforge/context-engine": "workspace:*",
     "@agentforge/cost-engine": "workspace:*",
     "@agentforge/evaluator": "workspace:*",
     "@agentforge/model-router": "workspace:*",

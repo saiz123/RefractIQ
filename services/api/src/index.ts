@@ -7,11 +7,22 @@ import { openDb, runs, runStages } from './db.js';
 
 const PORT = Number(process.env['PORT'] ?? 3001);
 const AGENTFORGE_DIR = process.env['AGENTFORGE_DIR'] ?? join(process.cwd(), '.agentforge');
+const API_TOKEN = process.env['AGENTFORGE_API_TOKEN'];
 
 const db = openDb(AGENTFORGE_DIR);
 const app = new Hono();
 
 app.use('/*', cors({ origin: 'http://localhost:3000' }));
+
+if (API_TOKEN) {
+  app.use('/api/*', async (c, next) => {
+    const auth = c.req.header('Authorization');
+    if (auth !== `Bearer ${API_TOKEN}`) {
+      return c.json({ error: 'Unauthorized' }, 401);
+    }
+    await next();
+  });
+}
 
 app.get('/api/health', (c) => c.json({ ok: true, version: '0.1.0' }));
 

@@ -1,5 +1,6 @@
 import type { AgentCall } from './types.js';
 import type { RequirementsArtifact, ArchitectureArtifact, TestArtifact, DocArtifact } from '@agentforge/shared';
+import { safeParseAgentJson } from '@agentforge/shared';
 import { DOC_SYSTEM } from './prompts.js';
 
 export interface DocInput {
@@ -23,6 +24,6 @@ export const docAgent: AgentCall<DocInput, DocArtifact> = {
     ].join('\n');
   },
   parseResponse(raw) {
-    return JSON.parse(raw) as DocArtifact;
+    return safeParseAgentJson<DocArtifact>(raw);
   },
 };

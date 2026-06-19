@@ -2,6 +2,7 @@ import type { ProviderRegistry } from '@agentforge/providers';
 import type { ModelRouter } from '@agentforge/model-router';
 import type { BudgetEnforcer } from '@agentforge/token-engine';
 import type { RunCostTracker } from '@agentforge/cost-engine';
+import type { ContextEngine } from '@agentforge/context-engine';
 import type { FileWriter, TestRunner } from './interfaces.js';
 
 export interface OrchestratorConfig {
@@ -15,4 +16,5 @@ export interface OrchestratorConfig {
   // Optional — injected in Phase 7
   fileWriter?: FileWriter;
   testRunner?: TestRunner;
+  contextEngine?: ContextEngine;
 }

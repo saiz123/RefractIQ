@@ -1,9 +1,10 @@
 import {
-  readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync,
+  readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync, unlinkSync,
 } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { safePath } from './security.js';
 import type { FileWrite } from '@agentforge/shared';
+import { WorkspaceSecurityError } from '@agentforge/shared';
 
 export interface WorkspaceFile {
   path: string;
@@ -29,7 +30,15 @@ export class Workspace {
   applyWrites(writes: FileWrite[]): void {
     for (const w of writes) {
       if (w.action === 'delete') {
-        // Phase 7: deletion is a no-op stub (workspace-engine doesn't handle deletions yet)
+        try {
+          const abs = safePath(this.rootDir, w.path);
+          if (existsSync(abs)) {
+            unlinkSync(abs);
+          }
+        } catch (err) {
+          if (!(err instanceof WorkspaceSecurityError)) throw err;
+          throw err; // re-throw security errors
+        }
         continue;
       }
       this.writeFile(w.path, w.content);

@@ -25,6 +25,7 @@ export interface RunConfig {
   outputDir: string;
   preferredProvider?: string;
   preferredModel?: string;
+  testCommand?: string;
   dryRun: boolean;
 }
 

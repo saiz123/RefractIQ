@@ -12,6 +12,7 @@ const REDACT_PATTERNS: RegExp[] = [
   /sk-[A-Za-z0-9\-]{20,}/g,
   /sk-ant-[A-Za-z0-9\-]{20,}/g,
   /AIza[A-Za-z0-9_\-]{35}/g,
+  /Bearer\s+[A-Za-z0-9\-._~+/]{20,}=*/gi,
 ];
 
 export function redactSecrets(text: string): string {
@@ -37,9 +38,9 @@ function shouldLog(level: LogLevel): boolean {
 function formatData(data: unknown): string {
   if (data === undefined) return '';
   try {
-    return ' ' + JSON.stringify(data);
+    return ' ' + redactSecrets(JSON.stringify(data));
   } catch {
-    return ' ' + String(data);
+    return ' ' + redactSecrets(String(data));
   }
 }
 

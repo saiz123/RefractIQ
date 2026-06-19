@@ -4,6 +4,7 @@ import type {
   RunResult,
   StageResult,
   StageType,
+  TaskType,
   BuildTask,
   RequirementsArtifact,
   ArchitectureArtifact,
@@ -30,6 +31,7 @@ import {
 
 export class Orchestrator {
   private lastBuilderProvider: string | undefined;
+  private lastSuggestedTestCommand: string | undefined;
 
   constructor(private config: OrchestratorConfig) {}
 
@@ -39,6 +41,26 @@ export class Orchestrator {
     const stages: StageResult[] = [];
 
     logger.info(`Starting run ${runId}`, { userPrompt, budgetUsd: runConfig.budgetUsd });
+
+    if (runConfig.dryRun) {
+      logger.info('Dry-run mode: running intake + architect + task breakdown only');
+      const requirements = await this.runIntake(userPrompt, stages);
+      const architecture = await this.runArchitect(requirements, stages);
+      const tasks = this.breakdownTasks(architecture);
+      logger.info(`Dry-run plan: ${tasks.length} tasks identified`);
+      logger.info('No files written, no commands run, no git commits.');
+      return {
+        id: runId,
+        status: 'complete',
+        userPrompt,
+        stages,
+        totalInputTokens: this.config.costTracker.totalInputTokens(),
+        totalOutputTokens: this.config.costTracker.totalOutputTokens(),
+        totalCostUsd: this.config.costTracker.totalCostUsd(),
+        durationMs: Date.now() - startMs,
+        outputPath: runConfig.outputDir,
+      };
+    }
 
     try {
       // Stage 1: Intake
@@ -218,10 +240,26 @@ export class Orchestrator {
     );
 
     if (!this.config.budgetEnforcer.isStageWithinBudget(agent.taskType, estimatedCost)) {
-      logger.warn(
-        `Stage ${stageType} skipped: per-stage budget exceeded (est. $${estimatedCost.toFixed(4)})`,
-      );
-      throw new Error(`Stage ${stageType} skipped due to per-stage budget limit`);
+      const optionalStages: TaskType[] = ['doc', 'review', 'summarize'];
+      if (optionalStages.includes(agent.taskType)) {
+        logger.warn(
+          `Stage ${stageType} skipped: per-stage budget exceeded (est. $${estimatedCost.toFixed(4)})`,
+        );
+        stages.push({
+          stage: stageType,
+          iteration,
+          status: 'skipped',
+          provider: '',
+          model: '',
+          inputTokens: 0,
+          outputTokens: 0,
+          costUsd: 0,
+          durationMs: 0,
+        });
+        throw new Error(`STAGE_SKIPPED:${stageType}`);
+      }
+      // Required stage — this is a hard limit
+      throw new BudgetExceededError(this.config.budgetEnforcer.runLimitUsd, estimatedCost);
     }
 
     logger.info(`Calling ${routerDecision.provider}/${routerDecision.model} for ${stageType}`, {
@@ -306,7 +344,9 @@ export class Orchestrator {
     userPrompt: string,
     stages: StageResult[],
   ): Promise<RequirementsArtifact> {
-    return this.callAgent(intakeAgent, { userPrompt }, 'intake', 0, stages);
+    const requirements = await this.callAgent(intakeAgent, { userPrompt }, 'intake', 0, stages);
+    this.lastSuggestedTestCommand = requirements.suggestedTestCommand;
+    return requirements;
   }
 
   private async runArchitect(
@@ -339,9 +379,25 @@ export class Orchestrator {
     requirements: RequirementsArtifact,
     stages: StageResult[],
   ): Promise<CodeDiffArtifact> {
+    let contextPack: string | undefined;
+
+    // Wire context engine if available
+    if (this.config.contextEngine && this.config.fileWriter?.listFiles) {
+      try {
+        const files = await this.config.fileWriter.listFiles();
+        const pack = await this.config.contextEngine.buildContextPack(
+          files as Parameters<typeof this.config.contextEngine.buildContextPack>[0],
+          task.description,
+        );
+        contextPack = this.config.contextEngine.formatForPrompt(pack);
+      } catch {
+        // Context engine failure is non-fatal — fall back to clarifiedGoal
+      }
+    }
+
     return this.callAgent(
       builderAgent,
-      { task, contextSummary: requirements.clarifiedGoal },
+      { task, contextSummary: requirements.clarifiedGoal, contextPack },
       'build',
       0,
       stages,
@@ -355,7 +411,9 @@ export class Orchestrator {
   ): Promise<TestArtifact> {
     if (this.config.testRunner) {
       const testCommand =
-        runConfig.preferredModel ?? 'npx vitest run';
+        runConfig.testCommand
+        ?? this.lastSuggestedTestCommand
+        ?? 'npx vitest run';
       return this.config.testRunner.run(testCommand);
     }
     // Stub: no test runner available
@@ -387,13 +445,20 @@ export class Orchestrator {
     testResult: TestArtifact,
     stages: StageResult[],
   ): Promise<ReviewArtifact> {
-    return this.callAgent(
-      reviewerAgent,
-      { diff, requirements, testResult },
-      'review',
-      0,
-      stages,
-    );
+    try {
+      return await this.callAgent(
+        reviewerAgent,
+        { diff, requirements, testResult },
+        'review',
+        0,
+        stages,
+      );
+    } catch (err) {
+      if (err instanceof Error && err.message.startsWith('STAGE_SKIPPED:')) {
+        return { issues: [], verdict: 'pass', suggestions: ['Review skipped: budget limit reached'] };
+      }
+      throw err;
+    }
   }
 
   private async runRepair(
@@ -450,13 +515,20 @@ export class Orchestrator {
     testResult: TestArtifact,
     stages: StageResult[],
   ): Promise<DocArtifact> {
-    return this.callAgent(
-      docAgent,
-      { requirements, architecture, fileTree, testResult },
-      'doc',
-      0,
-      stages,
-    );
+    try {
+      return await this.callAgent(
+        docAgent,
+        { requirements, architecture, fileTree, testResult },
+        'doc',
+        0,
+        stages,
+      );
+    } catch (err) {
+      if (err instanceof Error && err.message.startsWith('STAGE_SKIPPED:')) {
+        return { readme: '', changelog: '', inlineDocs: [] };
+      }
+      throw err;
+    }
   }
 
   private makeFailedResult(
