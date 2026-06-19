@@ -19,7 +19,7 @@ COPY packages/orchestrator/package.json packages/orchestrator/
 COPY apps/cli/package.json apps/cli/
 COPY services/api/package.json services/api/
 
-RUN pnpm install --frozen-lockfile --ignore-scripts
+RUN pnpm install --no-frozen-lockfile --ignore-scripts
 
 # ── Stage 2: builder ───────────────────────────────────────────────────────────
 FROM deps AS builder

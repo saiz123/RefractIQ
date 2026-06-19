@@ -1,6 +1,5 @@
 import type {
   FileEntry,
-  FileIndex,
   ContextPackResult,
   ContextEngineOptions,
   FileChunkResult,

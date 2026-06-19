@@ -76,7 +76,7 @@ export class GitManager {
         const file = line.slice(3).trim();
         if (!file) continue;
         if (code.includes('M')) modified.push(file);
-        else if (code.includes('A') || code === '?? ') added.push(file);
+        else if (code.includes('A')) added.push(file);
         else if (code.includes('D')) deleted.push(file);
         else if (code === '?? ') untracked.push(file);
       }

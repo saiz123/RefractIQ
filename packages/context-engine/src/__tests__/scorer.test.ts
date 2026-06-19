@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { scoreFile, extractKeywords } from '../scorer.js';
 import type { FileEntry } from '../types.js';
 
@@ -31,7 +31,7 @@ describe('extractKeywords', () => {
 describe('scoreFile', () => {
   it('returns score 0 when no keyword matches', () => {
     const file = makeFile('src/widget.ts', 'export function widgetHelper() {}');
-    const result = scoreFile(file, 'authenticate user login session');
+    scoreFile(file, 'authenticate user login session');
     // .ts gets +5 code file bonus, but no keyword match for 'authenticate', 'user', 'login', 'session'
     // Actually 'user' is <4 chars, 'login' not a stop word, 'session' not a stop word
     // The task says score 0 for "completely irrelevant" so let's test with a truly irrelevant task

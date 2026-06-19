@@ -8,7 +8,7 @@ export const planCommand = new Command('plan')
   .option('--budget <usd>', 'Per-run USD budget limit', '0.10')
   .option('--provider <id>', 'Force a specific provider')
   .option('--model <id>', 'Force a specific model')
-  .action(async (idea: string, options) => {
+  .action(async (idea: string, _options) => {
     const spinner = ora('Planning...').start();
     try {
       // Run with maxRepairLoops:0 and dryRun context — still calls real models for intake+architect
