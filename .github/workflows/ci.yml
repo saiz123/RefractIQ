@@ -22,9 +22,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
-      # Install pnpm via npm to avoid corepack/packageManager version conflicts
       - name: Install pnpm
         run: npm install -g pnpm@9
 
@@ -42,11 +41,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Typecheck
-        run: pnpm typecheck
-
+      # Build MUST run before typecheck — workspace packages export types
+      # from dist/ which does not exist until tsc compiles each package.
       - name: Build
         run: pnpm build
+
+      - name: Typecheck
+        run: pnpm typecheck
 
       - name: Test
         run: pnpm test
