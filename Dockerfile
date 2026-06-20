@@ -19,7 +19,9 @@ COPY packages/workspace-engine/package.json packages/workspace-engine/
 COPY packages/evaluator/package.json packages/evaluator/
 COPY packages/orchestrator/package.json packages/orchestrator/
 COPY apps/cli/package.json apps/cli/
+COPY apps/web/package.json apps/web/
 COPY services/api/package.json services/api/
+COPY services/worker/package.json services/worker/
 
 RUN pnpm install --no-frozen-lockfile --ignore-scripts
 
@@ -27,7 +29,9 @@ RUN pnpm install --no-frozen-lockfile --ignore-scripts
 FROM deps AS builder
 WORKDIR /app
 COPY . .
-RUN pnpm build
+# Skip apps/web (requires `next build` - built separately in apps/web/Dockerfile)
+# Skip services/worker (not yet implemented)
+RUN pnpm build --filter '!@refractiq/web' --filter '!@refractiq/worker'
 
 # ── Stage 3: api runtime ───────────────────────────────────────────────────────
 FROM node:20-alpine AS api
