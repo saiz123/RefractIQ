@@ -67,8 +67,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 0.875rem 2rem;
-        background: rgba(13, 17, 23, 0.92);
-        backdrop-filter: blur(12px);
+        background: #161B22;
         border-bottom: 1px solid var(--border);
       }
       .nav-logo {
@@ -131,17 +130,6 @@
         position: relative;
         overflow: hidden;
       }
-      .hero::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          ellipse 70% 60% at 50% 40%,
-          rgba(88, 166, 255, 0.10) 0%,
-          transparent 70%
-        );
-        pointer-events: none;
-      }
       .hero-badge {
         display: inline-flex;
         align-items: center;
@@ -161,7 +149,6 @@
         width: 140px;
         height: 140px;
         margin-bottom: 2rem;
-        filter: drop-shadow(0 0 50px rgba(88, 166, 255, 0.35));
         animation: float 6s ease-in-out infinite;
       }
       @keyframes float {
@@ -516,11 +503,6 @@
       /* ── CTA ── */
       .cta-section {
         text-align: center;
-        background: radial-gradient(
-          ellipse 80% 60% at 50% 50%,
-          rgba(163, 113, 247, 0.08) 0%,
-          transparent 70%
-        );
       }
       .cta-section h2 {
         margin-bottom: 1rem;
