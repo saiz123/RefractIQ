@@ -1,149 +1,76 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <radialGradient id="bg-grad" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#1e1b4b"/>
-      <stop offset="100%" stop-color="#0a0a18"/>
-    </radialGradient>
-    <linearGradient id="conn-grad" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#8b5cf6"/>
-      <stop offset="100%" stop-color="#3b82f6"/>
-    </linearGradient>
-    <linearGradient id="fire-grad" x1="0" y1="1" x2="0" y2="0" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#dc2626"/>
-      <stop offset="45%" stop-color="#f97316"/>
-      <stop offset="100%" stop-color="#fbbf24"/>
-    </linearGradient>
-    <linearGradient id="hex-stroke" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#7c3aed"/>
-      <stop offset="100%" stop-color="#3b82f6"/>
-    </linearGradient>
-    <filter id="node-glow" x="-60%" y="-60%" width="220%" height="220%">
-      <feGaussianBlur stdDeviation="5" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="fire-glow" x="-80%" y="-80%" width="260%" height="260%">
+    <!-- Glow filters for colored circles -->
+    <filter id="glow-green" x="-60%" y="-60%" width="220%" height="220%">
       <feGaussianBlur stdDeviation="8" result="blur"/>
       <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
-    <filter id="outer-glow" x="-10%" y="-10%" width="120%" height="120%">
-      <feGaussianBlur stdDeviation="12" result="blur"/>
+    <filter id="glow-blue" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
       <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-purple" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Subtle prism shadow -->
+    <filter id="prism-shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="4" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.4"/>
     </filter>
   </defs>
 
-  <!-- Outer ambient glow -->
-  <circle cx="256" cy="256" r="230" fill="#4c1d95" opacity="0.12"/>
+  <!-- Dark background -->
+  <rect width="512" height="512" fill="#0D1117" rx="76"/>
 
-  <!-- Hexagon body -->
-  <!-- r=210: points at 90°,30°,330°,270°,210°,150° from center 256,256 -->
-  <!-- top: 256,46 | tr: 437.9,151 | br: 437.9,361 | bot: 256,466 | bl: 74.1,361 | tl: 74.1,151 -->
-  <polygon points="256,42 440,149 440,363 256,470 72,363 72,149"
-           fill="url(#bg-grad)"
-           stroke="url(#hex-stroke)" stroke-width="2.5"/>
+  <!-- Input beam — white horizontal ray entering from left -->
+  <line x1="34" y1="256" x2="175" y2="256"
+        stroke="#E6EDF3" stroke-width="4.5" stroke-linecap="round" opacity="0.92"/>
 
-  <!-- Inner hex decoration -->
-  <polygon points="256,95 390,170 390,342 256,417 122,342 122,170"
-           fill="none" stroke="#4c1d95" stroke-width="1" opacity="0.4"/>
+  <!-- ── Prism ── -->
+  <!-- Main front face: bright white, triangular, apex pointing right -->
+  <polygon
+    points="175,82 175,430 358,256"
+    fill="#E6EDF3"
+    filter="url(#prism-shadow)"/>
 
-  <!-- Agent node positions r=140 from center 256,256 -->
-  <!-- Top:     256, 116  -->
-  <!-- TR:      377.2, 186 -->
-  <!-- BR:      377.2, 326 -->
-  <!-- Bot:     256, 396  -->
-  <!-- BL:      134.8, 326 -->
-  <!-- TL:      134.8, 186 -->
+  <!-- 3D bottom face: darker gray parallelogram showing depth -->
+  <polygon
+    points="175,430 358,256 372,274 192,446"
+    fill="#8B949E"
+    opacity="0.65"/>
 
-  <!-- Outer ring connection lines -->
-  <g stroke="url(#conn-grad)" stroke-width="1.8" opacity="0.55">
-    <line x1="256" y1="116" x2="377" y2="186"/>
-    <line x1="377" y1="186" x2="377" y2="326"/>
-    <line x1="377" y1="326" x2="256" y2="396"/>
-    <line x1="256" y1="396" x2="135" y2="326"/>
-    <line x1="135" y1="326" x2="135" y2="186"/>
-    <line x1="135" y1="186" x2="256" y2="116"/>
-  </g>
+  <!-- Prism top-edge subtle highlight line -->
+  <line x1="175" y1="82" x2="358" y2="256"
+        stroke="#F0F6FF" stroke-width="1.5" opacity="0.5"/>
 
-  <!-- Hub spoke lines -->
-  <g stroke="#6d28d9" stroke-width="1" opacity="0.35">
-    <line x1="256" y1="256" x2="256" y2="116"/>
-    <line x1="256" y1="256" x2="377" y2="186"/>
-    <line x1="256" y1="256" x2="377" y2="326"/>
-    <line x1="256" y1="256" x2="256" y2="396"/>
-    <line x1="256" y1="256" x2="135" y2="326"/>
-    <line x1="256" y1="256" x2="135" y2="186"/>
-  </g>
+  <!-- ── Output beams from apex (358, 256) ── -->
 
-  <!-- ── Agent Nodes ── -->
+  <!-- Green beam — upper right, ~50° above horizontal -->
+  <line x1="358" y1="256" x2="454" y2="118"
+        stroke="#3FB950" stroke-width="4" stroke-linecap="round"/>
 
-  <!-- Intake — top — electric blue -->
-  <g filter="url(#node-glow)">
-    <circle cx="256" cy="116" r="22" fill="#1e3a8a"/>
-    <circle cx="256" cy="116" r="22" fill="none" stroke="#60a5fa" stroke-width="2.5"/>
-    <circle cx="256" cy="116" r="8"  fill="#93c5fd"/>
-  </g>
+  <!-- Blue beam — middle right, ~12° above horizontal -->
+  <line x1="358" y1="256" x2="468" y2="224"
+        stroke="#58A6FF" stroke-width="4" stroke-linecap="round"/>
 
-  <!-- Architect — top-right — violet -->
-  <g filter="url(#node-glow)">
-    <circle cx="377" cy="186" r="22" fill="#4c1d95"/>
-    <circle cx="377" cy="186" r="22" fill="none" stroke="#a78bfa" stroke-width="2.5"/>
-    <circle cx="377" cy="186" r="8"  fill="#c4b5fd"/>
-  </g>
+  <!-- Purple beam — lower right, ~48° below horizontal -->
+  <line x1="358" y1="256" x2="452" y2="386"
+        stroke="#A371F7" stroke-width="4" stroke-linecap="round"/>
 
-  <!-- Builder — bottom-right — emerald -->
-  <g filter="url(#node-glow)">
-    <circle cx="377" cy="326" r="22" fill="#064e3b"/>
-    <circle cx="377" cy="326" r="22" fill="none" stroke="#34d399" stroke-width="2.5"/>
-    <circle cx="377" cy="326" r="8"  fill="#6ee7b7"/>
-  </g>
+  <!-- ── Endpoint circles ── -->
 
-  <!-- Reviewer — bottom — amber -->
-  <g filter="url(#node-glow)">
-    <circle cx="256" cy="396" r="22" fill="#78350f"/>
-    <circle cx="256" cy="396" r="22" fill="none" stroke="#fbbf24" stroke-width="2.5"/>
-    <circle cx="256" cy="396" r="8"  fill="#fde68a"/>
-  </g>
+  <!-- Green circle -->
+  <circle cx="454" cy="118" r="26" fill="#3FB950" filter="url(#glow-green)"/>
 
-  <!-- Evaluator — bottom-left — cyan -->
-  <g filter="url(#node-glow)">
-    <circle cx="135" cy="326" r="22" fill="#0e4f6c"/>
-    <circle cx="135" cy="326" r="22" fill="none" stroke="#22d3ee" stroke-width="2.5"/>
-    <circle cx="135" cy="326" r="8"  fill="#67e8f9"/>
-  </g>
+  <!-- Blue circle with checkmark -->
+  <circle cx="468" cy="224" r="26" fill="#58A6FF" filter="url(#glow-blue)"/>
+  <!-- White checkmark (verification style) -->
+  <path d="M456,224 L464,233 L481,214"
+        stroke="white" stroke-width="3.5"
+        stroke-linecap="round" stroke-linejoin="round"
+        fill="none"/>
 
-  <!-- Doc — top-left — rose -->
-  <g filter="url(#node-glow)">
-    <circle cx="135" cy="186" r="22" fill="#7f1d1d"/>
-    <circle cx="135" cy="186" r="22" fill="none" stroke="#f87171" stroke-width="2.5"/>
-    <circle cx="135" cy="186" r="8"  fill="#fca5a5"/>
-  </g>
-
-  <!-- ── Central Forge Flame ── -->
-  <g filter="url(#fire-glow)">
-    <!-- Outer flame body -->
-    <path d="M256,188
-             C256,188 222,216 224,244
-             C225.5,262 234,274 247,281
-             C241,265 245,251 256,247
-             C267,251 271,265 265,281
-             C278,274 286.5,262 288,244
-             C290,216 256,188 256,188 Z"
-          fill="url(#fire-grad)"/>
-    <!-- Inner flame (bright core) -->
-    <path d="M256,208
-             C256,208 240,222 241,237
-             C242,246 247,253 254,257
-             C251,248 253,241 256,238
-             C259,241 261,248 258,257
-             C265,253 270,246 271,237
-             C272,222 256,208 256,208 Z"
-          fill="#fef9c3" opacity="0.95"/>
-    <!-- Tip spark -->
-    <circle cx="256" cy="195" r="4" fill="#fde047" opacity="0.8"/>
-  </g>
-
-  <!-- Central hub (orchestrator) -->
-  <circle cx="256" cy="256" r="28" fill="#0a0a18" stroke="#7c3aed" stroke-width="2"/>
-  <circle cx="256" cy="256" r="10" fill="#7c3aed"/>
-  <circle cx="256" cy="256" r="5"  fill="#c4b5fd"/>
+  <!-- Purple circle -->
+  <circle cx="452" cy="386" r="26" fill="#A371F7" filter="url(#glow-purple)"/>
 
 </svg>
