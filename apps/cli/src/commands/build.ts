@@ -4,7 +4,7 @@ import ora from 'ora';
 import { openDbAsync } from '../db/client.js';
 import { saveRun } from '../db/runs.js';
 import { runBuild } from '../runner.js';
-import { printCostTable } from '../display.js';
+import { printCostTable, printContextStats } from '../display.js';
 
 export const buildCommand = new Command('build')
   .description('Run the full AI pipeline to build a project from an idea')
@@ -50,6 +50,7 @@ export const buildCommand = new Command('build')
 
       console.log(chalk.dim(`  Output: ${result.outputPath}`));
       printCostTable(result);
+      printContextStats(result);
     } catch (err) {
       spinner.stop();
       const msg = err instanceof Error ? err.message : String(err);

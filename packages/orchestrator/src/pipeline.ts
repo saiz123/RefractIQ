@@ -13,6 +13,7 @@ import type {
   ReviewArtifact,
   DocArtifact,
   ModelInfo,
+  ContextStats,
 } from '@agentforge/shared';
 import { BudgetExceededError, NoCapableModelError, logger } from '@agentforge/shared';
 import { CacheAwareMessageBuilder } from '@agentforge/token-engine';
@@ -32,6 +33,13 @@ import {
 export class Orchestrator {
   private lastBuilderProvider: string | undefined;
   private lastSuggestedTestCommand: string | undefined;
+  private contextAccumulator: ContextStats = {
+    totalFilesScored: 0,
+    filesIncluded: 0,
+    filesExcluded: 0,
+    summarizedFiles: 0,
+    estimatedTokensSaved: 0,
+  };
 
   constructor(private config: OrchestratorConfig) {}
 
@@ -39,6 +47,15 @@ export class Orchestrator {
     const runId = randomUUID();
     const startMs = Date.now();
     const stages: StageResult[] = [];
+
+    // Reset accumulator in case the same orchestrator instance is reused
+    this.contextAccumulator = {
+      totalFilesScored: 0,
+      filesIncluded: 0,
+      filesExcluded: 0,
+      summarizedFiles: 0,
+      estimatedTokensSaved: 0,
+    };
 
     logger.info(`Starting run ${runId}`, { userPrompt, budgetUsd: runConfig.budgetUsd });
 
@@ -146,6 +163,8 @@ export class Orchestrator {
         totalCostUsd: this.config.costTracker.totalCostUsd(),
         durationMs: totalDurationMs,
         outputPath: runConfig.outputDir,
+        contextStats:
+          this.contextAccumulator.totalFilesScored > 0 ? { ...this.contextAccumulator } : undefined,
       };
 
       logger.info(`Run ${runId} complete`, {
@@ -390,6 +409,14 @@ export class Orchestrator {
           task.description
         );
         contextPack = this.config.contextEngine.formatForPrompt(pack);
+        // Accumulate context stats
+        this.contextAccumulator.totalFilesScored +=
+          pack.filesIncluded.length + pack.filesExcluded.length;
+        this.contextAccumulator.filesIncluded += pack.filesIncluded.length;
+        this.contextAccumulator.filesExcluded += pack.filesExcluded.length;
+        this.contextAccumulator.summarizedFiles += pack.summarizedFiles.length;
+        // Rough estimate: excluded files average ~500 tokens each
+        this.contextAccumulator.estimatedTokensSaved += pack.filesExcluded.length * 500;
       } catch {
         // Context engine failure is non-fatal — fall back to clarifiedGoal
       }

@@ -611,11 +611,11 @@
         ⚡ Open Source &nbsp;·&nbsp; Self-Hosted &nbsp;·&nbsp; MIT License
       </div>
       <img class="hero-logo" src="logo.svg" alt="AgentForge" />
-      <h1>Your AI Software Team.<br />Your API Keys. Your Rules.</h1>
+      <h1>Build software with a team<br />of AI models.</h1>
       <p>
-        AgentForge routes each agent role — Intake, Architect, Builder, Reviewer, Documentation — to
-        the cheapest capable model across all your AI subscriptions. Structured artifacts. No
-        free-form chat. Token-optimized.
+        Open-source, self-hosted AI software-team orchestrator. Routes each agent role to the
+        cheapest capable model across all your providers. Structured artifact handoffs. Transparent
+        cost per step.
       </p>
       <div class="hero-actions">
         <a class="btn-primary" href="#quickstart">Get started</a>
@@ -633,7 +633,7 @@
           <div class="stat-label">AI Providers</div>
         </div>
         <div class="stat">
-          <div class="stat-num">230</div>
+          <div class="stat-num">243</div>
           <div class="stat-label">Tests Passing</div>
         </div>
         <div class="stat">
@@ -808,6 +808,169 @@
             Any OpenAI-compatible
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ── Comparison ── -->
+    <section id="compare">
+      <div class="container">
+        <div class="section-tag">vs. Alternatives</div>
+        <h2>Not another coding assistant.<br />The orchestration layer.</h2>
+        <p class="section-sub">
+          AgentForge sits between your providers and your project — routing work, tracking cost, and
+          structuring handoffs so each model does what it's cheapest and best at.
+        </p>
+        <div class="overflow-hidden rounded-lg border border-gray-800 mt-8">
+          <table style="width: 100%; font-size: 0.82rem; border-collapse: collapse">
+            <thead>
+              <tr style="border-bottom: 1px solid #1e1b3a; background: #0f0f1a">
+                <th
+                  style="text-align: left; padding: 0.75rem 1rem; color: #64748b; font-weight: 600"
+                ></th>
+                <th
+                  style="
+                    text-align: center;
+                    padding: 0.75rem 0.5rem;
+                    color: #a78bfa;
+                    font-weight: 700;
+                  "
+                >
+                  AgentForge
+                </th>
+                <th
+                  style="
+                    text-align: center;
+                    padding: 0.75rem 0.5rem;
+                    color: #64748b;
+                    font-weight: 500;
+                  "
+                >
+                  Claude Code / Codex
+                </th>
+                <th
+                  style="
+                    text-align: center;
+                    padding: 0.75rem 0.5rem;
+                    color: #64748b;
+                    font-weight: 500;
+                  "
+                >
+                  Aider
+                </th>
+                <th
+                  style="
+                    text-align: center;
+                    padding: 0.75rem 0.5rem;
+                    color: #64748b;
+                    font-weight: 500;
+                  "
+                >
+                  OpenHands
+                </th>
+                <th
+                  style="
+                    text-align: center;
+                    padding: 0.75rem 0.5rem;
+                    color: #64748b;
+                    font-weight: 500;
+                  "
+                >
+                  LangGraph/CrewAI
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid #1e1b3a">
+                <td style="padding: 0.65rem 1rem; color: #94a3b8">Multi-provider routing</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #22c55e">
+                  ✅ All providers
+                </td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #ef4444">
+                  ❌ Vendor-locked
+                </td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #f59e0b">
+                  ⚠️ Limited
+                </td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #f59e0b">⚠️ Some</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #64748b">Depends</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #1e1b3a; background: #0f0f1a30">
+                <td style="padding: 0.65rem 1rem; color: #94a3b8">Structured role handoffs</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #22c55e">
+                  ✅ JSON artifacts
+                </td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #ef4444">
+                  ❌ Single agent
+                </td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #f59e0b">
+                  ⚠️ 2-model
+                </td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #f59e0b">
+                  ⚠️ Single agent
+                </td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #64748b">
+                  Framework
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid #1e1b3a">
+                <td style="padding: 0.65rem 1rem; color: #94a3b8">Per-step cost tracking</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #22c55e">
+                  ✅ Per stage
+                </td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #ef4444">❌</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #ef4444">❌</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #f59e0b">
+                  ⚠️ Partial
+                </td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #64748b">Depends</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #1e1b3a; background: #0f0f1a30">
+                <td style="padding: 0.65rem 1rem; color: #94a3b8">Context pruning</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #22c55e">
+                  ✅ File scoring
+                </td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #ef4444">
+                  ❌ Full context
+                </td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #f59e0b">⚠️</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #f59e0b">⚠️</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #64748b">Depends</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #1e1b3a">
+                <td style="padding: 0.65rem 1rem; color: #94a3b8">Self-hosted dashboard</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #22c55e">
+                  ✅ Docker + Next.js
+                </td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #ef4444">❌</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #ef4444">❌</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #f59e0b">
+                  ⚠️ Cloud
+                </td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #ef4444">❌</td>
+              </tr>
+              <tr style="background: #0f0f1a30">
+                <td style="padding: 0.65rem 1rem; color: #94a3b8">Ready-to-run product</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #22c55e">
+                  ✅ One command
+                </td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #22c55e">✅</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #22c55e">✅</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #22c55e">✅</td>
+                <td style="text-align: center; padding: 0.65rem 0.5rem; color: #ef4444">
+                  ❌ Build it yourself
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: #475569">
+          <a
+            href="https://github.com/saiz123/AgentForge/blob/main/docs/vs-competitors.md"
+            target="_blank"
+            style="color: #a78bfa"
+            >Read the full comparison →</a
+          >
+        </p>
       </div>
     </section>
 

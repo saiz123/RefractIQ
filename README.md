@@ -1,11 +1,12 @@
 <div align="center">
   <img src="docs/logo.svg" width="120" alt="AgentForge logo"/>
   <h1>AgentForge</h1>
-  <p><strong>Open-source, self-hosted AI software team platform.</strong></p>
-  <p>Route each agent role to the cheapest capable model across all your AI subscriptions.<br/>Structured artifact handoffs. No free-form agent chat. Token-optimized.</p>
+  <p><strong>Build software with a team of AI models, not one expensive chatbot.</strong></p>
+  <p>Open-source, self-hosted AI software-team orchestrator. Routes each agent role to the cheapest capable model across all your providers. Structured artifact handoffs. Transparent cost per step.</p>
 
   <p>
-    <img src="https://img.shields.io/badge/tests-230%20passing-22c55e?style=flat-square" alt="230 tests passing"/>
+    <img src="https://img.shields.io/badge/tests-243%20passing-22c55e?style=flat-square" alt="243 tests passing"/>
+    <img src="https://github.com/saiz123/AgentForge/actions/workflows/ci.yml/badge.svg" alt="CI"/>
     <img src="https://img.shields.io/badge/license-MIT-7c3aed?style=flat-square" alt="MIT License"/>
     <img src="https://img.shields.io/badge/node-%3E%3D20-3b82f6?style=flat-square" alt="Node 20+"/>
     <img src="https://img.shields.io/badge/status-alpha-f59e0b?style=flat-square" alt="Alpha"/>
@@ -69,6 +70,24 @@ Report (SQLite + CLI table)
 
 ---
 
+## How AgentForge compares
+
+AgentForge is not a general coding assistant. It is the orchestration and cost-control layer for developers who already use multiple AI providers.
+
+| | AgentForge | Claude Code / Codex CLI | Aider | OpenHands | LangGraph / CrewAI |
+|---|---|---|---|---|---|
+| Multi-provider routing | ✅ BYOK, all providers | ❌ Vendor-locked | ⚠️ Limited | ⚠️ Some | Depends on impl. |
+| Structured role handoffs | ✅ JSON artifacts | ❌ Single agent | ⚠️ 2-model only | ⚠️ Single agent | Framework only |
+| Per-step cost tracking | ✅ Per stage, per model | ❌ | ❌ | ⚠️ Partial | Depends on impl. |
+| Context pruning | ✅ File relevance scoring | ❌ Full context | ⚠️ Partial | ⚠️ Partial | Depends on impl. |
+| Self-hosted dashboard | ✅ Docker + Next.js | ❌ | ❌ | ⚠️ Cloud option | ❌ |
+| Open-source MIT | ✅ | ✅ (Claude Code) | ✅ | ✅ | ✅ (framework) |
+| Ready-to-run product | ✅ One command | ✅ | ✅ | ✅ | ❌ Build it yourself |
+
+See [docs/vs-competitors.md](docs/vs-competitors.md) for a detailed breakdown.
+
+---
+
 ## Status
 
 **v0.1 alpha — all 10 build phases complete. Security audit reviewed and fixed.**
@@ -87,7 +106,7 @@ Report (SQLite + CLI table)
 | 9 — Web Dashboard | ✅ Done | Next.js 16 + Hono API, run history, cost charts |
 | 10 — Docker | ✅ Done | Full Docker Compose self-hosting |
 
-**230 tests passing** across 28 test files. Security audit (June 2026) resolved: 15 of 18 findings fixed including all 6 critical issues.
+**243 tests passing** across 28 test files. Security audit (June 2026) resolved: 15 of 18 findings fixed including all 6 critical issues.
 
 ---
 
@@ -188,6 +207,8 @@ docker compose run --rm cli build "your project idea"
 - [Security](docs/security.md) — key handling, sandboxing, secret redaction
 - [Self-Hosting](docs/self-hosting.md) — Docker Compose setup
 - [Development](docs/development.md) — how to contribute and extend AgentForge
+- [Competitive comparison](docs/vs-competitors.md) — how AgentForge differs from Claude Code, Aider, OpenHands, LangGraph, and LiteLLM
+- [Provider benchmarks](docs/provider-benchmarks.md) — expected cost per task type per provider
 
 ---
 

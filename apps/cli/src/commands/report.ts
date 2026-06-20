@@ -32,6 +32,9 @@ export const reportCommand = new Command('report')
         console.log(`Tokens:  ${run.totalInputTokens} in / ${run.totalOutputTokens} out`);
         console.log(`Output:  ${run.outputPath}`);
 
+        // contextStats is on RunResult but NOT stored in SQLite (the schema doesn't have it).
+        // It only shows up in the live build output, not in historical report lookups.
+
         if (stages.length > 0) {
           console.log(chalk.bold('\nStages:'));
           const colW = [18, 16, 18, 10, 10];

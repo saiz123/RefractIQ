@@ -34,6 +34,14 @@ export interface StageResult {
   durationMs: number;
 }
 
+export interface ContextStats {
+  totalFilesScored: number;
+  filesIncluded: number;
+  filesExcluded: number;
+  summarizedFiles: number;
+  estimatedTokensSaved: number;
+}
+
 export interface RunResult {
   id: string;
   status: RunStatus;
@@ -44,4 +52,5 @@ export interface RunResult {
   totalCostUsd: number;
   durationMs: number;
   outputPath: string;
+  contextStats?: ContextStats; // populated when context engine was active
 }

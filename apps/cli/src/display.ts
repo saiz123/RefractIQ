@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import type { RunResult } from '@agentforge/shared';
+import type { RunResult, ContextStats } from '@agentforge/shared';
 
 export function printCostTable(result: RunResult): void {
   console.log(chalk.bold('\nCost breakdown:'));
@@ -46,4 +46,27 @@ export function printCostTable(result: RunResult): void {
 
   const durationSec = (result.durationMs / 1000).toFixed(1);
   console.log(chalk.dim(`\nDuration: ${durationSec}s`));
+
+  if (result.totalOutputTokens > 0 && result.totalCostUsd > 0) {
+    const costPer1k = (result.totalCostUsd / result.totalOutputTokens) * 1000;
+    console.log(
+      chalk.dim(`\nEfficiency: ${chalk.white(`$${costPer1k.toFixed(4)}`)} per 1,000 output tokens`)
+    );
+  }
+}
+
+export function printContextStats(result: RunResult): void {
+  const s: ContextStats | undefined = result.contextStats;
+  if (!s || s.totalFilesScored === 0) return;
+
+  console.log(chalk.bold('\nContext optimization:'));
+  const saved =
+    s.estimatedTokensSaved > 0 ? `~${s.estimatedTokensSaved.toLocaleString()} tokens saved` : '';
+  console.log(
+    `  ${chalk.dim('Files scored:')}  ${String(s.totalFilesScored).padStart(4)}` +
+      `  ${chalk.dim('Included:')} ${chalk.green(String(s.filesIncluded).padStart(4))}` +
+      `  ${chalk.dim('Excluded:')} ${chalk.dim(String(s.filesExcluded).padStart(4))}` +
+      (s.summarizedFiles > 0 ? `  ${chalk.dim('Summarized:')} ${s.summarizedFiles}` : '') +
+      (saved ? `\n  ${chalk.dim('Estimated tokens saved:')} ${chalk.cyan(saved)}` : '')
+  );
 }
