@@ -27,7 +27,7 @@ RUN pnpm install --no-frozen-lockfile --ignore-scripts
 FROM deps AS builder
 WORKDIR /app
 COPY . .
-RUN pnpm build
+RUN pnpm -r --filter @refractiq/api... --filter @refractiq/cli... build
 
 # ── Stage 3: api runtime ───────────────────────────────────────────────────────
 FROM node:20-alpine AS api
