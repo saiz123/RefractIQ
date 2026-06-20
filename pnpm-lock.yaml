@@ -35,39 +35,39 @@ importers:
 
   apps/cli:
     dependencies:
-      '@agentforge/context-engine':
-        specifier: workspace:*
-        version: link:../../packages/context-engine
-      '@agentforge/cost-engine':
-        specifier: workspace:*
-        version: link:../../packages/cost-engine
-      '@agentforge/evaluator':
-        specifier: workspace:*
-        version: link:../../packages/evaluator
-      '@agentforge/model-router':
-        specifier: workspace:*
-        version: link:../../packages/model-router
-      '@agentforge/orchestrator':
-        specifier: workspace:*
-        version: link:../../packages/orchestrator
-      '@agentforge/providers':
-        specifier: workspace:*
-        version: link:../../packages/providers
-      '@agentforge/shared':
-        specifier: workspace:*
-        version: link:../../packages/shared
-      '@agentforge/token-engine':
-        specifier: workspace:*
-        version: link:../../packages/token-engine
-      '@agentforge/workspace-engine':
-        specifier: workspace:*
-        version: link:../../packages/workspace-engine
       '@inquirer/prompts':
         specifier: ^7.0.0
         version: 7.10.1(@types/node@22.19.21)
       '@libsql/client':
         specifier: ^0.14.0
         version: 0.14.0
+      '@refractiq/context-engine':
+        specifier: workspace:*
+        version: link:../../packages/context-engine
+      '@refractiq/cost-engine':
+        specifier: workspace:*
+        version: link:../../packages/cost-engine
+      '@refractiq/evaluator':
+        specifier: workspace:*
+        version: link:../../packages/evaluator
+      '@refractiq/model-router':
+        specifier: workspace:*
+        version: link:../../packages/model-router
+      '@refractiq/orchestrator':
+        specifier: workspace:*
+        version: link:../../packages/orchestrator
+      '@refractiq/providers':
+        specifier: workspace:*
+        version: link:../../packages/providers
+      '@refractiq/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
+      '@refractiq/token-engine':
+        specifier: workspace:*
+        version: link:../../packages/token-engine
+      '@refractiq/workspace-engine':
+        specifier: workspace:*
+        version: link:../../packages/workspace-engine
       chalk:
         specifier: ^5.3.0
         version: 5.6.2
@@ -139,10 +139,10 @@ importers:
 
   packages/context-engine:
     dependencies:
-      '@agentforge/shared':
+      '@refractiq/shared':
         specifier: workspace:*
         version: link:../shared
-      '@agentforge/token-engine':
+      '@refractiq/token-engine':
         specifier: workspace:*
         version: link:../token-engine
     devDependencies:
@@ -158,7 +158,7 @@ importers:
 
   packages/cost-engine:
     dependencies:
-      '@agentforge/shared':
+      '@refractiq/shared':
         specifier: workspace:*
         version: link:../shared
     devDependencies:
@@ -174,13 +174,13 @@ importers:
 
   packages/evaluator:
     dependencies:
-      '@agentforge/shared':
+      '@refractiq/shared':
         specifier: workspace:*
         version: link:../shared
-      '@agentforge/token-engine':
+      '@refractiq/token-engine':
         specifier: workspace:*
         version: link:../token-engine
-      '@agentforge/workspace-engine':
+      '@refractiq/workspace-engine':
         specifier: workspace:*
         version: link:../workspace-engine
     devDependencies:
@@ -196,16 +196,16 @@ importers:
 
   packages/model-router:
     dependencies:
-      '@agentforge/cost-engine':
+      '@refractiq/cost-engine':
         specifier: workspace:*
         version: link:../cost-engine
-      '@agentforge/providers':
+      '@refractiq/providers':
         specifier: workspace:*
         version: link:../providers
-      '@agentforge/shared':
+      '@refractiq/shared':
         specifier: workspace:*
         version: link:../shared
-      '@agentforge/token-engine':
+      '@refractiq/token-engine':
         specifier: workspace:*
         version: link:../token-engine
     devDependencies:
@@ -221,22 +221,22 @@ importers:
 
   packages/orchestrator:
     dependencies:
-      '@agentforge/context-engine':
+      '@refractiq/context-engine':
         specifier: workspace:*
         version: link:../context-engine
-      '@agentforge/cost-engine':
+      '@refractiq/cost-engine':
         specifier: workspace:*
         version: link:../cost-engine
-      '@agentforge/model-router':
+      '@refractiq/model-router':
         specifier: workspace:*
         version: link:../model-router
-      '@agentforge/providers':
+      '@refractiq/providers':
         specifier: workspace:*
         version: link:../providers
-      '@agentforge/shared':
+      '@refractiq/shared':
         specifier: workspace:*
         version: link:../shared
-      '@agentforge/token-engine':
+      '@refractiq/token-engine':
         specifier: workspace:*
         version: link:../token-engine
     devDependencies:
@@ -252,15 +252,15 @@ importers:
 
   packages/providers:
     dependencies:
-      '@agentforge/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@anthropic-ai/sdk':
         specifier: ^0.27.0
         version: 0.27.3
       '@google/generative-ai':
         specifier: ^0.21.0
         version: 0.21.0
+      '@refractiq/shared':
+        specifier: workspace:*
+        version: link:../shared
       openai:
         specifier: ^4.67.0
         version: 4.104.0(ws@8.21.0)(zod@4.4.3)
@@ -289,7 +289,7 @@ importers:
 
   packages/token-engine:
     dependencies:
-      '@agentforge/shared':
+      '@refractiq/shared':
         specifier: workspace:*
         version: link:../shared
     devDependencies:
@@ -305,7 +305,7 @@ importers:
 
   packages/workspace-engine:
     dependencies:
-      '@agentforge/shared':
+      '@refractiq/shared':
         specifier: workspace:*
         version: link:../shared
     devDependencies:
@@ -321,15 +321,15 @@ importers:
 
   services/api:
     dependencies:
-      '@agentforge/shared':
-        specifier: workspace:*
-        version: link:../../packages/shared
       '@hono/node-server':
         specifier: ^1.12.0
         version: 1.19.14(hono@4.12.26)
       '@libsql/client':
         specifier: ^0.14.0
         version: 0.14.0
+      '@refractiq/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       drizzle-orm:
         specifier: ^0.33.0
         version: 0.33.0(@libsql/client@0.14.0)(@types/better-sqlite3@7.6.13)(@types/react@19.2.17)(better-sqlite3@11.10.0)(react@19.2.4)

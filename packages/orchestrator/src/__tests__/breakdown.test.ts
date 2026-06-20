@@ -1,11 +1,11 @@
-import { describe, it, expect } from 'vitest';
+﻿import { describe, it, expect } from 'vitest';
 import { Orchestrator } from '../pipeline.js';
 import type { OrchestratorConfig } from '../config.js';
-import { ProviderRegistry } from '@agentforge/providers';
-import { ModelRouter } from '@agentforge/model-router';
-import { BudgetEnforcer, DEFAULT_BUDGET_CONFIG } from '@agentforge/token-engine';
-import { RunCostTracker } from '@agentforge/cost-engine';
-import type { ModelInfo, ChatRequest, ChatResponse, Message } from '@agentforge/shared';
+import { ProviderRegistry } from '@refractiq/providers';
+import { ModelRouter } from '@refractiq/model-router';
+import { BudgetEnforcer, DEFAULT_BUDGET_CONFIG } from '@refractiq/token-engine';
+import { RunCostTracker } from '@refractiq/cost-engine';
+import type { ModelInfo, ChatRequest, ChatResponse, Message } from '@refractiq/shared';
 
 // Minimal mock adapter for config construction
 class MinimalMockAdapter {

@@ -1,7 +1,7 @@
 {
-  "name": "@agentforge/shared",
+  "name": "@refractiq/shared",
   "version": "0.1.0",
-  "description": "Shared types, schemas, errors, logger, and config for AgentForge",
+  "description": "Shared types, schemas, errors, logger, and config for RefractIQ",
   "type": "module",
   "exports": {
     ".": {

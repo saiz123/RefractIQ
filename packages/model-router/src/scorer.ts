@@ -1,5 +1,5 @@
-import type { ModelInfo } from '@agentforge/shared';
-import type { RouterRequest, TaskTier } from '@agentforge/shared';
+﻿import type { ModelInfo } from '@refractiq/shared';
+import type { RouterRequest, TaskTier } from '@refractiq/shared';
 import { TASK_TIERS } from './tiers.js';
 
 /**

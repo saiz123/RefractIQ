@@ -1,5 +1,5 @@
-import { execSync, execFileSync } from 'node:child_process';
-import { CommandBlockedError } from '@agentforge/shared';
+﻿import { execSync, execFileSync } from 'node:child_process';
+import { CommandBlockedError } from '@refractiq/shared';
 
 export interface GitStatus {
   modified: string[];
@@ -22,8 +22,8 @@ export class GitManager {
 
   init(): void {
     execSync('git init', { cwd: this.cwd, stdio: 'pipe' });
-    execSync('git config user.email "agentforge@local"', { cwd: this.cwd, stdio: 'pipe' });
-    execSync('git config user.name "AgentForge"', { cwd: this.cwd, stdio: 'pipe' });
+    execSync('git config user.email "refractiq@local"', { cwd: this.cwd, stdio: 'pipe' });
+    execSync('git config user.name "RefractIQ"', { cwd: this.cwd, stdio: 'pipe' });
   }
 
   add(pathSpec = '.'): void {

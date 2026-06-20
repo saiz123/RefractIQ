@@ -1,8 +1,8 @@
-# Provider Benchmarks
+﻿# Provider Benchmarks
 
-Expected cost ranges for a typical AgentForge build run. Estimates are based on model pricing as of mid-2026 and a "reverse a string CLI" sized project (~500 tokens input per stage, ~300 tokens output).
+Expected cost ranges for a typical RefractIQ build run. Estimates are based on model pricing as of mid-2026 and a "reverse a string CLI" sized project (~500 tokens input per stage, ~300 tokens output).
 
-**AgentForge automatically routes to cheapest capable model per stage.** These tables show what to expect when mixing providers.
+**RefractIQ automatically routes to cheapest capable model per stage.** These tables show what to expect when mixing providers.
 
 ---
 
@@ -36,11 +36,11 @@ Expected cost ranges for a typical AgentForge build run. Estimates are based on 
 
 2. **Use Ollama for development** — Free local inference for iterating on prompts and testing workflows before using cloud providers for final builds.
 
-3. **Set a budget** — `agentforge build "..." --budget 0.05` aborts before exceeding $0.05. Useful for experiments.
+3. **Set a budget** — `RefractIQ build "..." --budget 0.05` aborts before exceeding $0.05. Useful for experiments.
 
 4. **Let the router work** — The default tier assignments (cheap for Intake/Doc, mid for Architecture/Review, strong for Build/Repair) are tuned to minimize cost while maintaining quality.
 
-5. **Dry-run first** — `agentforge build "..." --dry-run` runs only Intake + Architecture stages to verify the plan before spending on the full build.
+5. **Dry-run first** — `RefractIQ build "..." --dry-run` runs only Intake + Architecture stages to verify the plan before spending on the full build.
 
 ---
 

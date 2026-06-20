@@ -1,6 +1,6 @@
-import type { AgentCall } from './types.js';
-import type { RequirementsArtifact, TestArtifact, ReviewArtifact } from '@agentforge/shared';
-import { safeParseAgentJson } from '@agentforge/shared';
+﻿import type { AgentCall } from './types.js';
+import type { RequirementsArtifact, TestArtifact, ReviewArtifact } from '@refractiq/shared';
+import { safeParseAgentJson } from '@refractiq/shared';
 import { REVIEWER_SYSTEM } from './prompts.js';
 
 export interface ReviewerInput {

@@ -1,4 +1,4 @@
-import type { StageType } from '@agentforge/shared';
+﻿import type { StageType } from '@refractiq/shared';
 
 export interface StageSpend {
   stage: StageType;
@@ -40,7 +40,7 @@ export class RunCostTracker {
     return this.entries;
   }
 
-  /** Summary table rows for agentforge report */
+  /** Summary table rows for refractiq report */
   toReportRows(): Array<{
     stage: string;
     provider: string;

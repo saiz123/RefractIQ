@@ -1,6 +1,6 @@
-# Example: Next.js Todo App
+﻿# Example: Next.js Todo App
 
-AgentForge building a React frontend from scratch.
+RefractIQ building a React frontend from scratch.
 
 ## Prompt
 

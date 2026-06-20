@@ -1,5 +1,5 @@
-import { resolve, normalize, relative } from 'node:path';
-import { WorkspaceSecurityError, CommandBlockedError } from '@agentforge/shared';
+﻿import { resolve, normalize, relative } from 'node:path';
+import { WorkspaceSecurityError, CommandBlockedError } from '@refractiq/shared';
 
 /**
  * Resolve a user-provided path relative to rootDir.

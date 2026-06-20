@@ -1,8 +1,8 @@
-# AgentForge — CLAUDE.md
+﻿# RefractIQ — CLAUDE.md
 
 ## What this is
 
-AgentForge is an open-source self-hosted AI software team platform. Users register API keys for multiple AI providers (Anthropic, OpenAI, Google Gemini, Ollama). The system routes each agent task to the cheapest capable model across all registered providers and builds software through a structured artifact pipeline.
+RefractIQ is an open-source self-hosted AI software team platform. Users register API keys for multiple AI providers (Anthropic, OpenAI, Google Gemini, Ollama). The system routes each agent task to the cheapest capable model across all registered providers and builds software through a structured artifact pipeline.
 
 ## Monorepo structure
 
@@ -21,7 +21,7 @@ tests/e2e/  end-to-end tests using MockAdapter (zero real API calls)
 
 1. Agents never call each other. The orchestrator controls all handoffs via structured JSON artifacts: `requirements.json` → `architecture.json` → `task-list.json` → `context-pack.json` + `code-diff` → `test-result.json` → `review.json` → `final-report.md`.
 
-2. API keys are never stored in `.agentforge/config.json`, SQLite, or log files. Keys come from environment variables or `.env` only. The `SecretRedactor` in `packages/shared` strips known key patterns from all log output.
+2. API keys are never stored in `.RefractIQ/config.json`, SQLite, or log files. Keys come from environment variables or `.env` only. The `SecretRedactor` in `packages/shared` strips known key patterns from all log output.
 
 3. The context-engine never sends the full repo. It scores files for relevance and returns only the top-K chunks within a token budget cap.
 
@@ -53,7 +53,7 @@ pnpm test                                      # run all tests with Vitest
 pnpm lint                                      # ESLint all TypeScript files
 pnpm typecheck                                 # tsc --noEmit across all packages
 pnpm format                                    # Prettier format
-pnpm --filter @agentforge/providers test       # test a single package
+pnpm --filter @RefractIQ/providers test       # test a single package
 ```
 
 ## Key types (single source of truth in packages/shared)

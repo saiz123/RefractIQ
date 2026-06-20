@@ -1,6 +1,6 @@
-# Self-Hosting AgentForge
+﻿# Self-Hosting RefractIQ
 
-AgentForge is designed to run entirely on your own machine or server. No cloud account required.
+RefractIQ is designed to run entirely on your own machine or server. No cloud account required.
 
 ## Option 1 — Local (recommended for development)
 
@@ -12,8 +12,8 @@ AgentForge is designed to run entirely on your own machine or server. No cloud a
 
 1. **Clone and install**
    ```bash
-   git clone https://github.com/your-username/agentforge
-   cd agentforge
+   git clone https://github.com/your-username/RefractIQ
+   cd RefractIQ
    pnpm install
    pnpm build
    ```
@@ -40,7 +40,7 @@ AgentForge is designed to run entirely on your own machine or server. No cloud a
 5. **Launch dashboard** (optional)
    ```bash
    node apps/cli/dist/bin/cli.js serve   # API on :3001
-   pnpm --filter @agentforge/web dev      # UI on :3000
+   pnpm --filter @RefractIQ/web dev      # UI on :3000
    ```
 
 ---
@@ -55,8 +55,8 @@ AgentForge is designed to run entirely on your own machine or server. No cloud a
 
 1. **Clone**
    ```bash
-   git clone https://github.com/your-username/agentforge
-   cd agentforge
+   git clone https://github.com/your-username/RefractIQ
+   cd RefractIQ
    ```
 
 2. **Configure**
@@ -88,9 +88,9 @@ AgentForge is designed to run entirely on your own machine or server. No cloud a
 
 ### Data persistence
 
-All AgentForge state is stored in the `agentforge_data` Docker volume:
-- `.agentforge/config.json` — provider configs, budget settings
-- `.agentforge/agentforge.db` — run history, cost tracking
+All RefractIQ state is stored in the `RefractIQ_data` Docker volume:
+- `.RefractIQ/config.json` — provider configs, budget settings
+- `.RefractIQ/RefractIQ.db` — run history, cost tracking
 
 Generated output files are mounted at `./output/` on your host machine.
 
@@ -128,7 +128,7 @@ docker compose down -v     # stop + delete all data (irreversible)
 | `GEMINI_API_KEY` | If using Gemini | Gemini Flash / Pro |
 | `OPENROUTER_API_KEY` | If using OpenRouter | Multi-provider routing |
 | `OLLAMA_ENDPOINT` | If using Ollama | Default: `http://localhost:11434` |
-| `AGENTFORGE_DEFAULT_BUDGET_USD` | No | Default per-run budget (default: `0.50`) |
-| `AGENTFORGE_LOG_LEVEL` | No | `silent\|error\|warn\|info\|debug` (default: `info`) |
+| `RefractIQ_DEFAULT_BUDGET_USD` | No | Default per-run budget (default: `0.50`) |
+| `RefractIQ_LOG_LEVEL` | No | `silent\|error\|warn\|info\|debug` (default: `info`) |
 | `API_PORT` | No | API server port (default: `3001`) |
 | `WEB_PORT` | No | Web dashboard port (default: `3000`) |

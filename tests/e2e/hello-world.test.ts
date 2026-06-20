@@ -1,14 +1,14 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+﻿import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { ProviderRegistry } from '@agentforge/providers';
-import { ModelRouter } from '@agentforge/model-router';
-import { BudgetEnforcer, DEFAULT_BUDGET_CONFIG } from '@agentforge/token-engine';
-import { RunCostTracker } from '@agentforge/cost-engine';
-import { Orchestrator } from '@agentforge/orchestrator';
-import type { ModelInfo, ChatRequest, ChatResponse, Message } from '@agentforge/shared';
-import type { ProviderAdapter } from '@agentforge/providers';
+import { ProviderRegistry } from '@refractiq/providers';
+import { ModelRouter } from '@refractiq/model-router';
+import { BudgetEnforcer, DEFAULT_BUDGET_CONFIG } from '@refractiq/token-engine';
+import { RunCostTracker } from '@refractiq/cost-engine';
+import { Orchestrator } from '@refractiq/orchestrator';
+import type { ModelInfo, ChatRequest, ChatResponse, Message } from '@refractiq/shared';
+import type { ProviderAdapter } from '@refractiq/providers';
 
 // --- Fixtures ---
 
@@ -106,7 +106,7 @@ describe('E2E: hello-world pipeline', () => {
   let tmpDir: string;
 
   beforeEach(() => {
-    tmpDir = mkdtempSync(join(tmpdir(), 'agentforge-e2e-'));
+    tmpDir = mkdtempSync(join(tmpdir(), 'refractiq-e2e-'));
   });
 
   afterEach(() => {

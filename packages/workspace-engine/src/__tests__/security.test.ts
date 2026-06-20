@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest';
+﻿import { describe, it, expect } from 'vitest';
 import { resolve, join } from 'node:path';
 import { safePath, validateCommand } from '../security.js';
-import { WorkspaceSecurityError, CommandBlockedError } from '@agentforge/shared';
+import { WorkspaceSecurityError, CommandBlockedError } from '@refractiq/shared';
 
 // Use an absolute path that works on both Unix and Windows
 const ROOT = resolve('/workspace');

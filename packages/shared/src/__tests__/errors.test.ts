@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
-  AgentForgeError,
+  RefractIQError,
   ProviderError,
   NoCapableModelError,
   BudgetExceededError,
@@ -9,11 +9,11 @@ import {
   InitError,
 } from '../errors.js';
 
-describe('AgentForgeError', () => {
+describe('RefractIQError', () => {
   it('has correct code and name', () => {
-    const err = new AgentForgeError('something went wrong', 'TEST_CODE');
+    const err = new RefractIQError('something went wrong', 'TEST_CODE');
     expect(err.code).toBe('TEST_CODE');
-    expect(err.name).toBe('AgentForgeError');
+    expect(err.name).toBe('RefractIQError');
     expect(err.message).toBe('something went wrong');
     expect(err instanceof Error).toBe(true);
   });

@@ -3,6 +3,6 @@ import { app } from './app.js';
 
 const PORT = Number(process.env['PORT'] ?? 3001);
 
-console.log(`AgentForge API running at http://localhost:${PORT}`);
+console.log(`RefractIQ API running at http://localhost:${PORT}`);
 
 serve({ fetch: app.fetch, port: PORT });

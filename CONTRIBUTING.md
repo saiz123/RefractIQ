@@ -1,6 +1,6 @@
-# Contributing to AgentForge
+﻿# Contributing to RefractIQ
 
-AgentForge is open-source and welcomes contributions. Before contributing, please read this document and the [architecture docs](docs/architecture.md).
+RefractIQ is open-source and welcomes contributions. Before contributing, please read this document and the [architecture docs](docs/architecture.md).
 
 ## Key design constraints
 
@@ -15,8 +15,8 @@ These are non-negotiable:
 ## Setup
 
 ```bash
-git clone https://github.com/your-username/agentforge
-cd agentforge
+git clone https://github.com/your-username/RefractIQ
+cd RefractIQ
 pnpm install
 pnpm build
 pnpm test
@@ -48,5 +48,5 @@ shared → providers → token-engine → cost-engine → model-router
 2. Add model metadata in `packages/providers/src/models/<name>.json`
 3. Register in `packages/providers/src/registry.ts`
 4. Add mock HTTP tests
-5. Add to the `agentforge providers add` interactive prompt in `apps/cli/src/commands/providers.ts`
+5. Add to the `RefractIQ providers add` interactive prompt in `apps/cli/src/commands/providers.ts`
 6. Document in `docs/provider-design.md`

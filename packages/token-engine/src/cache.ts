@@ -1,4 +1,4 @@
-import type { Message } from '@agentforge/shared';
+﻿import type { Message } from '@refractiq/shared';
 
 export interface CacheableSection {
   content: string;

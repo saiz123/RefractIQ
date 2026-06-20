@@ -1,5 +1,5 @@
 {
-  "name": "@agentforge/evaluator",
+  "name": "@refractiq/evaluator",
   "version": "0.1.0",
   "description": "Test runner, pass/fail parsing, and log compression",
   "type": "module",
@@ -21,9 +21,9 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@agentforge/shared": "workspace:*",
-    "@agentforge/token-engine": "workspace:*",
-    "@agentforge/workspace-engine": "workspace:*"
+    "@refractiq/shared": "workspace:*",
+    "@refractiq/token-engine": "workspace:*",
+    "@refractiq/workspace-engine": "workspace:*"
   },
   "devDependencies": {
     "rimraf": "^6.0.0",

@@ -1,9 +1,9 @@
-import type { ProviderRegistry } from '@agentforge/providers';
-import type { ModelRouter } from '@agentforge/model-router';
-import type { BudgetEnforcer } from '@agentforge/token-engine';
-import type { RunCostTracker } from '@agentforge/cost-engine';
-import type { ContextEngine } from '@agentforge/context-engine';
-import type { AgentForgeConfig } from '@agentforge/shared';
+﻿import type { ProviderRegistry } from '@refractiq/providers';
+import type { ModelRouter } from '@refractiq/model-router';
+import type { BudgetEnforcer } from '@refractiq/token-engine';
+import type { RunCostTracker } from '@refractiq/cost-engine';
+import type { ContextEngine } from '@refractiq/context-engine';
+import type { RefractIQConfig } from '@refractiq/shared';
 import type { FileWriter, TestRunner } from './interfaces.js';
 
 export interface OrchestratorConfig {
@@ -18,6 +18,6 @@ export interface OrchestratorConfig {
   fileWriter?: FileWriter;
   testRunner?: TestRunner;
   contextEngine?: ContextEngine;
-  agentForgeConfig?: AgentForgeConfig; // for task overrides
+  refractiqConfig?: RefractIQConfig; // for task overrides
   averageLatencyByModel?: Record<string, number>; // for latency-aware routing
 }

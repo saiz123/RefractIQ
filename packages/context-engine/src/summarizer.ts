@@ -1,5 +1,5 @@
-import type { FileEntry } from './types.js';
-import { estimateTokens } from '@agentforge/token-engine';
+﻿import type { FileEntry } from './types.js';
+import { estimateTokens } from '@refractiq/token-engine';
 
 /** Contract for a function that summarizes a file using a cheap model call */
 export type FileSummarizerFn = (file: FileEntry) => Promise<string>;

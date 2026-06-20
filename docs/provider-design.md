@@ -1,4 +1,4 @@
-# Provider Design
+﻿# Provider Design
 
 > All provider adapters (Anthropic, OpenAI, Gemini, Ollama, Mock) are fully implemented.
 
@@ -49,7 +49,7 @@ Each provider has a JSON metadata file at `packages/providers/src/models/<provid
 }
 ```
 
-Users can override pricing in `.agentforge/config.json` under `models.overrides`.
+Users can override pricing in `.RefractIQ/config.json` under `models.overrides`.
 
 ## ProviderRegistry
 
@@ -64,4 +64,4 @@ API keys are read from environment variables only:
 - `OPENROUTER_API_KEY`
 - `OLLAMA_ENDPOINT` (no key — just endpoint)
 
-Keys are never written to `.agentforge/config.json`, SQLite, or logs.
+Keys are never written to `.RefractIQ/config.json`, SQLite, or logs.

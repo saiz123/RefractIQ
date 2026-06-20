@@ -20,7 +20,7 @@ export default async function ProvidersPage() {
     }>;
     modelStats = fetchedModelStats;
   } catch {
-    error = 'Could not connect to AgentForge API.';
+    error = 'Could not connect to RefractIQ API.';
   }
 
   return (
@@ -37,7 +37,7 @@ export default async function ProvidersPage() {
         <div className="text-center py-20 text-gray-500">
           <p className="text-lg mb-2">No providers configured</p>
           <p className="text-sm">
-            Run <code className="bg-gray-800 px-1.5 py-0.5 rounded">agentforge providers add</code>{' '}
+            Run <code className="bg-gray-800 px-1.5 py-0.5 rounded">refractiq providers add</code>{' '}
             to add one
           </p>
         </div>

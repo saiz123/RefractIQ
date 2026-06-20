@@ -1,6 +1,6 @@
-import type { AgentCall } from './types.js';
-import type { RequirementsArtifact } from '@agentforge/shared';
-import { safeParseAgentJson } from '@agentforge/shared';
+﻿import type { AgentCall } from './types.js';
+import type { RequirementsArtifact } from '@refractiq/shared';
+import { safeParseAgentJson } from '@refractiq/shared';
 import { INTAKE_SYSTEM } from './prompts.js';
 
 export const intakeAgent: AgentCall<{ userPrompt: string }, RequirementsArtifact> = {

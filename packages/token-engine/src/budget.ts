@@ -1,5 +1,5 @@
-import { BudgetExceededError } from '@agentforge/shared';
-import type { TaskType } from '@agentforge/shared';
+﻿import { BudgetExceededError } from '@refractiq/shared';
+import type { TaskType } from '@refractiq/shared';
 
 export interface BudgetConfig {
   /** Hard limit on tokens sent in a single model call */

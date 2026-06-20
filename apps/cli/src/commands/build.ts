@@ -22,7 +22,7 @@ export const buildCommand = new Command('build')
   )
   .option('--test-command <cmd>', 'Command to run tests (e.g. "npx vitest run")')
   .action(async (idea: string, options) => {
-    const spinner = ora('Starting AgentForge pipeline...').start();
+    const spinner = ora('Starting RefractIQ pipeline...').start();
 
     try {
       const isPreview = options.preview as boolean;

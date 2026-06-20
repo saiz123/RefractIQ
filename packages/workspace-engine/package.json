@@ -1,5 +1,5 @@
 {
-  "name": "@agentforge/workspace-engine",
+  "name": "@refractiq/workspace-engine",
   "version": "0.1.0",
   "description": "File I/O, Git operations, and sandboxed command execution",
   "type": "module",
@@ -21,7 +21,7 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@agentforge/shared": "workspace:*"
+    "@refractiq/shared": "workspace:*"
   },
   "devDependencies": {
     "rimraf": "^6.0.0",

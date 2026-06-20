@@ -1,5 +1,5 @@
-import { createRequire } from 'module';
-import type { ModelInfo } from '@agentforge/shared';
+﻿import { createRequire } from 'module';
+import type { ModelInfo } from '@refractiq/shared';
 
 interface ModelFile {
   models: ModelInfo[];

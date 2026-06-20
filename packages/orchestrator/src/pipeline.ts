@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+﻿import { randomUUID } from 'crypto';
 import type {
   RunConfig,
   RunResult,
@@ -14,12 +14,12 @@ import type {
   DocArtifact,
   ModelInfo,
   ContextStats,
-} from '@agentforge/shared';
-import { BudgetExceededError, NoCapableModelError, logger } from '@agentforge/shared';
-import { CacheAwareMessageBuilder } from '@agentforge/token-engine';
-import { calculateCallCost, estimateCallCost } from '@agentforge/cost-engine';
-import { TASK_CAPABILITIES } from '@agentforge/model-router';
-import { compressLog } from '@agentforge/token-engine';
+} from '@refractiq/shared';
+import { BudgetExceededError, NoCapableModelError, logger } from '@refractiq/shared';
+import { CacheAwareMessageBuilder } from '@refractiq/token-engine';
+import { calculateCallCost, estimateCallCost } from '@refractiq/cost-engine';
+import { TASK_CAPABILITIES } from '@refractiq/model-router';
+import { compressLog } from '@refractiq/token-engine';
 import type { OrchestratorConfig } from './config.js';
 import type { AgentCall } from './agents/types.js';
 import {
@@ -126,7 +126,7 @@ export class Orchestrator {
         if (this.config.fileWriter) {
           await this.config.fileWriter.applyWrites(diff.files);
           await this.config.fileWriter.commitStage(
-            `[agentforge] stage:build task:${task.id} run:${runId}`
+            `[refractiq] stage:build task:${task.id} run:${runId}`
           );
         }
       }
@@ -164,7 +164,7 @@ export class Orchestrator {
         if (this.config.fileWriter) {
           await this.config.fileWriter.applyWrites(repairDiff.files);
           await this.config.fileWriter.commitStage(
-            `[agentforge] stage:repair iteration:${repairIteration} run:${runId}`
+            `[refractiq] stage:repair iteration:${repairIteration} run:${runId}`
           );
           const newDiff = await this.config.fileWriter.getDiff();
           finalTest = await this.runTest(runConfig, stages, repairIteration);
@@ -247,7 +247,7 @@ export class Orchestrator {
     // Route to best model — for review, try to use a different provider than the builder.
     // If no alternative provider is available, fall back to any available provider.
     // Check for per-role config overrides
-    const taskOverride = this.config.agentForgeConfig?.taskOverrides?.[agent.taskType];
+    const taskOverride = this.config.refractiqConfig?.taskOverrides?.[agent.taskType];
     const runConfig = this.activeRunConfig;
 
     const baseRouterRequest = {

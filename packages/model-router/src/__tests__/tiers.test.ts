@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
+﻿import { describe, it, expect } from 'vitest';
 import { TASK_TIERS, TASK_CAPABILITIES } from '../tiers.js';
-import type { TaskType } from '@agentforge/shared';
+import type { TaskType } from '@refractiq/shared';
 
 const ALL_TASK_TYPES: TaskType[] = [
   'intake',

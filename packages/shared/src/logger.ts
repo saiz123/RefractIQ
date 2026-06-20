@@ -24,7 +24,7 @@ export function redactSecrets(text: string): string {
 }
 
 function getConfiguredLevel(): LogLevel {
-  const envLevel = process.env['AGENTFORGE_LOG_LEVEL'];
+  const envLevel = process.env['REFRACTIQ_LOG_LEVEL'];
   if (envLevel && envLevel in LOG_LEVELS) {
     return envLevel as LogLevel;
   }

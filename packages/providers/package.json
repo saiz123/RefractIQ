@@ -1,5 +1,5 @@
 {
-  "name": "@agentforge/providers",
+  "name": "@refractiq/providers",
   "version": "0.1.0",
   "description": "Provider adapters for Anthropic, OpenAI, Gemini, Ollama, and Mock",
   "type": "module",
@@ -21,7 +21,7 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@agentforge/shared": "workspace:*",
+    "@refractiq/shared": "workspace:*",
     "@anthropic-ai/sdk": "^0.27.0",
     "@google/generative-ai": "^0.21.0",
     "openai": "^4.67.0"

@@ -1,6 +1,6 @@
-import type { AgentCall } from './types.js';
-import type { BuildTask, CodeDiffArtifact } from '@agentforge/shared';
-import { safeParseAgentJson } from '@agentforge/shared';
+﻿import type { AgentCall } from './types.js';
+import type { BuildTask, CodeDiffArtifact } from '@refractiq/shared';
+import { safeParseAgentJson } from '@refractiq/shared';
 import { BUILDER_SYSTEM } from './prompts.js';
 
 export interface BuilderInput {

@@ -1,19 +1,19 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AgentForge — Self-Hosted AI Software Team</title>
+    <title>RefractIQ — Self-Hosted AI Software Team</title>
     <meta
       name="description"
       content="Open-source, self-hosted AI software team platform. Route each agent task to the cheapest capable model across all your AI subscriptions."
     />
-    <meta property="og:title" content="AgentForge" />
+    <meta property="og:title" content="RefractIQ" />
     <meta
       property="og:description"
       content="Cross-provider AI agents. Structured artifact handoffs. Token-optimized."
     />
-    <meta property="og:image" content="https://saiz123.github.io/AgentForge/logo.svg" />
+    <meta property="og:image" content="https://saiz123.github.io/RefractIQ/logo.svg" />
     <link rel="icon" href="logo.svg" type="image/svg+xml" />
     <style>
       *,
@@ -579,22 +579,22 @@
   <body>
     <!-- Work-in-progress banner -->
     <div class="wip-banner">
-      🔨 &nbsp;<strong>Work in Progress</strong> — AgentForge v0.1 is an active alpha. Feedback
-      welcome on <a href="https://github.com/saiz123/AgentForge/issues">GitHub Issues</a>.
+      🔨 &nbsp;<strong>Work in Progress</strong> — RefractIQ v0.1 is an active alpha. Feedback
+      welcome on <a href="https://github.com/saiz123/RefractIQ/issues">GitHub Issues</a>.
     </div>
 
     <!-- Nav -->
     <nav>
       <a class="nav-logo" href="#">
-        <img src="logo.svg" alt="AgentForge logo" />
-        <span>AgentForge</span>
+        <img src="logo.svg" alt="RefractIQ logo" />
+        <span>RefractIQ</span>
       </a>
       <div class="nav-links">
         <a href="#how-it-works">How it works</a>
         <a href="#features">Features</a>
         <a href="#quickstart">Quick start</a>
-        <a href="https://github.com/saiz123/AgentForge/tree/main/docs" target="_blank">Docs</a>
-        <a class="btn-gh" href="https://github.com/saiz123/AgentForge" target="_blank">
+        <a href="https://github.com/saiz123/RefractIQ/tree/main/docs" target="_blank">Docs</a>
+        <a class="btn-gh" href="https://github.com/saiz123/RefractIQ" target="_blank">
           <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
             <path
               d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.93.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"
@@ -610,7 +610,7 @@
       <div class="hero-badge">
         ⚡ Open Source &nbsp;·&nbsp; Self-Hosted &nbsp;·&nbsp; MIT License
       </div>
-      <img class="hero-logo" src="logo.svg" alt="AgentForge" />
+      <img class="hero-logo" src="logo.svg" alt="RefractIQ" />
       <h1>Build software with a team<br />of AI models.</h1>
       <p>
         Open-source, self-hosted AI software-team orchestrator. Routes each agent role to the
@@ -619,7 +619,7 @@
       </p>
       <div class="hero-actions">
         <a class="btn-primary" href="#quickstart">Get started</a>
-        <a class="btn-outline" href="https://github.com/saiz123/AgentForge" target="_blank"
+        <a class="btn-outline" href="https://github.com/saiz123/RefractIQ" target="_blank"
           >View on GitHub</a
         >
       </div>
@@ -710,7 +710,7 @@
         <div class="section-tag">Features</div>
         <h2>Built for people who pay<br />for multiple AI subscriptions.</h2>
         <p class="section-sub">
-          AgentForge makes your existing subscriptions work together — not separately.
+          RefractIQ makes your existing subscriptions work together — not separately.
         </p>
         <div class="features-grid">
           <div class="feature-card">
@@ -748,7 +748,7 @@
             <h3>Local Persistence</h3>
             <p>
               Every run is tracked in a local SQLite database — provider, model, tokens, USD cost,
-              duration — per stage. <code>agentforge report</code> shows a full cost breakdown.
+              duration — per stage. <code>RefractIQ report</code> shows a full cost breakdown.
             </p>
           </div>
 
@@ -757,7 +757,7 @@
             <h3>Web Dashboard</h3>
             <p>
               Next.js dashboard with run history, per-stage cost tables, and provider status. Served
-              by a Hono API. <code>agentforge serve</code> starts it locally.
+              by a Hono API. <code>RefractIQ serve</code> starts it locally.
             </p>
           </div>
 
@@ -779,7 +779,7 @@
         <div class="section-tag">Providers</div>
         <h2>Connect what you already have.</h2>
         <p class="section-sub" style="margin: 0 auto 0.5rem">
-          Your API keys. Your subscriptions. AgentForge routes tasks to the cheapest capable model
+          Your API keys. Your subscriptions. RefractIQ routes tasks to the cheapest capable model
           automatically.
         </p>
         <div class="providers-grid">
@@ -817,7 +817,7 @@
         <div class="section-tag">vs. Alternatives</div>
         <h2>Not another coding assistant.<br />The orchestration layer.</h2>
         <p class="section-sub">
-          AgentForge sits between your providers and your project — routing work, tracking cost, and
+          RefractIQ sits between your providers and your project — routing work, tracking cost, and
           structuring handoffs so each model does what it's cheapest and best at.
         </p>
         <div class="overflow-hidden rounded-lg border border-gray-800 mt-8">
@@ -835,7 +835,7 @@
                     font-weight: 700;
                   "
                 >
-                  AgentForge
+                  RefractIQ
                 </th>
                 <th
                   style="
@@ -965,7 +965,7 @@
         </div>
         <p style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: #475569">
           <a
-            href="https://github.com/saiz123/AgentForge/blob/main/docs/vs-competitors.md"
+            href="https://github.com/saiz123/RefractIQ/blob/main/docs/vs-competitors.md"
             target="_blank"
             style="color: #a78bfa"
             >Read the full comparison →</a
@@ -998,20 +998,20 @@
               <div class="qs-num">3</div>
               <h4>Initialize and build</h4>
               <p>
-                Run <code>agentforge init</code> then <code>agentforge providers add</code> to
+                Run <code>RefractIQ init</code> then <code>RefractIQ providers add</code> to
                 register a provider.
               </p>
             </div>
             <div class="qs-step">
               <div class="qs-num">4</div>
               <h4>Build something</h4>
-              <p>Give AgentForge a project idea and watch the pipeline run.</p>
+              <p>Give RefractIQ a project idea and watch the pipeline run.</p>
             </div>
           </div>
           <div>
             <pre><span class="code-comment"># Clone and install</span>
-<span class="code-cmd">git</span> clone https://github.com/saiz123/AgentForge
-<span class="code-cmd">cd</span> AgentForge
+<span class="code-cmd">git</span> clone https://github.com/saiz123/RefractIQ
+<span class="code-cmd">cd</span> RefractIQ
 <span class="code-cmd">pnpm</span> install && pnpm build
 
 <span class="code-comment"># Add your API keys</span>
@@ -1044,10 +1044,10 @@
         <h2>Built in public.<br />MIT licensed.</h2>
         <p>Star the repo, open an issue, submit a PR. All contributions welcome.</p>
         <div class="cta-actions">
-          <a class="btn-primary" href="https://github.com/saiz123/AgentForge" target="_blank"
+          <a class="btn-primary" href="https://github.com/saiz123/RefractIQ" target="_blank"
             >⭐ Star on GitHub</a
           >
-          <a class="btn-outline" href="https://github.com/saiz123/AgentForge/issues" target="_blank"
+          <a class="btn-outline" href="https://github.com/saiz123/RefractIQ/issues" target="_blank"
             >Open an Issue</a
           >
         </div>
@@ -1057,13 +1057,13 @@
     <!-- Footer -->
     <footer>
       <p>
-        <strong>AgentForge</strong> &nbsp;·&nbsp;
-        <a href="https://github.com/saiz123/AgentForge" target="_blank">GitHub</a> &nbsp;·&nbsp;
-        <a href="https://github.com/saiz123/AgentForge/blob/main/LICENSE" target="_blank"
+        <strong>RefractIQ</strong> &nbsp;·&nbsp;
+        <a href="https://github.com/saiz123/RefractIQ" target="_blank">GitHub</a> &nbsp;·&nbsp;
+        <a href="https://github.com/saiz123/RefractIQ/blob/main/LICENSE" target="_blank"
           >MIT License</a
         >
         &nbsp;·&nbsp;
-        <a href="https://github.com/saiz123/AgentForge/tree/main/docs" target="_blank"
+        <a href="https://github.com/saiz123/RefractIQ/tree/main/docs" target="_blank"
           >Documentation</a
         >
       </p>

@@ -13,7 +13,7 @@ export function buildFileIndex(files: FileEntry[]): FileIndex {
   };
 }
 
-const SKIP_PATHS = ['node_modules/', 'dist/', '.git/', '.agentforge/', 'coverage/'];
+const SKIP_PATHS = ['node_modules/', 'dist/', '.git/', '.refractiq/', 'coverage/'];
 const SKIP_EXTENSIONS = [
   '.png',
   '.jpg',

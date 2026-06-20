@@ -1,4 +1,4 @@
-import type { ProviderConfig } from '@agentforge/shared';
+﻿import type { ProviderConfig } from '@refractiq/shared';
 import type { ProviderAdapter } from './types.js';
 import { AnthropicAdapter } from './adapters/anthropic.js';
 import { OpenAIAdapter } from './adapters/openai.js';

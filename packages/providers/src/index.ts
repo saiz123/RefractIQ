@@ -1,4 +1,4 @@
-// @agentforge/providers
+﻿// @refractiq/providers
 // ProviderAdapter interface, registry, adapters, and factory
 
 export type { ProviderAdapter } from './types.js';
@@ -21,4 +21,4 @@ export type {
   MessageRole,
   ProviderConfig,
   Capability,
-} from '@agentforge/shared';
+} from '@refractiq/shared';

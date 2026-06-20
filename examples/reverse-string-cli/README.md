@@ -1,6 +1,6 @@
-# Example: Reverse String CLI
+﻿# Example: Reverse String CLI
 
-A minimal example showing AgentForge building a TypeScript CLI from scratch.
+A minimal example showing RefractIQ building a TypeScript CLI from scratch.
 
 ## Prompt
 

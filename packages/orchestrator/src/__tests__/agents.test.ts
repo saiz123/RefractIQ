@@ -1,10 +1,10 @@
-import { describe, it, expect } from 'vitest';
+﻿import { describe, it, expect } from 'vitest';
 import { intakeAgent } from '../agents/intake.js';
 import { architectAgent } from '../agents/architect.js';
 import { builderAgent } from '../agents/builder.js';
 import { reviewerAgent } from '../agents/reviewer.js';
 import { docAgent } from '../agents/doc.js';
-import type { BuildTask } from '@agentforge/shared';
+import type { BuildTask } from '@refractiq/shared';
 
 const MOCK_REQUIREMENTS = JSON.stringify({
   clarifiedGoal: 'A CLI that reverses a string',

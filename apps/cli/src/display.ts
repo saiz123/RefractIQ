@@ -1,5 +1,5 @@
-import chalk from 'chalk';
-import type { RunResult, ContextStats } from '@agentforge/shared';
+﻿import chalk from 'chalk';
+import type { RunResult, ContextStats } from '@refractiq/shared';
 
 export function printCostTable(result: RunResult): void {
   console.log(chalk.bold('\nCost breakdown:'));

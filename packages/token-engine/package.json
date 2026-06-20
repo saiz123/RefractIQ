@@ -1,5 +1,5 @@
 {
-  "name": "@agentforge/token-engine",
+  "name": "@refractiq/token-engine",
   "version": "0.1.0",
   "description": "Token counting, budget enforcement, and prompt-cache layout",
   "type": "module",
@@ -21,7 +21,7 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@agentforge/shared": "workspace:*"
+    "@refractiq/shared": "workspace:*"
   },
   "devDependencies": {
     "rimraf": "^6.0.0",

@@ -1,6 +1,6 @@
 // Browser uses the public URL; server-side Next.js uses the internal container URL
 const PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
-const INTERNAL_API_URL = process.env.AGENTFORGE_INTERNAL_API_URL ?? PUBLIC_API_URL;
+const INTERNAL_API_URL = process.env.REFRACTIQ_INTERNAL_API_URL ?? PUBLIC_API_URL;
 
 function getApiUrl(): string {
   return typeof window !== 'undefined' ? PUBLIC_API_URL : INTERNAL_API_URL;

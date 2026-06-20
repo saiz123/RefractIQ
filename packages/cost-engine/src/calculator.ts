@@ -1,4 +1,4 @@
-import type { ModelInfo } from '@agentforge/shared';
+﻿import type { ModelInfo } from '@refractiq/shared';
 
 export interface CallCost {
   inputCostUsd: number;

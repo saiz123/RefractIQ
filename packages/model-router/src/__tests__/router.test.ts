@@ -1,9 +1,9 @@
-import { describe, it, expect } from 'vitest';
+﻿import { describe, it, expect } from 'vitest';
 import { ModelRouter } from '../router.js';
-import { ProviderRegistry } from '@agentforge/providers';
-import { NoCapableModelError } from '@agentforge/shared';
-import type { ModelInfo, ChatRequest, ChatResponse, Message } from '@agentforge/shared';
-import type { ProviderAdapter } from '@agentforge/providers';
+import { ProviderRegistry } from '@refractiq/providers';
+import { NoCapableModelError } from '@refractiq/shared';
+import type { ModelInfo, ChatRequest, ChatResponse, Message } from '@refractiq/shared';
+import type { ProviderAdapter } from '@refractiq/providers';
 
 // Minimal test adapter that supports custom models and availability
 class TestAdapter implements ProviderAdapter {

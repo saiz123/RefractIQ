@@ -74,10 +74,10 @@ COPY --from=builder /app/services/api ./services/api
 COPY --from=builder /app/apps/cli ./apps/cli
 
 # Create default output and state dirs
-RUN mkdir -p /data/.agentforge /data/output
+RUN mkdir -p /data/.refractiq /data/output
 
 ENV NODE_ENV=production
-ENV AGENTFORGE_DIR=/data/.agentforge
+ENV REFRACTIQ_DIR=/data/.refractiq
 
 WORKDIR /data
 ENTRYPOINT ["node", "/app/apps/cli/dist/bin/cli.js"]

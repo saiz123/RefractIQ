@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
+﻿import { describe, it, expect } from 'vitest';
 import { scoreModel } from '../scorer.js';
-import type { ModelInfo, RouterRequest } from '@agentforge/shared';
+import type { ModelInfo, RouterRequest } from '@refractiq/shared';
 
 const cheapModel: ModelInfo = {
   id: 'gemini-1.5-flash',

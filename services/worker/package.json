@@ -1,7 +1,7 @@
 {
-  "name": "@agentforge/worker",
+  "name": "@refractiq/worker",
   "version": "0.1.0",
-  "description": "AgentForge long-running build worker (Phase 9, not yet implemented)",
+  "description": "RefractIQ long-running build worker (Phase 9, not yet implemented)",
   "private": true,
   "scripts": {
     "build": "echo 'Phase 9: worker service not yet implemented'",

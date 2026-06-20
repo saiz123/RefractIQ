@@ -1,4 +1,4 @@
-# AgentForge — Docker Compose
+# RefractIQ — Docker Compose
 # Self-hosted AI software team platform
 #
 # Quick start:
@@ -9,7 +9,7 @@
 # Web dashboard: http://localhost:3000
 # API:           http://localhost:3001
 
-name: agentforge
+name: refractiq
 
 services:
   # ── API server ──────────────────────────────────────────────────────────────
@@ -17,16 +17,16 @@ services:
     build:
       context: .
       target: api
-    image: agentforge-api:latest
+    image: refractiq-api:latest
     restart: unless-stopped
     ports:
       - '${API_PORT:-3001}:3001'
     volumes:
-      - agentforge_data:/data/.agentforge
+      - refractiq_data:/data/.refractiq
     environment:
       NODE_ENV: production
       PORT: '3001'
-      AGENTFORGE_DIR: /data/.agentforge
+      REFRACTIQ_DIR: /data/.refractiq
     env_file:
       - .env
     healthcheck:
@@ -47,14 +47,14 @@ services:
     build:
       context: apps/web
       dockerfile: Dockerfile
-    image: agentforge-web:latest
+    image: refractiq-web:latest
     restart: unless-stopped
     ports:
       - '${WEB_PORT:-3000}:3000'
     environment:
       NODE_ENV: production
       NEXT_PUBLIC_API_URL: 'http://localhost:${API_PORT:-3001}'
-      AGENTFORGE_INTERNAL_API_URL: 'http://api:3001'
+      REFRACTIQ_INTERNAL_API_URL: 'http://api:3001'
     depends_on:
       api:
         condition: service_healthy
@@ -64,18 +64,18 @@ services:
     build:
       context: .
       target: cli
-    image: agentforge-cli:latest
+    image: refractiq-cli:latest
     profiles:
       - tools
     volumes:
-      - agentforge_data:/data/.agentforge
+      - refractiq_data:/data/.refractiq
       - ./output:/data/output
     environment:
       NODE_ENV: production
-      AGENTFORGE_DIR: /data/.agentforge
+      REFRACTIQ_DIR: /data/.refractiq
     env_file:
       - .env
 
 volumes:
-  agentforge_data:
+  refractiq_data:
     driver: local

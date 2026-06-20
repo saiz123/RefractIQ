@@ -1,14 +1,14 @@
-export class AgentForgeError extends Error {
+export class RefractIQError extends Error {
   constructor(
     message: string,
     public readonly code: string
   ) {
     super(message);
-    this.name = 'AgentForgeError';
+    this.name = 'RefractIQError';
   }
 }
 
-export class ProviderError extends AgentForgeError {
+export class ProviderError extends RefractIQError {
   constructor(
     message: string,
     public readonly provider: string
@@ -18,7 +18,7 @@ export class ProviderError extends AgentForgeError {
   }
 }
 
-export class NoCapableModelError extends AgentForgeError {
+export class NoCapableModelError extends RefractIQError {
   constructor(
     public readonly taskType: string,
     public readonly tried: string[]
@@ -31,7 +31,7 @@ export class NoCapableModelError extends AgentForgeError {
   }
 }
 
-export class BudgetExceededError extends AgentForgeError {
+export class BudgetExceededError extends RefractIQError {
   constructor(
     public readonly limitUsd: number,
     public readonly estimatedUsd: number
@@ -44,21 +44,21 @@ export class BudgetExceededError extends AgentForgeError {
   }
 }
 
-export class WorkspaceSecurityError extends AgentForgeError {
+export class WorkspaceSecurityError extends RefractIQError {
   constructor(public readonly attemptedPath: string) {
     super(`Path traversal attempt blocked: "${attemptedPath}"`, 'WORKSPACE_SECURITY');
     this.name = 'WorkspaceSecurityError';
   }
 }
 
-export class CommandBlockedError extends AgentForgeError {
+export class CommandBlockedError extends RefractIQError {
   constructor(public readonly command: string) {
     super(`Command blocked by allowlist: "${command}"`, 'COMMAND_BLOCKED');
     this.name = 'CommandBlockedError';
   }
 }
 
-export class InitError extends AgentForgeError {
+export class InitError extends RefractIQError {
   constructor(message: string) {
     super(message, 'INIT_ERROR');
     this.name = 'InitError';

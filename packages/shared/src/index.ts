@@ -1,4 +1,4 @@
-// @agentforge/shared
+﻿// @refractiq/shared
 // Types, errors, logger, and config
 
 export * from './types/index.js';

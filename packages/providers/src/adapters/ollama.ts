@@ -1,11 +1,11 @@
-import type {
+﻿import type {
   ModelInfo,
   ChatRequest,
   ChatResponse,
   Message,
   ProviderConfig,
-} from '@agentforge/shared';
-import { ProviderError } from '@agentforge/shared';
+} from '@refractiq/shared';
+import { ProviderError } from '@refractiq/shared';
 import type { ProviderAdapter } from '../types.js';
 import { loadOllamaModels } from '../modelLoader.js';
 

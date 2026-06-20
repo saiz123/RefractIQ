@@ -1,6 +1,6 @@
-import type { AgentCall } from './types.js';
-import type { RequirementsArtifact, ArchitectureArtifact } from '@agentforge/shared';
-import { safeParseAgentJson } from '@agentforge/shared';
+﻿import type { AgentCall } from './types.js';
+import type { RequirementsArtifact, ArchitectureArtifact } from '@refractiq/shared';
+import { safeParseAgentJson } from '@refractiq/shared';
 import { ARCHITECT_SYSTEM } from './prompts.js';
 
 export const architectAgent: AgentCall<RequirementsArtifact, ArchitectureArtifact> = {

@@ -1,11 +1,11 @@
-import type { AgentCall } from './types.js';
+﻿import type { AgentCall } from './types.js';
 import type {
   RequirementsArtifact,
   ArchitectureArtifact,
   TestArtifact,
   DocArtifact,
-} from '@agentforge/shared';
-import { safeParseAgentJson } from '@agentforge/shared';
+} from '@refractiq/shared';
+import { safeParseAgentJson } from '@refractiq/shared';
 import { DOC_SYSTEM } from './prompts.js';
 
 export interface DocInput {

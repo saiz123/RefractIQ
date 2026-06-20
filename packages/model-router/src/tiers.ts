@@ -1,4 +1,4 @@
-import type { TaskType, TaskTier, Capability } from '@agentforge/shared';
+﻿import type { TaskType, TaskTier, Capability } from '@refractiq/shared';
 
 export const TASK_TIERS: Record<TaskType, TaskTier> = {
   intake: 'cheap',

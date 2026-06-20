@@ -1,14 +1,14 @@
-import { mkdirSync } from 'node:fs';
+﻿import { mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { ProviderRegistry, createAdapter } from '@agentforge/providers';
-import { ModelRouter } from '@agentforge/model-router';
-import { BudgetEnforcer, DEFAULT_BUDGET_CONFIG } from '@agentforge/token-engine';
-import { RunCostTracker } from '@agentforge/cost-engine';
-import { Orchestrator } from '@agentforge/orchestrator';
-import { WorkspaceFileWriter } from '@agentforge/workspace-engine';
-import { WorkspaceTestRunner } from '@agentforge/evaluator';
-import { ContextEngine } from '@agentforge/context-engine';
-import { loadConfig, getAgentForgeDir, type RunResult } from '@agentforge/shared';
+import { ProviderRegistry, createAdapter } from '@refractiq/providers';
+import { ModelRouter } from '@refractiq/model-router';
+import { BudgetEnforcer, DEFAULT_BUDGET_CONFIG } from '@refractiq/token-engine';
+import { RunCostTracker } from '@refractiq/cost-engine';
+import { Orchestrator } from '@refractiq/orchestrator';
+import { WorkspaceFileWriter } from '@refractiq/workspace-engine';
+import { WorkspaceTestRunner } from '@refractiq/evaluator';
+import { ContextEngine } from '@refractiq/context-engine';
+import { loadConfig, getRefractIQDir, type RunResult } from '@refractiq/shared';
 import { openDbAsync } from './db/client.js';
 import { getAverageLatencyByModel } from './db/runs.js';
 
@@ -26,8 +26,8 @@ export interface BuildOptions {
 
 export async function runBuild(userPrompt: string, opts: BuildOptions): Promise<RunResult> {
   const cwd = opts.cwd ?? process.cwd();
-  const agentForgeDir = getAgentForgeDir(cwd);
-  const config = loadConfig(agentForgeDir);
+  const refractiqDir = getRefractIQDir(cwd);
+  const config = loadConfig(refractiqDir);
 
   // Resolve output directory
   const outputDir = resolve(cwd, opts.outputDir);
@@ -40,7 +40,7 @@ export async function runBuild(userPrompt: string, opts: BuildOptions): Promise<
   }
 
   if (registry.listAll().length === 0) {
-    throw new Error('No providers configured. Run "agentforge providers add" first.');
+    throw new Error('No providers configured. Run "refractiq providers add" first.');
   }
 
   // Assemble pipeline components
@@ -77,7 +77,7 @@ export async function runBuild(userPrompt: string, opts: BuildOptions): Promise<
     fileWriter,
     testRunner,
     contextEngine,
-    agentForgeConfig: config,
+    refractiqConfig: config,
     averageLatencyByModel,
   });
 

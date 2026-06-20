@@ -1,3 +1,3 @@
-// @agentforge/cli
+﻿// @refractiq/cli
 // Commander.js commands: init, build, plan, doctor, providers, report — Phase 1 implementation
 export {};

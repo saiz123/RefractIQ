@@ -1,5 +1,5 @@
 {
-  "name": "@agentforge/model-router",
+  "name": "@refractiq/model-router",
   "version": "0.1.0",
   "description": "Cross-provider cheapest-capable-model selection",
   "type": "module",
@@ -21,10 +21,10 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@agentforge/cost-engine": "workspace:*",
-    "@agentforge/providers": "workspace:*",
-    "@agentforge/shared": "workspace:*",
-    "@agentforge/token-engine": "workspace:*"
+    "@refractiq/cost-engine": "workspace:*",
+    "@refractiq/providers": "workspace:*",
+    "@refractiq/shared": "workspace:*",
+    "@refractiq/token-engine": "workspace:*"
   },
   "devDependencies": {
     "rimraf": "^6.0.0",

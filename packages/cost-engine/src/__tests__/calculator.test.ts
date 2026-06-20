@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
+﻿import { describe, it, expect } from 'vitest';
 import { calculateCallCost, estimateCallCost } from '../calculator.js';
-import type { ModelInfo } from '@agentforge/shared';
+import type { ModelInfo } from '@refractiq/shared';
 
 const mockModel: ModelInfo = {
   id: 'test-model',

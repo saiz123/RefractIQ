@@ -32,8 +32,8 @@ export const runStages = sqliteTable('run_stages', {
   cacheWriteTokens: integer('cache_write_tokens').notNull().default(0),
 });
 
-export function openDb(agentForgeDir: string) {
-  const dbPath = join(agentForgeDir, 'agentforge.db');
+export function openDb(refractiqDir: string) {
+  const dbPath = join(refractiqDir, 'refractiq.db');
   const client = createClient({ url: `file:${dbPath}` });
   return drizzle(client, { schema: { runs, runStages } });
 }

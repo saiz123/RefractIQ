@@ -1,17 +1,17 @@
-import { Command } from 'commander';
+﻿import { Command } from 'commander';
 import chalk from 'chalk';
 import { select, input } from '@inquirer/prompts';
-import { getAgentForgeDir, loadConfig, saveConfig, InitError } from '@agentforge/shared';
-import type { ProviderConfig } from '@agentforge/providers';
+import { getRefractIQDir, loadConfig, saveConfig, InitError } from '@refractiq/shared';
+import type { ProviderConfig } from '@refractiq/providers';
 
 const providersAddCommand = new Command('add')
   .description('Add an AI provider')
   .action(async () => {
-    const agentForgeDir = getAgentForgeDir();
+    const refractiqDir = getRefractIQDir();
 
     let config;
     try {
-      config = loadConfig(agentForgeDir);
+      config = loadConfig(refractiqDir);
     } catch (err) {
       if (err instanceof InitError) {
         console.error(chalk.red(`✗ ${err.message}`));
@@ -58,7 +58,7 @@ const providersAddCommand = new Command('add')
       config.providers.push(newProvider);
     }
 
-    saveConfig(agentForgeDir, config);
+    saveConfig(refractiqDir, config);
 
     const envVarMap: Record<string, string> = {
       anthropic: 'ANTHROPIC_API_KEY',
@@ -68,7 +68,7 @@ const providersAddCommand = new Command('add')
       openrouter: 'OPENROUTER_API_KEY',
     };
 
-    console.log(chalk.green(`\n✓ Provider "${name}" saved to ${agentForgeDir}/config.json`));
+    console.log(chalk.green(`\n✓ Provider "${name}" saved to ${refractiqDir}/config.json`));
 
     const envVar = envVarMap[type];
     if (envVar) {
@@ -82,17 +82,17 @@ const providersAddCommand = new Command('add')
       );
     }
 
-    console.log(chalk.dim('\nRun "agentforge doctor" to verify connectivity.'));
+    console.log(chalk.dim('\nRun "refractiq doctor" to verify connectivity.'));
   });
 
 const providersListCommand = new Command('list')
   .description('List configured AI providers')
   .action(() => {
-    const agentForgeDir = getAgentForgeDir();
+    const refractiqDir = getRefractIQDir();
 
     let config;
     try {
-      config = loadConfig(agentForgeDir);
+      config = loadConfig(refractiqDir);
     } catch (err) {
       if (err instanceof InitError) {
         console.error(chalk.red(`✗ ${err.message}`));
@@ -103,7 +103,7 @@ const providersListCommand = new Command('list')
 
     if (config.providers.length === 0) {
       console.log(
-        chalk.yellow('No providers configured. Run "agentforge providers add" to add one.')
+        chalk.yellow('No providers configured. Run "refractiq providers add" to add one.')
       );
       return;
     }

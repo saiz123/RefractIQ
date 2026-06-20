@@ -1,8 +1,8 @@
-# Token Optimization
+﻿# Token Optimization
 
 > Status: Phase 0 stub — implementation begins in Phase 3 (router) and Phase 4 (engine).
 
-Token optimization is the primary design constraint of AgentForge — not an afterthought.
+Token optimization is the primary design constraint of RefractIQ — not an afterthought.
 
 ## Mechanisms (in priority order)
 
@@ -36,7 +36,7 @@ Agents produce compact JSON, not verbose prose. The orchestrator passes only the
 
 ### 5. File summarization cache
 
-Files exceeding per-file token budget are summarized by a cheap model call (~200 tokens). Summaries are cached in `.agentforge/cache/summaries/` keyed by content hash. Repeat builds reuse cached summaries at zero cost.
+Files exceeding per-file token budget are summarized by a cheap model call (~200 tokens). Summaries are cached in `.RefractIQ/cache/summaries/` keyed by content hash. Repeat builds reuse cached summaries at zero cost.
 
 ### 6. Error log compression
 
@@ -65,4 +65,4 @@ Hard limit of 3 iterations (configurable). The orchestrator exits after the cap 
 
 ## Tracking
 
-Every `ChatResponse` carries `inputTokens`, `outputTokens`, `cacheReadTokens`, `cacheWriteTokens`. The `cost-engine` converts these to USD. All totals are stored in SQLite and displayed by `agentforge report`.
+Every `ChatResponse` carries `inputTokens`, `outputTokens`, `cacheReadTokens`, `cacheWriteTokens`. The `cost-engine` converts these to USD. All totals are stored in SQLite and displayed by `RefractIQ report`.

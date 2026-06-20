@@ -1,6 +1,6 @@
-# Example: FastAPI CRUD API
+﻿# Example: FastAPI CRUD API
 
-AgentForge building a Python backend REST API from scratch.
+RefractIQ building a Python backend REST API from scratch.
 
 ## Prompt
 

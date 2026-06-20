@@ -1,12 +1,12 @@
-<div align="center">
-  <img src="docs/logo.svg" width="120" alt="AgentForge logo"/>
-  <h1>AgentForge</h1>
+﻿<div align="center">
+  <img src="docs/logo.svg" width="120" alt="RefractIQ logo"/>
+  <h1>RefractIQ</h1>
   <p><strong>Build software with a team of AI models, not one expensive chatbot.</strong></p>
   <p>Open-source, self-hosted AI software-team orchestrator. Routes each agent role to the cheapest capable model across all your providers. Structured artifact handoffs. Transparent cost per step.</p>
 
   <p>
     <img src="https://img.shields.io/badge/tests-243%20passing-22c55e?style=flat-square" alt="243 tests passing"/>
-    <img src="https://github.com/saiz123/AgentForge/actions/workflows/ci.yml/badge.svg" alt="CI"/>
+    <img src="https://github.com/saiz123/RefractIQ/actions/workflows/ci.yml/badge.svg" alt="CI"/>
     <img src="https://img.shields.io/badge/license-MIT-7c3aed?style=flat-square" alt="MIT License"/>
     <img src="https://img.shields.io/badge/node-%3E%3D20-3b82f6?style=flat-square" alt="Node 20+"/>
     <img src="https://img.shields.io/badge/status-alpha-f59e0b?style=flat-square" alt="Alpha"/>
@@ -14,8 +14,8 @@
   </p>
 
   <p>
-    <a href="https://saiz123.github.io/AgentForge">🌐 Website</a> &nbsp;·&nbsp;
-    <a href="https://github.com/saiz123/AgentForge/issues">🐛 Issues</a> &nbsp;·&nbsp;
+    <a href="https://saiz123.github.io/RefractIQ">🌐 Website</a> &nbsp;·&nbsp;
+    <a href="https://github.com/saiz123/RefractIQ/issues">🐛 Issues</a> &nbsp;·&nbsp;
     <a href="docs/development.md">📖 Docs</a> &nbsp;·&nbsp;
     <a href="docs/self-hosting.md">🐳 Self-hosting</a>
   </p>
@@ -28,9 +28,9 @@
 
 ---
 
-## What is AgentForge?
+## What is RefractIQ?
 
-You already pay for Anthropic, OpenAI, Gemini, and Ollama subscriptions. AgentForge puts them all to work together — routing each task in the pipeline to the **cheapest capable model** across all your providers:
+You already pay for Anthropic, OpenAI, Gemini, and Ollama subscriptions. RefractIQ puts them all to work together — routing each task in the pipeline to the **cheapest capable model** across all your providers:
 
 | Stage | Default routing | Why |
 |---|---|---|
@@ -70,11 +70,11 @@ Report (SQLite + CLI table)
 
 ---
 
-## How AgentForge compares
+## How RefractIQ compares
 
-AgentForge is not a general coding assistant. It is the orchestration and cost-control layer for developers who already use multiple AI providers.
+RefractIQ is not a general coding assistant. It is the orchestration and cost-control layer for developers who already use multiple AI providers.
 
-| | AgentForge | Claude Code / Codex CLI | Aider | OpenHands | LangGraph / CrewAI |
+| | RefractIQ | Claude Code / Codex CLI | Aider | OpenHands | LangGraph / CrewAI |
 |---|---|---|---|---|---|
 | Multi-provider routing | ✅ BYOK, all providers | ❌ Vendor-locked | ⚠️ Limited | ⚠️ Some | Depends on impl. |
 | Structured role handoffs | ✅ JSON artifacts | ❌ Single agent | ⚠️ 2-model only | ⚠️ Single agent | Framework only |
@@ -95,14 +95,14 @@ See [docs/vs-competitors.md](docs/vs-competitors.md) for a detailed breakdown.
 | Phase | Status | Description |
 |---|---|---|
 | 0 — Scaffold | ✅ Done | pnpm monorepo, 13 packages, tooling |
-| 1 — CLI | ✅ Done | `agentforge init/build/plan/doctor/providers/report/serve` |
+| 1 — CLI | ✅ Done | `RefractIQ init/build/plan/doctor/providers/report/serve` |
 | 2 — Providers | ✅ Done | Anthropic, OpenAI, Gemini, Ollama, OpenRouter, Mock |
 | 3 — Model Router | ✅ Done | Cross-provider cheapest-model selection |
 | 4 — Token/Cost Engine | ✅ Done | 3-layer budget enforcement, cost tracking |
 | 5 — Orchestrator | ✅ Done | 9-stage pipeline, repair loop, budget abort |
 | 6 — Context Engine | ✅ Done | File relevance scoring, chunking, diff extraction |
 | 7 — Workspace Engine | ✅ Done | File I/O, Git, sandboxed command runner |
-| 8 — Real Build | ✅ Done | End-to-end `agentforge build`, SQLite persistence |
+| 8 — Real Build | ✅ Done | End-to-end `RefractIQ build`, SQLite persistence |
 | 9 — Web Dashboard | ✅ Done | Next.js 16 + Hono API, run history, cost charts |
 | 10 — Docker | ✅ Done | Full Docker Compose self-hosting |
 
@@ -119,8 +119,8 @@ See [docs/vs-competitors.md](docs/vs-competitors.md) for a detailed breakdown.
 ## Quick start
 
 ```bash
-git clone https://github.com/saiz123/AgentForge.git
-cd AgentForge
+git clone https://github.com/saiz123/RefractIQ.git
+cd RefractIQ
 pnpm install && pnpm build
 
 cp .env.example .env
@@ -137,7 +137,7 @@ node apps/cli/dist/bin/cli.js report
 
 ```bash
 node apps/cli/dist/bin/cli.js serve   # API on http://localhost:3001
-pnpm --filter @agentforge/web dev     # UI on http://localhost:3000
+pnpm --filter @RefractIQ/web dev     # UI on http://localhost:3000
 ```
 
 ### Docker
@@ -192,7 +192,7 @@ docker compose run --rm cli build "your project idea"
 
 - **Command execution is allowlisted, not sandboxed** — generated project commands run locally with an allowlist. Docker process isolation is a planned future hardening milestone.
 - **Dry-run calls intake + architect** — planning stages make real model calls even in dry-run. File writes, git commits, and test/build commands are skipped.
-- **API has no auth by default** — set `AGENTFORGE_API_TOKEN` in `.env` before exposing the API beyond localhost.
+- **API has no auth by default** — set `RefractIQ_API_TOKEN` in `.env` before exposing the API beyond localhost.
 - **Cloud provider E2E requires real keys** — may incur costs. Not run in CI.
 - **Provider model pricing is static** — update `packages/providers/src/models/*.json` when provider prices change.
 - **Web Dockerfile uses npm** — standalone build context, does not use the root pnpm workspace.
@@ -206,8 +206,8 @@ docker compose run --rm cli build "your project idea"
 - [Token Optimization](docs/token-optimization.md) — how cost is minimized
 - [Security](docs/security.md) — key handling, sandboxing, secret redaction
 - [Self-Hosting](docs/self-hosting.md) — Docker Compose setup
-- [Development](docs/development.md) — how to contribute and extend AgentForge
-- [Competitive comparison](docs/vs-competitors.md) — how AgentForge differs from Claude Code, Aider, OpenHands, LangGraph, and LiteLLM
+- [Development](docs/development.md) — how to contribute and extend RefractIQ
+- [Competitive comparison](docs/vs-competitors.md) — how RefractIQ differs from Claude Code, Aider, OpenHands, LangGraph, and LiteLLM
 - [Provider benchmarks](docs/provider-benchmarks.md) — expected cost per task type per provider
 
 ---

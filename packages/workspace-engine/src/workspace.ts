@@ -1,4 +1,4 @@
-import {
+﻿import {
   readFileSync,
   writeFileSync,
   mkdirSync,
@@ -9,8 +9,8 @@ import {
 } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { safePath } from './security.js';
-import type { FileWrite } from '@agentforge/shared';
-import { WorkspaceSecurityError } from '@agentforge/shared';
+import type { FileWrite } from '@refractiq/shared';
+import { WorkspaceSecurityError } from '@refractiq/shared';
 
 export interface WorkspaceFile {
   path: string;
@@ -62,10 +62,10 @@ export class Workspace {
 
   /**
    * Recursively list all files in the workspace as WorkspaceFile objects.
-   * Skips node_modules, dist, .git, .agentforge by default.
+   * Skips node_modules, dist, .git, .refractiq by default.
    */
   listFiles(
-    skipDirs = ['node_modules', 'dist', '.git', '.agentforge', 'coverage']
+    skipDirs = ['node_modules', 'dist', '.git', '.refractiq', 'coverage']
   ): WorkspaceFile[] {
     const entries: WorkspaceFile[] = [];
     this.walkDir(this.rootDir, this.rootDir, skipDirs, entries);

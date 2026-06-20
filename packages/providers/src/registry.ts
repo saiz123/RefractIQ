@@ -1,4 +1,4 @@
-import type { ModelInfo } from '@agentforge/shared';
+﻿import type { ModelInfo } from '@refractiq/shared';
 import type { ProviderAdapter } from './types.js';
 
 export class ProviderRegistry {

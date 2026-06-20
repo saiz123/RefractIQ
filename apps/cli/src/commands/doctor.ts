@@ -1,16 +1,16 @@
-import { Command } from 'commander';
+﻿import { Command } from 'commander';
 import chalk from 'chalk';
-import { getAgentForgeDir, loadConfig, InitError } from '@agentforge/shared';
-import { createAdapter, ProviderRegistry } from '@agentforge/providers';
+import { getRefractIQDir, loadConfig, InitError } from '@refractiq/shared';
+import { createAdapter, ProviderRegistry } from '@refractiq/providers';
 
 export const doctorCommand = new Command('doctor')
   .description('Check health and reachability of all configured providers')
   .action(async () => {
-    const agentForgeDir = getAgentForgeDir();
+    const refractiqDir = getRefractIQDir();
 
     let config;
     try {
-      config = loadConfig(agentForgeDir);
+      config = loadConfig(refractiqDir);
     } catch (err) {
       if (err instanceof InitError) {
         console.error(chalk.red(`✗ ${err.message}`));
@@ -21,7 +21,7 @@ export const doctorCommand = new Command('doctor')
 
     if (config.providers.length === 0) {
       console.log(
-        chalk.yellow('No providers configured. Run "agentforge providers add" to add one.')
+        chalk.yellow('No providers configured. Run "refractiq providers add" to add one.')
       );
       return;
     }
@@ -31,7 +31,7 @@ export const doctorCommand = new Command('doctor')
       registry.register(createAdapter(providerConfig));
     }
 
-    console.log(chalk.bold('\nAgentForge Doctor\n'));
+    console.log(chalk.bold('\nRefractIQ Doctor\n'));
 
     const rows: Array<{ id: string; status: string; latency: string; models: string }> = [];
 

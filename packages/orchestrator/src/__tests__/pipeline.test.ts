@@ -1,12 +1,12 @@
-import { describe, it, expect } from 'vitest';
+﻿import { describe, it, expect } from 'vitest';
 import { Orchestrator } from '../pipeline.js';
 import type { OrchestratorConfig } from '../config.js';
-import { ProviderRegistry } from '@agentforge/providers';
-import type { ProviderAdapter } from '@agentforge/providers';
-import { ModelRouter } from '@agentforge/model-router';
-import { BudgetEnforcer, DEFAULT_BUDGET_CONFIG } from '@agentforge/token-engine';
-import { RunCostTracker } from '@agentforge/cost-engine';
-import type { ModelInfo, ChatRequest, ChatResponse, Message, RunConfig } from '@agentforge/shared';
+import { ProviderRegistry } from '@refractiq/providers';
+import type { ProviderAdapter } from '@refractiq/providers';
+import { ModelRouter } from '@refractiq/model-router';
+import { BudgetEnforcer, DEFAULT_BUDGET_CONFIG } from '@refractiq/token-engine';
+import { RunCostTracker } from '@refractiq/cost-engine';
+import type { ModelInfo, ChatRequest, ChatResponse, Message, RunConfig } from '@refractiq/shared';
 
 // ────────────────────────────────────────────────────────────
 // Mock Responses
@@ -116,7 +116,7 @@ function makeRunConfig(overrides: Partial<RunConfig> = {}): RunConfig {
     userPrompt: 'reverse a string',
     budgetUsd: 10.0,
     maxRepairLoops: 2,
-    outputDir: '/tmp/agentforge-test',
+    outputDir: '/tmp/refractiq-test',
     dryRun: false,
     ...overrides,
   };
@@ -143,7 +143,7 @@ function makeConfig(
     router: new ModelRouter(registry),
     budgetEnforcer: new BudgetEnforcer(budgetConfig),
     costTracker: new RunCostTracker(),
-    outputDir: '/tmp/agentforge-test',
+    outputDir: '/tmp/refractiq-test',
     maxRepairLoops,
     dryRun: false,
   };
@@ -156,7 +156,7 @@ function makeConfig(
 const REQUIREMENTS_JSON = MOCK_REQUIREMENTS;
 const ARCHITECTURE_JSON = MOCK_ARCHITECTURE;
 const TEST_MODEL: ModelInfo = makeMockModel('counting-model', 'counting');
-const tmpDir = '/tmp/agentforge-test';
+const tmpDir = '/tmp/refractiq-test';
 
 // ────────────────────────────────────────────────────────────
 // Tests

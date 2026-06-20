@@ -1,4 +1,4 @@
-import type { TaskType } from '@agentforge/shared';
+﻿import type { TaskType } from '@refractiq/shared';
 
 export interface AgentCall<TInput, TOutput> {
   taskType: TaskType;

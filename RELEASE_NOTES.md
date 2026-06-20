@@ -1,4 +1,4 @@
-# AgentForge v0.1.0-alpha — Release Notes
+﻿# RefractIQ v0.1.0-alpha — Release Notes
 
 **Release:** v0.1.0-alpha  
 **Date:** June 2026  
@@ -41,13 +41,13 @@
 - Git commands use execFileSync with argument arrays (no shell interpolation)
 
 ### CLI
-- `agentforge init` — creates `.agentforge/` with config and SQLite schema
-- `agentforge providers add` — interactive provider registration
-- `agentforge doctor` — validates provider health and connectivity
-- `agentforge build "<idea>"` — runs full pipeline
-- `agentforge plan "<idea>"` — planning only (intake + architecture)
-- `agentforge report` — per-stage cost and token breakdown
-- `agentforge serve` — starts Hono API for the web dashboard
+- `RefractIQ init` — creates `.RefractIQ/` with config and SQLite schema
+- `RefractIQ providers add` — interactive provider registration
+- `RefractIQ doctor` — validates provider health and connectivity
+- `RefractIQ build "<idea>"` — runs full pipeline
+- `RefractIQ plan "<idea>"` — planning only (intake + architecture)
+- `RefractIQ report` — per-stage cost and token breakdown
+- `RefractIQ serve` — starts Hono API for the web dashboard
 
 ### Web Dashboard
 - Next.js 16 dashboard at `localhost:3000`
@@ -63,7 +63,7 @@
 
 - Command execution is allowlisted, not sandboxed
 - Dry-run calls intake + architect (planning model calls still made)
-- API has no auth by default — set `AGENTFORGE_API_TOKEN` for exposure beyond localhost
+- API has no auth by default — set `RefractIQ_API_TOKEN` for exposure beyond localhost
 - Cloud provider E2E requires real API keys and may incur costs
 - Provider model pricing is static in JSON config files
 
@@ -84,8 +84,8 @@
 ## Getting Started
 
 ```bash
-git clone https://github.com/saiz123/AgentForge.git
-cd AgentForge
+git clone https://github.com/saiz123/RefractIQ.git
+cd RefractIQ
 pnpm install && pnpm build
 cp .env.example .env
 # Add your API keys to .env

@@ -4,7 +4,7 @@ import { eq } from 'drizzle-orm';
 import { join } from 'node:path';
 import { openDb, runs, runStages } from './db.js';
 
-const AGENTFORGE_DIR = process.env['AGENTFORGE_DIR'] ?? join(process.cwd(), '.agentforge');
+const REFRACTIQ_DIR = process.env['REFRACTIQ_DIR'] ?? join(process.cwd(), '.refractiq');
 
 export const app = new Hono();
 
@@ -17,7 +17,7 @@ app.use('/api/*', async (c, next) => {
     await next();
     return;
   }
-  const token = process.env['AGENTFORGE_API_TOKEN'];
+  const token = process.env['REFRACTIQ_API_TOKEN'];
   if (!token) {
     await next();
     return;
@@ -33,7 +33,7 @@ app.get('/api/health', (c) => c.json({ ok: true, version: '0.1.0' }));
 
 app.get('/api/runs', async (c) => {
   try {
-    const db = openDb(AGENTFORGE_DIR);
+    const db = openDb(REFRACTIQ_DIR);
     const allRuns = await db.select().from(runs).all();
     return c.json(allRuns.reverse());
   } catch {
@@ -43,7 +43,7 @@ app.get('/api/runs', async (c) => {
 
 app.get('/api/runs/:id', async (c) => {
   try {
-    const db = openDb(AGENTFORGE_DIR);
+    const db = openDb(REFRACTIQ_DIR);
     const id = c.req.param('id');
     const run = await db.select().from(runs).where(eq(runs.id, id)).get();
     if (!run) return c.json({ error: 'Not found' }, 404);
@@ -57,7 +57,7 @@ app.get('/api/runs/:id', async (c) => {
 app.get('/api/providers', async (c) => {
   try {
     const { readFileSync } = await import('node:fs');
-    const config = JSON.parse(readFileSync(join(AGENTFORGE_DIR, 'config.json'), 'utf8')) as {
+    const config = JSON.parse(readFileSync(join(REFRACTIQ_DIR, 'config.json'), 'utf8')) as {
       providers?: unknown[];
     };
     return c.json(config.providers ?? []);
@@ -68,7 +68,7 @@ app.get('/api/providers', async (c) => {
 
 app.get('/api/stats', async (c) => {
   try {
-    const db = openDb(AGENTFORGE_DIR);
+    const db = openDb(REFRACTIQ_DIR);
     const allRuns = await db.select().from(runs).all();
     const allStages = await db.select().from(runStages).all();
 
@@ -112,7 +112,7 @@ app.get('/api/stats', async (c) => {
 
 app.get('/api/providers/stats', async (c) => {
   try {
-    const db = openDb(AGENTFORGE_DIR);
+    const db = openDb(REFRACTIQ_DIR);
     const allStages = await db.select().from(runStages).all();
 
     // Group by provider + model

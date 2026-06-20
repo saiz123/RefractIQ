@@ -30,7 +30,7 @@ export default async function HomePage() {
       fetchStats().catch(() => null),
     ]);
   } catch {
-    error = 'Could not connect to AgentForge API. Is "agentforge serve" running?';
+    error = 'Could not connect to RefractIQ API. Is "refractiq serve" running?';
   }
 
   return (
@@ -68,7 +68,7 @@ export default async function HomePage() {
           <p className="text-sm">
             Run{' '}
             <code className="bg-gray-800 px-1.5 py-0.5 rounded">
-              agentforge build &quot;your idea&quot;
+              refractiq build &quot;your idea&quot;
             </code>{' '}
             to get started
           </p>

@@ -1,5 +1,5 @@
-import type { FileWriter } from '@agentforge/shared';
-import type { FileWrite } from '@agentforge/shared';
+﻿import type { FileWriter } from '@refractiq/shared';
+import type { FileWrite } from '@refractiq/shared';
 import { Workspace } from './workspace.js';
 import { GitManager } from './git.js';
 

@@ -18,7 +18,7 @@ export const planCommand = new Command('plan')
       spinner.stop();
       console.log(chalk.yellow('plan: runs intake + architecture stages using real providers.'));
       console.log(chalk.dim('Full plan-only mode (no build) will be added in Phase 9.'));
-      console.log(chalk.dim(`\nTo build: agentforge build "${idea}"`));
+      console.log(chalk.dim(`\nTo build: refractiq build "${idea}"`));
     } catch (err) {
       spinner.stop();
       const msg = err instanceof Error ? err.message : String(err);

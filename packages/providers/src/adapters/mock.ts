@@ -1,10 +1,10 @@
-import type {
+﻿import type {
   ModelInfo,
   ChatRequest,
   ChatResponse,
   Message,
   ProviderConfig,
-} from '@agentforge/shared';
+} from '@refractiq/shared';
 import type { ProviderAdapter } from '../types.js';
 
 export interface MockFixture {

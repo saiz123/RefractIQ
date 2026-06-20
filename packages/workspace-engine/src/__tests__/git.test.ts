@@ -1,15 +1,15 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+﻿import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { GitManager } from '../git.js';
-import { CommandBlockedError } from '@agentforge/shared';
+import { CommandBlockedError } from '@refractiq/shared';
 
 describe('GitManager', () => {
   let tmpDir: string;
 
   beforeEach(() => {
-    tmpDir = mkdtempSync(join(tmpdir(), 'agentforge-git-test-'));
+    tmpDir = mkdtempSync(join(tmpdir(), 'refractiq-git-test-'));
   });
 
   afterEach(() => {

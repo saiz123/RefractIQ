@@ -1,16 +1,16 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+﻿import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { Workspace } from '../workspace.js';
-import { WorkspaceSecurityError } from '@agentforge/shared';
+import { WorkspaceSecurityError } from '@refractiq/shared';
 
 describe('Workspace', () => {
   let tmpDir: string;
   let workspace: Workspace;
 
   beforeEach(() => {
-    tmpDir = mkdtempSync(join(tmpdir(), 'agentforge-test-'));
+    tmpDir = mkdtempSync(join(tmpdir(), 'refractiq-test-'));
     workspace = new Workspace(tmpDir);
   });
 

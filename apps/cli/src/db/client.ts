@@ -1,8 +1,8 @@
-import { createClient, type Client } from '@libsql/client';
+﻿import { createClient, type Client } from '@libsql/client';
 import { drizzle } from 'drizzle-orm/libsql';
 import { join } from 'node:path';
 import { existsSync, writeFileSync } from 'node:fs';
-import { getAgentForgeDir, InitError } from '@agentforge/shared';
+import { getRefractIQDir, InitError } from '@refractiq/shared';
 import * as schema from './schema.js';
 import { runMigrations } from './migrations.js';
 
@@ -42,11 +42,11 @@ function makeClient(dbPath: string): Client {
 }
 
 export function openDb(cwd?: string): DbClient {
-  const agentForgeDir = getAgentForgeDir(cwd);
-  const dbPath = join(agentForgeDir, 'agentforge.db');
+  const refractiqDir = getRefractIQDir(cwd);
+  const dbPath = join(refractiqDir, 'refractiq.db');
 
   if (!existsSync(dbPath)) {
-    throw new InitError(`Database not found at "${dbPath}". Run "agentforge init" first.`);
+    throw new InitError(`Database not found at "${dbPath}". Run "refractiq init" first.`);
   }
 
   const client = makeClient(dbPath);
@@ -56,11 +56,11 @@ export function openDb(cwd?: string): DbClient {
 }
 
 export async function openDbAsync(cwd?: string): Promise<DbClient> {
-  const agentForgeDir = getAgentForgeDir(cwd);
-  const dbPath = join(agentForgeDir, 'agentforge.db');
+  const refractiqDir = getRefractIQDir(cwd);
+  const dbPath = join(refractiqDir, 'refractiq.db');
 
   if (!existsSync(dbPath)) {
-    throw new InitError(`Database not found at "${dbPath}". Run "agentforge init" first.`);
+    throw new InitError(`Database not found at "${dbPath}". Run "refractiq init" first.`);
   }
 
   const client = makeClient(dbPath);
@@ -69,8 +69,8 @@ export async function openDbAsync(cwd?: string): Promise<DbClient> {
   return drizzle(client, { schema });
 }
 
-export async function createDb(agentForgeDir: string): Promise<void> {
-  const dbPath = join(agentForgeDir, 'agentforge.db');
+export async function createDb(refractiqDir: string): Promise<void> {
+  const dbPath = join(refractiqDir, 'refractiq.db');
   if (!existsSync(dbPath)) {
     writeFileSync(dbPath, '');
   }

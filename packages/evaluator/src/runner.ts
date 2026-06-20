@@ -1,7 +1,7 @@
-import type { TestRunner } from '@agentforge/shared';
-import type { TestArtifact } from '@agentforge/shared';
-import { CommandRunner } from '@agentforge/workspace-engine';
-import { compressLog } from '@agentforge/token-engine';
+﻿import type { TestRunner } from '@refractiq/shared';
+import type { TestArtifact } from '@refractiq/shared';
+import { CommandRunner } from '@refractiq/workspace-engine';
+import { compressLog } from '@refractiq/token-engine';
 import { parseTestOutput } from './parser.js';
 
 export class WorkspaceTestRunner implements TestRunner {

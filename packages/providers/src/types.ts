@@ -1,4 +1,4 @@
-import type { ModelInfo, ChatRequest, ChatResponse, Message } from '@agentforge/shared';
+﻿import type { ModelInfo, ChatRequest, ChatResponse, Message } from '@refractiq/shared';
 
 export interface ProviderAdapter {
   readonly id: string;

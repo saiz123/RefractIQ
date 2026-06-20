@@ -1,4 +1,4 @@
-import type {
+﻿import type {
   FileEntry,
   ContextPackResult,
   ContextEngineOptions,
@@ -8,7 +8,7 @@ import { DEFAULT_CONTEXT_OPTIONS } from './types.js';
 import { buildFileIndex, shouldSkip } from './indexer.js';
 import { scoreFile } from './scorer.js';
 import { chunkFile } from './chunker.js';
-import { estimateTokens } from '@agentforge/token-engine';
+import { estimateTokens } from '@refractiq/token-engine';
 import type { FileSummarizerFn } from './summarizer.js';
 import { stubSummarizer } from './summarizer.js';
 

@@ -1,5 +1,5 @@
 {
-  "name": "@agentforge/context-engine",
+  "name": "@refractiq/context-engine",
   "version": "0.1.0",
   "description": "File relevance scoring, chunking, summarization, and diff extraction",
   "type": "module",
@@ -21,8 +21,8 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@agentforge/shared": "workspace:*",
-    "@agentforge/token-engine": "workspace:*"
+    "@refractiq/shared": "workspace:*",
+    "@refractiq/token-engine": "workspace:*"
   },
   "devDependencies": {
     "rimraf": "^6.0.0",

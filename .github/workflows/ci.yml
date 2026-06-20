@@ -55,6 +55,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Build API image
-        run: docker build --target api -t agentforge-api:ci .
+        run: docker build --target api -t refractiq-api:ci .
       - name: Build CLI image
-        run: docker build --target cli -t agentforge-cli:ci .
+        run: docker build --target cli -t refractiq-cli:ci .

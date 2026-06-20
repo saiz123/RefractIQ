@@ -1,10 +1,10 @@
-# Architecture
+﻿# Architecture
 
 > All packages and pipeline stages are implemented and tested.
 
 ## Overview
 
-AgentForge is a monorepo of TypeScript packages. The CLI (`apps/cli`) is the primary user interface. All AI work flows through the `orchestrator`, which sequences agent stages, calls the `model-router` to select the cheapest capable provider/model for each stage, and passes structured JSON artifacts between stages.
+RefractIQ is a monorepo of TypeScript packages. The CLI (`apps/cli`) is the primary user interface. All AI work flows through the `orchestrator`, which sequences agent stages, calls the `model-router` to select the cheapest capable provider/model for each stage, and passes structured JSON artifacts between stages.
 
 ## Package map
 

@@ -1,11 +1,11 @@
-# Security
+﻿# Security
 
 > Security controls are fully implemented: API key redaction via SecretRedactor, path traversal prevention in workspace-engine, command allowlist in CommandRunner, and shell injection prevention via execFileSync with argument arrays.
 
 ## API key handling
 
 - Keys are read from environment variables or `.env` file only
-- Keys are **never** written to `.agentforge/config.json`, SQLite, or log files
+- Keys are **never** written to `.RefractIQ/config.json`, SQLite, or log files
 - The `SecretRedactor` in `packages/shared/src/logger.ts` strips known key patterns from all log output before writing
 
 Patterns redacted:
@@ -33,7 +33,7 @@ Blocked unconditionally (pre-allowlist, regex-based):
 - `rm -rf` patterns
 - Network tools: `curl`, `wget`
 
-Users can extend the allowlist in `.agentforge/config.json` under `security.allowedCommands`.
+Users can extend the allowlist in `.RefractIQ/config.json` under `security.allowedCommands`.
 
 ## Prompt injection mitigation
 

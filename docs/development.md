@@ -1,4 +1,4 @@
-# Development Guide
+﻿# Development Guide
 
 ## Prerequisites
 
@@ -9,8 +9,8 @@
 ## Setup
 
 ```bash
-git clone https://github.com/your-username/agentforge
-cd agentforge
+git clone https://github.com/your-username/RefractIQ
+cd RefractIQ
 pnpm install
 pnpm build
 pnpm test
@@ -28,9 +28,9 @@ pnpm format                                 # Prettier
 pnpm typecheck                              # tsc --noEmit across all packages
 
 # Single-package operations
-pnpm --filter @agentforge/providers build
-pnpm --filter @agentforge/providers test
-pnpm --filter @agentforge/providers typecheck
+pnpm --filter @RefractIQ/providers build
+pnpm --filter @RefractIQ/providers test
+pnpm --filter @RefractIQ/providers typecheck
 ```
 
 ## Package structure
@@ -69,12 +69,12 @@ mkdir packages/my-package
 cd packages/my-package
 cat > package.json << 'EOF'
 {
-  "name": "@agentforge/my-package",
+  "name": "@RefractIQ/my-package",
   "version": "0.1.0",
   "type": "module",
   "exports": { ".": { "import": "./dist/index.js", "types": "./dist/index.d.ts" } },
   "scripts": { "build": "tsc", "typecheck": "tsc --noEmit", "test": "vitest run" },
-  "dependencies": { "@agentforge/shared": "workspace:*" }
+  "dependencies": { "@RefractIQ/shared": "workspace:*" }
 }
 EOF
 mkdir src
@@ -86,7 +86,7 @@ echo 'export {};' > src/index.ts
 All tests that exercise orchestrator or provider logic must use `MockAdapter` (no real API calls):
 
 ```typescript
-import { MockAdapter } from '@agentforge/providers';
+import { MockAdapter } from '@RefractIQ/providers';
 
 const provider = new MockAdapter({
   fixtures: [
@@ -102,4 +102,4 @@ cp .env.example .env
 # Fill in at least one real provider key for smoke tests
 ```
 
-The `agentforge doctor` command validates all providers before a real build.
+The `RefractIQ doctor` command validates all providers before a real build.

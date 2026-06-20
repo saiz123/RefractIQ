@@ -73,7 +73,7 @@ export const reportCommand = new Command('report')
         }
 
         if (recentRuns.length === 0) {
-          console.log(chalk.yellow('No runs yet. Use "agentforge build" to start one.'));
+          console.log(chalk.yellow('No runs yet. Use "refractiq build" to start one.'));
           return;
         }
 

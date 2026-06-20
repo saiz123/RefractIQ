@@ -31,33 +31,33 @@ const DEFAULT_CONFIG = {
   },
 };
 
-const GITIGNORE_ENTRIES = ['.agentforge/'];
+const GITIGNORE_ENTRIES = ['.refractiq/'];
 
 export const initCommand = new Command('init')
-  .description('Initialize AgentForge in the current directory')
+  .description('Initialize RefractIQ in the current directory')
   .action(async () => {
     const cwd = process.cwd();
-    const agentforgeDir = join(cwd, '.agentforge');
+    const refractiqDir = join(cwd, '.refractiq');
 
-    if (existsSync(agentforgeDir)) {
+    if (existsSync(refractiqDir)) {
       console.log(
         chalk.yellow(
-          'Warning: .agentforge/ already exists. Skipping initialization to avoid overwriting.'
+          'Warning: .refractiq/ already exists. Skipping initialization to avoid overwriting.'
         )
       );
       process.exit(0);
     }
 
-    // Create .agentforge/ directory
-    mkdirSync(agentforgeDir, { recursive: true });
+    // Create .refractiq/ directory
+    mkdirSync(refractiqDir, { recursive: true });
 
     // Write config.json
-    const configPath = join(agentforgeDir, 'config.json');
+    const configPath = join(refractiqDir, 'config.json');
     writeFileSync(configPath, JSON.stringify(DEFAULT_CONFIG, null, 2) + '\n', 'utf8');
 
     // Create and initialize the SQLite database with schema
     try {
-      await createDb(agentforgeDir);
+      await createDb(refractiqDir);
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       console.error(chalk.red(`Failed to initialize database: ${msg}`));
@@ -70,24 +70,22 @@ export const initCommand = new Command('init')
       const existing = readFileSync(gitignorePath, 'utf8');
       const toAdd = GITIGNORE_ENTRIES.filter((entry) => !existing.includes(entry));
       if (toAdd.length > 0) {
-        const block = '\n# AgentForge\n' + toAdd.join('\n') + '\n';
+        const block = '\n# RefractIQ\n' + toAdd.join('\n') + '\n';
         appendFileSync(gitignorePath, block, 'utf8');
       }
     }
 
-    console.log(chalk.green('AgentForge initialized successfully!'));
+    console.log(chalk.green('RefractIQ initialized successfully!'));
     console.log('');
     console.log(chalk.bold('Created:'));
-    console.log(`  ${chalk.cyan('.agentforge/config.json')}  — project configuration`);
-    console.log(`  ${chalk.cyan('.agentforge/agentforge.db')} — local SQLite database`);
+    console.log(`  ${chalk.cyan('.refractiq/config.json')}  — project configuration`);
+    console.log(`  ${chalk.cyan('.refractiq/refractiq.db')} — local SQLite database`);
     console.log('');
     console.log(chalk.bold('Next steps:'));
-    console.log(`  1. Add a provider:  ${chalk.cyan('agentforge providers add')}`);
-    console.log(`  2. Check health:    ${chalk.cyan('agentforge doctor')}`);
+    console.log(`  1. Add a provider:  ${chalk.cyan('refractiq providers add')}`);
+    console.log(`  2. Check health:    ${chalk.cyan('refractiq doctor')}`);
+    console.log(`  3. Plan a feature:  ${chalk.cyan('refractiq plan "your feature description"')}`);
     console.log(
-      `  3. Plan a feature:  ${chalk.cyan('agentforge plan "your feature description"')}`
-    );
-    console.log(
-      `  4. Build it:        ${chalk.cyan('agentforge build "your feature description"')}`
+      `  4. Build it:        ${chalk.cyan('refractiq build "your feature description"')}`
     );
   });

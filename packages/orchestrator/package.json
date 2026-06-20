@@ -1,5 +1,5 @@
 {
-  "name": "@agentforge/orchestrator",
+  "name": "@refractiq/orchestrator",
   "version": "0.1.0",
   "description": "Pipeline state machine — sequences agent stages and controls all artifact handoffs",
   "type": "module",
@@ -21,12 +21,12 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@agentforge/context-engine": "workspace:*",
-    "@agentforge/cost-engine": "workspace:*",
-    "@agentforge/model-router": "workspace:*",
-    "@agentforge/providers": "workspace:*",
-    "@agentforge/shared": "workspace:*",
-    "@agentforge/token-engine": "workspace:*"
+    "@refractiq/context-engine": "workspace:*",
+    "@refractiq/cost-engine": "workspace:*",
+    "@refractiq/model-router": "workspace:*",
+    "@refractiq/providers": "workspace:*",
+    "@refractiq/shared": "workspace:*",
+    "@refractiq/token-engine": "workspace:*"
   },
   "devDependencies": {
     "rimraf": "^6.0.0",

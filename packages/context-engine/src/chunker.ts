@@ -1,5 +1,5 @@
-import type { FileEntry, FileChunkResult } from './types.js';
-import { estimateTokens } from '@agentforge/token-engine';
+﻿import type { FileEntry, FileChunkResult } from './types.js';
+import { estimateTokens } from '@refractiq/token-engine';
 
 /**
  * Split a file into chunks at logical boundaries.

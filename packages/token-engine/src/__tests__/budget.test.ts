@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
+﻿import { describe, it, expect } from 'vitest';
 import { BudgetEnforcer, DEFAULT_BUDGET_CONFIG } from '../budget.js';
-import { BudgetExceededError } from '@agentforge/shared';
+import { BudgetExceededError } from '@refractiq/shared';
 
 describe('BudgetEnforcer', () => {
   const enforcer = new BudgetEnforcer(DEFAULT_BUDGET_CONFIG);
