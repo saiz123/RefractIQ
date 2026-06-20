@@ -1,8 +1,8 @@
 export const dynamic = 'force-dynamic';
 
 import Link from 'next/link';
-import { fetchRuns } from '@/lib/api';
-import type { Run } from '@/lib/api';
+import { fetchRuns, fetchStats } from '@/lib/api';
+import type { Run, RunStats } from '@/lib/api';
 
 function StatusBadge({ status }: { status: string }) {
   const colors: Record<string, string> = {
@@ -22,9 +22,13 @@ function StatusBadge({ status }: { status: string }) {
 
 export default async function HomePage() {
   let runs: Run[] = [];
+  let stats: RunStats | null = null;
   let error: string | null = null;
   try {
-    runs = await fetchRuns();
+    [runs, stats] = await Promise.all([
+      fetchRuns().catch(() => [] as Run[]),
+      fetchStats().catch(() => null),
+    ]);
   } catch {
     error = 'Could not connect to AgentForge API. Is "agentforge serve" running?';
   }
@@ -35,6 +39,22 @@ export default async function HomePage() {
         <h1 className="text-2xl font-bold">Run History</h1>
         <span className="text-sm text-gray-500">{runs.length} runs</span>
       </div>
+
+      {stats && stats.totalRuns > 0 && (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          {[
+            { label: 'Total Runs', value: String(stats.totalRuns) },
+            { label: 'Total Spent', value: `$${stats.totalCost.toFixed(4)}` },
+            { label: 'Avg per Run', value: `$${stats.avgCost.toFixed(4)}` },
+            { label: 'Total Tokens', value: stats.totalTokens.toLocaleString() },
+          ].map(({ label, value }) => (
+            <div key={label} className="bg-gray-900 border border-gray-800 rounded-lg px-4 py-3">
+              <p className="text-gray-500 text-xs mb-1">{label}</p>
+              <p className="text-white font-semibold">{value}</p>
+            </div>
+          ))}
+        </div>
+      )}
 
       {error && (
         <div className="bg-red-950 border border-red-800 text-red-300 rounded-lg px-4 py-3 text-sm mb-6">

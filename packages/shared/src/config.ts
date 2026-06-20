@@ -1,7 +1,13 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import type { ProviderConfig } from './types/provider.js';
+import type { TaskType } from './types/index.js';
 import { InitError } from './errors.js';
+
+export interface TaskOverride {
+  preferredProvider?: string;
+  preferredModel?: string;
+}
 
 export interface AgentForgeConfig {
   version: string;
@@ -13,6 +19,7 @@ export interface AgentForgeConfig {
     strong: { tasks: string[] };
   };
   security: { allowedCommands: string[] };
+  taskOverrides?: Partial<Record<TaskType, TaskOverride>>;
 }
 
 export function getAgentForgeDir(cwd?: string): string {

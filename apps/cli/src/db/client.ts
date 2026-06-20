@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { existsSync, writeFileSync } from 'node:fs';
 import { getAgentForgeDir, InitError } from '@agentforge/shared';
 import * as schema from './schema.js';
+import { runMigrations } from './migrations.js';
 
 export type DbClient = ReturnType<typeof drizzle<typeof schema>>;
 
@@ -64,6 +65,7 @@ export async function openDbAsync(cwd?: string): Promise<DbClient> {
 
   const client = makeClient(dbPath);
   await client.executeMultiple(SCHEMA_SQL);
+  await runMigrations(client);
   return drizzle(client, { schema });
 }
 

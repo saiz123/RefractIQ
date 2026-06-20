@@ -71,6 +71,14 @@ export class OpenAIAdapter implements ProviderAdapter {
       model: response.model,
       provider: this.id,
       latencyMs,
+      // OpenAI Predicted Outputs cache hit tokens
+      cacheReadTokens: (response.usage as unknown as Record<string, unknown>)?.[
+        'prompt_tokens_details'
+      ]
+        ? ((response.usage as unknown as Record<string, Record<string, number>>)[
+            'prompt_tokens_details'
+          ]?.['cached_tokens'] ?? 0)
+        : 0,
     };
   }
 

@@ -53,6 +53,18 @@ export function printCostTable(result: RunResult): void {
       chalk.dim(`\nEfficiency: ${chalk.white(`$${costPer1k.toFixed(4)}`)} per 1,000 output tokens`)
     );
   }
+
+  // Show cache stats if any stage had cache hits
+  const totalCacheRead = result.stages.reduce((s, r) => s + (r.cacheReadTokens ?? 0), 0);
+  const totalCacheWrite = result.stages.reduce((s, r) => s + (r.cacheWriteTokens ?? 0), 0);
+  if (totalCacheRead > 0 || totalCacheWrite > 0) {
+    const cacheReadCost = (totalCacheRead / 1_000_000) * 0.1; // approximate 10% of avg input price
+    console.log(
+      chalk.dim(
+        `Cache: ${totalCacheRead.toLocaleString()} tokens read (est. $${cacheReadCost.toFixed(5)} saved) · ${totalCacheWrite.toLocaleString()} written`
+      )
+    );
+  }
 }
 
 export function printContextStats(result: RunResult): void {

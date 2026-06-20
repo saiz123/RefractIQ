@@ -54,5 +54,13 @@ export function scoreModel(model: ModelInfo, request: RouterRequest): number {
   // Context window bonus: modest bonus for larger windows (tiebreaker)
   score += Math.min(model.contextWindow / 100_000, 5);
 
+  // Latency tiebreaker: -1 point per 2000ms of average latency (small penalty, doesn't override cost)
+  if (request.averageLatencyByModel) {
+    const avgLatency = request.averageLatencyByModel[model.id];
+    if (avgLatency !== undefined && avgLatency > 0) {
+      score -= Math.floor(avgLatency / 2000);
+    }
+  }
+
   return score;
 }

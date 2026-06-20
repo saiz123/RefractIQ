@@ -65,3 +65,109 @@ app.get('/api/providers', async (c) => {
     return c.json([]);
   }
 });
+
+app.get('/api/stats', async (c) => {
+  try {
+    const db = openDb(AGENTFORGE_DIR);
+    const allRuns = await db.select().from(runs).all();
+    const allStages = await db.select().from(runStages).all();
+
+    const totalRuns = allRuns.length;
+    const totalCost = allRuns.reduce((s, r) => s + r.totalCostUsd, 0);
+    const avgCost = totalRuns > 0 ? totalCost / totalRuns : 0;
+    const totalTokens = allRuns.reduce((s, r) => s + r.totalInputTokens + r.totalOutputTokens, 0);
+    const byStatus = allRuns.reduce(
+      (acc, r) => {
+        acc[r.status] = (acc[r.status] ?? 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
+
+    // Top providers used
+    const providerCounts: Record<string, number> = {};
+    for (const s of allStages) {
+      if (s.provider) providerCounts[s.provider] = (providerCounts[s.provider] ?? 0) + 1;
+    }
+
+    return c.json({
+      totalRuns,
+      totalCost,
+      avgCost,
+      totalTokens,
+      byStatus,
+      topProviders: providerCounts,
+    });
+  } catch {
+    return c.json({
+      totalRuns: 0,
+      totalCost: 0,
+      avgCost: 0,
+      totalTokens: 0,
+      byStatus: {},
+      topProviders: {},
+    });
+  }
+});
+
+app.get('/api/providers/stats', async (c) => {
+  try {
+    const db = openDb(AGENTFORGE_DIR);
+    const allStages = await db.select().from(runStages).all();
+
+    // Group by provider + model
+    const byModel: Record<
+      string,
+      {
+        provider: string;
+        model: string;
+        callCount: number;
+        totalCost: number;
+        totalInputTokens: number;
+        totalOutputTokens: number;
+        totalLatency: number;
+        cacheReadTokens: number;
+      }
+    > = {};
+
+    for (const s of allStages) {
+      if (!s.provider || !s.model) continue;
+      const key = `${s.provider}/${s.model}`;
+      if (!byModel[key]) {
+        byModel[key] = {
+          provider: s.provider,
+          model: s.model,
+          callCount: 0,
+          totalCost: 0,
+          totalInputTokens: 0,
+          totalOutputTokens: 0,
+          totalLatency: 0,
+          cacheReadTokens: 0,
+        };
+      }
+      const entry = byModel[key]!;
+      entry.callCount++;
+      entry.totalCost += s.costUsd;
+      entry.totalInputTokens += s.inputTokens;
+      entry.totalOutputTokens += s.outputTokens;
+      entry.totalLatency += (s.endedAt ?? s.startedAt) - s.startedAt;
+      entry.cacheReadTokens += s.cacheReadTokens ?? 0;
+    }
+
+    const result = Object.values(byModel)
+      .map((e) => ({
+        provider: e.provider,
+        model: e.model,
+        callCount: e.callCount,
+        avgCost: e.callCount > 0 ? e.totalCost / e.callCount : 0,
+        avgInputTokens: e.callCount > 0 ? Math.round(e.totalInputTokens / e.callCount) : 0,
+        avgLatencyMs: e.callCount > 0 ? Math.round(e.totalLatency / e.callCount) : 0,
+        cacheReadTokens: e.cacheReadTokens,
+      }))
+      .sort((a, b) => b.callCount - a.callCount);
+
+    return c.json(result);
+  } catch {
+    return c.json([]);
+  }
+});

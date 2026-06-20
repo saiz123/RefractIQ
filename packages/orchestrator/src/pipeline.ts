@@ -33,6 +33,7 @@ import {
 export class Orchestrator {
   private lastBuilderProvider: string | undefined;
   private lastSuggestedTestCommand: string | undefined;
+  private activeRunConfig: RunConfig | undefined;
   private contextAccumulator: ContextStats = {
     totalFilesScored: 0,
     filesIncluded: 0,
@@ -47,6 +48,9 @@ export class Orchestrator {
     const runId = randomUUID();
     const startMs = Date.now();
     const stages: StageResult[] = [];
+
+    // Store runConfig for access in callAgent (task overrides, latency routing)
+    this.activeRunConfig = runConfig;
 
     // Reset accumulator in case the same orchestrator instance is reused
     this.contextAccumulator = {
@@ -66,6 +70,29 @@ export class Orchestrator {
       const tasks = this.breakdownTasks(architecture);
       logger.info(`Dry-run plan: ${tasks.length} tasks identified`);
       logger.info('No files written, no commands run, no git commits.');
+
+      let plannedWrites: RunResult['plannedWrites'];
+
+      if (runConfig.showPreview && tasks.length > 0) {
+        logger.info('Preview mode: generating files without writing to disk...');
+        const allWrites: Array<{ path: string; lineCount: number; action: string }> = [];
+        for (const task of tasks) {
+          try {
+            const diff = await this.runBuild(task, requirements, stages);
+            for (const fw of diff.files) {
+              allWrites.push({
+                path: fw.path,
+                lineCount: fw.content.split('\n').length,
+                action: fw.action,
+              });
+            }
+          } catch {
+            // Best-effort preview — skip failed tasks
+          }
+        }
+        plannedWrites = allWrites;
+      }
+
       return {
         id: runId,
         status: 'complete',
@@ -76,6 +103,7 @@ export class Orchestrator {
         totalCostUsd: this.config.costTracker.totalCostUsd(),
         durationMs: Date.now() - startMs,
         outputPath: runConfig.outputDir,
+        plannedWrites,
       };
     }
 
@@ -218,12 +246,21 @@ export class Orchestrator {
 
     // Route to best model — for review, try to use a different provider than the builder.
     // If no alternative provider is available, fall back to any available provider.
+    // Check for per-role config overrides
+    const taskOverride = this.config.agentForgeConfig?.taskOverrides?.[agent.taskType];
+    const runConfig = this.activeRunConfig;
+
     const baseRouterRequest = {
       taskType: agent.taskType,
       estimatedInputTokens: estimatedTokens,
       requiredCapabilities: TASK_CAPABILITIES[agent.taskType],
       budgetRemainingUsd:
         this.config.budgetEnforcer.runLimitUsd - this.config.costTracker.totalCostUsd(),
+      // Task-specific overrides take precedence over run-level defaults
+      userPreferredProvider: taskOverride?.preferredProvider ?? runConfig?.preferredProvider,
+      userPreferredModel: taskOverride?.preferredModel ?? runConfig?.preferredModel,
+      // Historical latency data for latency-aware routing
+      averageLatencyByModel: this.config.averageLatencyByModel,
     };
 
     let routerDecision;
@@ -336,6 +373,8 @@ export class Orchestrator {
       model: routerDecision.model,
       inputTokens: response.inputTokens,
       outputTokens: response.outputTokens,
+      cacheReadTokens: response.cacheReadTokens ?? 0,
+      cacheWriteTokens: response.cacheWriteTokens ?? 0,
       costUsd: cost.totalCostUsd,
       durationMs,
     });

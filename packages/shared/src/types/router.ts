@@ -11,6 +11,7 @@ export interface RouterRequest {
   preferDifferentProviderFrom?: string; // for Reviewer: exclude this provider
   userPreferredProvider?: string; // hard override
   userPreferredModel?: string; // hard override (takes precedence over provider)
+  averageLatencyByModel?: Record<string, number>; // model id → avg ms (used as tiebreaker)
 }
 
 export interface RouterDecision {

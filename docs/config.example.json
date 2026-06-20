@@ -24,5 +24,10 @@
       "vitest",
       "jest"
     ]
+  },
+  "taskOverrides": {
+    "intake": { "preferredProvider": "gemini" },
+    "build": { "preferredModel": "claude-sonnet-4-6" },
+    "review": { "preferredProvider": "openai" }
   }
 }

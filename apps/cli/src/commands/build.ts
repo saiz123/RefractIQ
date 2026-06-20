@@ -15,11 +15,17 @@ export const buildCommand = new Command('build')
   .option('--max-repair-loops <n>', 'Maximum repair loop iterations', '3')
   .option('--output <dir>', 'Output directory for generated files', './output')
   .option('--dry-run', 'Plan only — runs intake + architecture, no file writes or commands', false)
+  .option(
+    '--preview',
+    'Preview files that would be generated without writing to disk (runs intake + architect + build stages, will spend tokens)',
+    false
+  )
   .option('--test-command <cmd>', 'Command to run tests (e.g. "npx vitest run")')
   .action(async (idea: string, options) => {
     const spinner = ora('Starting AgentForge pipeline...').start();
 
     try {
+      const isPreview = options.preview as boolean;
       const result = await runBuild(idea, {
         budgetUsd: parseFloat(options.budget as string),
         maxRepairLoops: parseInt(options.maxRepairLoops as string, 10),
@@ -27,7 +33,8 @@ export const buildCommand = new Command('build')
         preferredProvider: options.provider as string | undefined,
         preferredModel: options.model as string | undefined,
         testCommand: options.testCommand as string | undefined,
-        dryRun: options.dryRun as boolean,
+        dryRun: isPreview || (options.dryRun as boolean),
+        showPreview: isPreview,
       });
 
       spinner.stop();
@@ -51,6 +58,17 @@ export const buildCommand = new Command('build')
       console.log(chalk.dim(`  Output: ${result.outputPath}`));
       printCostTable(result);
       printContextStats(result);
+
+      // Print planned writes if available (from --preview mode)
+      if (result.plannedWrites && result.plannedWrites.length > 0) {
+        console.log(chalk.bold('\nFiles that would be generated:\n'));
+        for (const w of result.plannedWrites) {
+          const icon =
+            w.action === 'create' ? '\u{1F4C4}' : w.action === 'update' ? '✏️' : '\u{1F5D1}️';
+          console.log(`  ${icon}  ${chalk.cyan(w.path)} ${chalk.dim(`(${w.lineCount} lines)`)}`);
+        }
+        console.log(chalk.dim(`\nRun without --preview to apply these changes.`));
+      }
     } catch (err) {
       spinner.stop();
       const msg = err instanceof Error ? err.message : String(err);

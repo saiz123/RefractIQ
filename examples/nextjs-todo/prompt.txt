@@ -1,0 +1,1 @@
+A Next.js 15 todo app with TypeScript, Tailwind CSS v4, and localStorage persistence. Include add, complete, delete, and filter (all/active/completed) features. Use the App Router and server components where appropriate.

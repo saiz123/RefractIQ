@@ -1,0 +1,1 @@
+A FastAPI CRUD API for managing a todo list with SQLite storage, Pydantic v2 models, and pytest tests. Include endpoints: GET /todos, POST /todos, PUT /todos/{id}, DELETE /todos/{id}. Use httpx for testing.

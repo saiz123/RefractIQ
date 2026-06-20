@@ -24,11 +24,32 @@ export interface Stage {
   stage: string;
   iteration: number;
   status: string;
+  startedAt: number;
+  endedAt: number | null;
   provider: string;
   model: string;
   inputTokens: number;
   outputTokens: number;
   costUsd: number;
+}
+
+export interface RunStats {
+  totalRuns: number;
+  totalCost: number;
+  avgCost: number;
+  totalTokens: number;
+  byStatus: Record<string, number>;
+  topProviders: Record<string, number>;
+}
+
+export interface ModelStats {
+  provider: string;
+  model: string;
+  callCount: number;
+  avgCost: number;
+  avgInputTokens: number;
+  avgLatencyMs: number;
+  cacheReadTokens: number;
 }
 
 export async function fetchRuns(): Promise<Run[]> {
@@ -45,6 +66,26 @@ export async function fetchRun(id: string): Promise<{ run: Run; stages: Stage[] 
 
 export async function fetchProviders(): Promise<unknown[]> {
   const res = await fetch(`${getApiUrl()}/api/providers`, { cache: 'no-store' });
+  if (!res.ok) return [];
+  return res.json();
+}
+
+export async function fetchStats(): Promise<RunStats> {
+  const res = await fetch(`${getApiUrl()}/api/stats`, { cache: 'no-store' });
+  if (!res.ok)
+    return {
+      totalRuns: 0,
+      totalCost: 0,
+      avgCost: 0,
+      totalTokens: 0,
+      byStatus: {},
+      topProviders: {},
+    };
+  return res.json();
+}
+
+export async function fetchModelStats(): Promise<ModelStats[]> {
+  const res = await fetch(`${getApiUrl()}/api/providers/stats`, { cache: 'no-store' });
   if (!res.ok) return [];
   return res.json();
 }

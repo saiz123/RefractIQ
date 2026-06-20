@@ -20,6 +20,7 @@ export interface RunConfig {
   preferredModel?: string;
   testCommand?: string;
   dryRun: boolean;
+  showPreview?: boolean;
 }
 
 export interface StageResult {
@@ -30,6 +31,8 @@ export interface StageResult {
   model?: string;
   inputTokens: number;
   outputTokens: number;
+  cacheReadTokens?: number;
+  cacheWriteTokens?: number;
   costUsd: number;
   durationMs: number;
 }
@@ -53,4 +56,5 @@ export interface RunResult {
   durationMs: number;
   outputPath: string;
   contextStats?: ContextStats; // populated when context engine was active
+  plannedWrites?: Array<{ path: string; lineCount: number; action: string }>;
 }

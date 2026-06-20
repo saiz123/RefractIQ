@@ -9,6 +9,8 @@ import { WorkspaceFileWriter } from '@agentforge/workspace-engine';
 import { WorkspaceTestRunner } from '@agentforge/evaluator';
 import { ContextEngine } from '@agentforge/context-engine';
 import { loadConfig, getAgentForgeDir, type RunResult } from '@agentforge/shared';
+import { openDbAsync } from './db/client.js';
+import { getAverageLatencyByModel } from './db/runs.js';
 
 export interface BuildOptions {
   budgetUsd: number;
@@ -18,6 +20,7 @@ export interface BuildOptions {
   preferredModel?: string;
   testCommand?: string;
   dryRun: boolean;
+  showPreview?: boolean;
   cwd?: string;
 }
 
@@ -54,6 +57,15 @@ export async function runBuild(userPrompt: string, opts: BuildOptions): Promise<
   const testRunner = new WorkspaceTestRunner(outputDir, new Set(config.security.allowedCommands));
   const contextEngine = new ContextEngine();
 
+  // Get historical latency data for latency-aware routing
+  let averageLatencyByModel: Record<string, number> = {};
+  try {
+    const db = await openDbAsync(cwd);
+    averageLatencyByModel = await getAverageLatencyByModel(db);
+  } catch {
+    // Non-fatal: latency routing falls back to cost-only
+  }
+
   const orchestrator = new Orchestrator({
     registry,
     router,
@@ -65,6 +77,8 @@ export async function runBuild(userPrompt: string, opts: BuildOptions): Promise<
     fileWriter,
     testRunner,
     contextEngine,
+    agentForgeConfig: config,
+    averageLatencyByModel,
   });
 
   const runConfig = {
@@ -76,6 +90,7 @@ export async function runBuild(userPrompt: string, opts: BuildOptions): Promise<
     preferredModel: opts.preferredModel,
     testCommand: opts.testCommand,
     dryRun: opts.dryRun,
+    showPreview: opts.showPreview,
   };
 
   return orchestrator.run(userPrompt, runConfig);

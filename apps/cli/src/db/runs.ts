@@ -30,6 +30,8 @@ export async function saveRun(db: DbClient, result: RunResult): Promise<void> {
       model: stage.model ?? '',
       inputTokens: stage.inputTokens,
       outputTokens: stage.outputTokens,
+      cacheReadTokens: stage.cacheReadTokens ?? 0,
+      cacheWriteTokens: stage.cacheWriteTokens ?? 0,
       costUsd: stage.costUsd,
     });
   }
@@ -46,4 +48,26 @@ export async function getRunWithStages(db: DbClient, runId: string) {
   if (!run) return null;
   const stages = await db.select().from(runStages).where(eq(runStages.runId, runId));
   return { run, stages };
+}
+
+export async function getAverageLatencyByModel(db: DbClient): Promise<Record<string, number>> {
+  const map: Record<string, number> = {};
+  try {
+    const rows = await db.select().from(runStages);
+    // Group and average in JS (simpler than raw SQL aggregation with Drizzle)
+    const byModel: Record<string, number[]> = {};
+    for (const row of rows) {
+      if (row.model && row.endedAt && row.startedAt) {
+        const latency = row.endedAt - row.startedAt;
+        if (!byModel[row.model]) byModel[row.model] = [];
+        byModel[row.model]!.push(latency);
+      }
+    }
+    for (const [model, latencies] of Object.entries(byModel)) {
+      map[model] = latencies.reduce((a, b) => a + b, 0) / latencies.length;
+    }
+  } catch {
+    // Silently return empty map — latency routing is optional
+  }
+  return map;
 }

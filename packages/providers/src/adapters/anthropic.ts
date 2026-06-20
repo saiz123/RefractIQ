@@ -64,7 +64,15 @@ export class AnthropicAdapter implements ProviderAdapter {
       model: response.model,
       provider: this.id,
       latencyMs,
-      // cache fields wired in Phase 4 when token-engine is implemented
+      // Extract prompt cache fields safely (available in newer Anthropic SDK versions)
+      cacheReadTokens:
+        ((response.usage as unknown as Record<string, unknown>)['cache_read_input_tokens'] as
+          | number
+          | undefined) ?? 0,
+      cacheWriteTokens:
+        ((response.usage as unknown as Record<string, unknown>)['cache_creation_input_tokens'] as
+          | number
+          | undefined) ?? 0,
     };
   }
 
