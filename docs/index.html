@@ -459,8 +459,14 @@
           grid-template-columns: 1fr;
         }
       }
+      /* Left column distributes steps to match code-block height */
+      .qs-steps-col {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
       .qs-step {
-        margin-bottom: 1.5rem;
+        margin-bottom: 0;
       }
       .qs-num {
         display: inline-flex;
@@ -485,7 +491,7 @@
         color: var(--muted);
       }
       pre {
-        background: #060610;
+        background: #0D1117;
         border: 1px solid var(--border);
         border-radius: 0.75rem;
         padding: 1.5rem;
@@ -980,7 +986,7 @@
         <div class="section-tag">Quick start</div>
         <h2>From zero to running<br />in under 5 minutes.</h2>
         <div class="quickstart-grid">
-          <div>
+          <div class="qs-steps-col">
             <div class="qs-step">
               <div class="qs-num">1</div>
               <h4>Clone and install</h4>
