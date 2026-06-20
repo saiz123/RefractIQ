@@ -2,8 +2,9 @@
 
 # ── Stage 1: deps ─────────────────────────────────────────────────────────────
 FROM node:20-alpine AS deps
-# Disable corepack so it doesn't intercept pnpm calls based on packageManager field
-RUN corepack disable && npm install -g pnpm@9.0.0
+# Use corepack (bundled with Node 20) to activate exact pnpm version
+ENV COREPACK_ENABLE_STRICT=0
+RUN corepack enable && corepack prepare pnpm@9.0.0 --activate
 WORKDIR /app
 
 # Copy workspace manifests first for layer caching
