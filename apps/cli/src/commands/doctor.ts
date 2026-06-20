@@ -1,7 +1,8 @@
-﻿import { Command } from 'commander';
+import { Command } from 'commander';
 import chalk from 'chalk';
 import { getRefractIQDir, loadConfig, InitError } from '@refractiq/shared';
 import { createAdapter, ProviderRegistry } from '@refractiq/providers';
+import type { OllamaAdapter } from '@refractiq/providers';
 
 export const doctorCommand = new Command('doctor')
   .description('Check health and reachability of all configured providers')
@@ -18,6 +19,21 @@ export const doctorCommand = new Command('doctor')
       }
       throw err;
     }
+
+    // Check Docker availability
+    let dockerAvailable = false;
+    try {
+      const { execSync } = await import('node:child_process');
+      execSync('docker info', { stdio: 'pipe', timeout: 5000 });
+      dockerAvailable = true;
+    } catch {
+      dockerAvailable = false;
+    }
+    console.log(chalk.bold('\nSystem\n'));
+    console.log(
+      `  Docker: ${dockerAvailable ? chalk.green('✓ available') : chalk.dim('✗ not available (--sandbox flag requires Docker)')}`
+    );
+    console.log();
 
     if (config.providers.length === 0) {
       console.log(
@@ -79,6 +95,19 @@ export const doctorCommand = new Command('doctor')
           row.models,
         ].join('  ')
       );
+    }
+
+    // Show Ollama pull status
+    for (const adapter of registry.listAll()) {
+      if (adapter.id === 'ollama' && 'listPulledModels' in adapter) {
+        const ollamaAdapter = adapter as OllamaAdapter;
+        const pulled = await ollamaAdapter.listPulledModels();
+        if (pulled.length > 0) {
+          console.log(chalk.dim(`  Ollama pulled: ${pulled.join(', ')}`));
+        } else {
+          console.log(chalk.yellow(`  No Ollama models pulled. Run: ollama pull llama3.2`));
+        }
+      }
     }
 
     const anyFailed = rows.some((r) => r.status.includes('unavailable'));

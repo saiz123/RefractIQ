@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 636 418" width="636" height="418" font-family="Inter, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="prismGrad" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#F4F6FA"/>
+      <stop offset="0.55" stop-color="#E2E7EC"/>
+      <stop offset="1" stop-color="#CFD6DE"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background (delete this rect for a transparent logo) -->
+  <rect id="bg" x="0" y="0" width="636" height="418" fill="#0D1117"/>
+
+  <!-- input beam -->
+  <line x1="150" y1="156" x2="231" y2="156" stroke="#E9ECF0" stroke-width="11" stroke-linecap="round"/>
+
+  <!-- output beams -->
+  <line x1="313" y1="137" x2="461" y2="79"  stroke="#3FB950" stroke-width="9" stroke-linecap="round"/>
+  <line x1="320" y1="150" x2="484" y2="141" stroke="#58A6FF" stroke-width="9" stroke-linecap="round"/>
+  <line x1="340" y1="167" x2="476" y2="202" stroke="#A371F7" stroke-width="9" stroke-linecap="round"/>
+
+  <!-- prism (outline triangle + lit facet, with cut-out interior) -->
+  <path d="M289 66 L217 221 L292 235 L369 197 L330 129 Z
+           M289 92 L271 224 L232 213 Z"
+        fill="url(#prismGrad)" fill-rule="evenodd"
+        stroke="url(#prismGrad)" stroke-width="3" stroke-linejoin="round"/>
+
+  <!-- dots -->
+  <circle cx="462" cy="79"  r="14" fill="#3FB950"/>
+  <circle cx="485" cy="141" r="21" fill="#58A6FF"/>
+  <circle cx="476" cy="203" r="17" fill="#A371F7"/>
+  <!-- verified checkmark -->
+  <path d="M476 142 L483 150 L497 130" fill="none" stroke="#FFFFFF" stroke-width="5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- wordmark -->
+  <text x="318" y="343" text-anchor="middle" font-size="115" font-weight="700" letter-spacing="-2.5">
+    <tspan fill="#E9ECF0">Refract</tspan><tspan fill="#58A6FF">IQ</tspan>
+  </text>
+
+  <!-- tagline -->
+  <text x="319" y="371" text-anchor="middle" font-size="12.5" font-weight="500"
+        letter-spacing="1.7" fill="#8B949E">ONE REQUEST. SPLIT BY ROLE. ASSIGNED BY MODEL MERIT.</text>
+</svg>

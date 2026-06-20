@@ -21,6 +21,9 @@ export interface RunConfig {
   testCommand?: string;
   dryRun: boolean;
   showPreview?: boolean;
+  sandbox?: boolean;
+  targetDir?: string; // existing project to read + patch
+  patchMode?: boolean; // when true, use patch builder prompt
 }
 
 export interface StageResult {
@@ -56,5 +59,11 @@ export interface RunResult {
   durationMs: number;
   outputPath: string;
   contextStats?: ContextStats; // populated when context engine was active
-  plannedWrites?: Array<{ path: string; lineCount: number; action: string }>;
+  plannedWrites?: Array<{
+    path: string;
+    lineCount: number;
+    action: string;
+    content: string;
+    contentPreview: string;
+  }>;
 }

@@ -21,7 +21,8 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@refractiq/shared": "workspace:*"
+    "@refractiq/shared": "workspace:*",
+    "@refractiq/token-engine": "workspace:*"
   },
   "devDependencies": {
     "rimraf": "^6.0.0",

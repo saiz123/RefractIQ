@@ -1,11 +1,11 @@
-﻿import { mkdirSync } from 'node:fs';
+import { mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { ProviderRegistry, createAdapter } from '@refractiq/providers';
 import { ModelRouter } from '@refractiq/model-router';
 import { BudgetEnforcer, DEFAULT_BUDGET_CONFIG } from '@refractiq/token-engine';
 import { RunCostTracker } from '@refractiq/cost-engine';
 import { Orchestrator } from '@refractiq/orchestrator';
-import { WorkspaceFileWriter } from '@refractiq/workspace-engine';
+import { WorkspaceFileWriter, SandboxRunner } from '@refractiq/workspace-engine';
 import { WorkspaceTestRunner } from '@refractiq/evaluator';
 import { ContextEngine } from '@refractiq/context-engine';
 import { loadConfig, getRefractIQDir, type RunResult } from '@refractiq/shared';
@@ -21,6 +21,8 @@ export interface BuildOptions {
   testCommand?: string;
   dryRun: boolean;
   showPreview?: boolean;
+  sandbox?: boolean;
+  targetDir?: string;
   cwd?: string;
 }
 
@@ -29,9 +31,12 @@ export async function runBuild(userPrompt: string, opts: BuildOptions): Promise<
   const refractiqDir = getRefractIQDir(cwd);
   const config = loadConfig(refractiqDir);
 
-  // Resolve output directory
-  const outputDir = resolve(cwd, opts.outputDir);
-  mkdirSync(outputDir, { recursive: true });
+  // Resolve target dir and effective output dir
+  const resolvedTargetDir = opts.targetDir ? resolve(cwd, opts.targetDir) : undefined;
+
+  // Resolve output directory — use targetDir if no explicit --output given
+  const effectiveOutputDir = resolvedTargetDir ?? resolve(cwd, opts.outputDir);
+  mkdirSync(effectiveOutputDir, { recursive: true });
 
   // Build provider registry from config
   const registry = new ProviderRegistry();
@@ -53,8 +58,12 @@ export async function runBuild(userPrompt: string, opts: BuildOptions): Promise<
   const budgetEnforcer = new BudgetEnforcer(budgetConfig);
   const costTracker = new RunCostTracker();
 
-  const fileWriter = new WorkspaceFileWriter(outputDir);
-  const testRunner = new WorkspaceTestRunner(outputDir, new Set(config.security.allowedCommands));
+  const fileWriter = new WorkspaceFileWriter(effectiveOutputDir);
+
+  const testRunner = opts.sandbox
+    ? new SandboxRunner(effectiveOutputDir)
+    : new WorkspaceTestRunner(effectiveOutputDir, new Set(config.security.allowedCommands));
+
   const contextEngine = new ContextEngine();
 
   // Get historical latency data for latency-aware routing
@@ -71,7 +80,7 @@ export async function runBuild(userPrompt: string, opts: BuildOptions): Promise<
     router,
     budgetEnforcer,
     costTracker,
-    outputDir,
+    outputDir: effectiveOutputDir,
     maxRepairLoops: opts.maxRepairLoops,
     dryRun: opts.dryRun,
     fileWriter,
@@ -79,18 +88,21 @@ export async function runBuild(userPrompt: string, opts: BuildOptions): Promise<
     contextEngine,
     refractiqConfig: config,
     averageLatencyByModel,
+    targetDir: resolvedTargetDir,
   });
 
   const runConfig = {
     userPrompt,
     budgetUsd: opts.budgetUsd,
     maxRepairLoops: opts.maxRepairLoops,
-    outputDir,
+    outputDir: effectiveOutputDir,
     preferredProvider: opts.preferredProvider,
     preferredModel: opts.preferredModel,
     testCommand: opts.testCommand,
     dryRun: opts.dryRun,
     showPreview: opts.showPreview,
+    sandbox: opts.sandbox,
+    targetDir: resolvedTargetDir,
   };
 
   return orchestrator.run(userPrompt, runConfig);

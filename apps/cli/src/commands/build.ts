@@ -4,7 +4,7 @@ import ora from 'ora';
 import { openDbAsync } from '../db/client.js';
 import { saveRun } from '../db/runs.js';
 import { runBuild } from '../runner.js';
-import { printCostTable, printContextStats } from '../display.js';
+import { printCostTable, printContextStats, printPreviewFile } from '../display.js';
 
 export const buildCommand = new Command('build')
   .description('Run the full AI pipeline to build a project from an idea')
@@ -20,12 +20,30 @@ export const buildCommand = new Command('build')
     'Preview files that would be generated without writing to disk (runs intake + architect + build stages, will spend tokens)',
     false
   )
+  .option(
+    '--preview-full',
+    'Show complete file content in preview (default shows first 30 lines)',
+    false
+  )
   .option('--test-command <cmd>', 'Command to run tests (e.g. "npx vitest run")')
+  .option(
+    '--target-dir <path>',
+    'Existing project directory to read as context and apply changes to'
+  )
+  .option('--patch', 'Apply changes to the current directory (shorthand for --target-dir .)', false)
+  .option(
+    '--sandbox',
+    'Run generated test commands inside an isolated Docker container (requires Docker)',
+    false
+  )
   .action(async (idea: string, options) => {
     const spinner = ora('Starting RefractIQ pipeline...').start();
 
     try {
       const isPreview = options.preview as boolean;
+
+      const targetDir = options.patch ? process.cwd() : (options.targetDir as string | undefined);
+
       const result = await runBuild(idea, {
         budgetUsd: parseFloat(options.budget as string),
         maxRepairLoops: parseInt(options.maxRepairLoops as string, 10),
@@ -35,6 +53,8 @@ export const buildCommand = new Command('build')
         testCommand: options.testCommand as string | undefined,
         dryRun: isPreview || (options.dryRun as boolean),
         showPreview: isPreview,
+        targetDir,
+        sandbox: options.sandbox as boolean,
       });
 
       spinner.stop();
@@ -61,11 +81,11 @@ export const buildCommand = new Command('build')
 
       // Print planned writes if available (from --preview mode)
       if (result.plannedWrites && result.plannedWrites.length > 0) {
-        console.log(chalk.bold('\nFiles that would be generated:\n'));
+        console.log(
+          chalk.bold(`\nFiles that would be generated (${result.plannedWrites.length} files):\n`)
+        );
         for (const w of result.plannedWrites) {
-          const icon =
-            w.action === 'create' ? '\u{1F4C4}' : w.action === 'update' ? '✏️' : '\u{1F5D1}️';
-          console.log(`  ${icon}  ${chalk.cyan(w.path)} ${chalk.dim(`(${w.lineCount} lines)`)}`);
+          printPreviewFile(w, !!(options.previewFull as boolean));
         }
         console.log(chalk.dim(`\nRun without --preview to apply these changes.`));
       }

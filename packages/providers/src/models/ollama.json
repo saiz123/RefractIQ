@@ -6,13 +6,121 @@
       "contextWindow": 128000,
       "inputCostPer1M": 0,
       "outputCostPer1M": 0,
-      "capabilities": ["code", "json"],
-      "maxOutputTokens": 4096
+      "capabilities": ["code", "json", "fast"],
+      "maxOutputTokens": 8192
+    },
+    {
+      "id": "llama3.1:8b",
+      "provider": "ollama",
+      "contextWindow": 128000,
+      "inputCostPer1M": 0,
+      "outputCostPer1M": 0,
+      "capabilities": ["code", "json", "reasoning"],
+      "maxOutputTokens": 8192
+    },
+    {
+      "id": "llama3.1:70b",
+      "provider": "ollama",
+      "contextWindow": 128000,
+      "inputCostPer1M": 0,
+      "outputCostPer1M": 0,
+      "capabilities": ["code", "json", "reasoning"],
+      "maxOutputTokens": 8192
     },
     {
       "id": "codestral",
       "provider": "ollama",
       "contextWindow": 32000,
+      "inputCostPer1M": 0,
+      "outputCostPer1M": 0,
+      "capabilities": ["code", "json"],
+      "maxOutputTokens": 4096
+    },
+    {
+      "id": "codellama:7b",
+      "provider": "ollama",
+      "contextWindow": 16000,
+      "inputCostPer1M": 0,
+      "outputCostPer1M": 0,
+      "capabilities": ["code", "json"],
+      "maxOutputTokens": 4096
+    },
+    {
+      "id": "codellama:13b",
+      "provider": "ollama",
+      "contextWindow": 16000,
+      "inputCostPer1M": 0,
+      "outputCostPer1M": 0,
+      "capabilities": ["code", "json"],
+      "maxOutputTokens": 4096
+    },
+    {
+      "id": "deepseek-coder:6.7b",
+      "provider": "ollama",
+      "contextWindow": 16000,
+      "inputCostPer1M": 0,
+      "outputCostPer1M": 0,
+      "capabilities": ["code", "json"],
+      "maxOutputTokens": 4096
+    },
+    {
+      "id": "deepseek-coder-v2:16b",
+      "provider": "ollama",
+      "contextWindow": 128000,
+      "inputCostPer1M": 0,
+      "outputCostPer1M": 0,
+      "capabilities": ["code", "json", "reasoning"],
+      "maxOutputTokens": 8192
+    },
+    {
+      "id": "qwen2.5-coder:7b",
+      "provider": "ollama",
+      "contextWindow": 128000,
+      "inputCostPer1M": 0,
+      "outputCostPer1M": 0,
+      "capabilities": ["code", "json"],
+      "maxOutputTokens": 8192
+    },
+    {
+      "id": "qwen2.5-coder:32b",
+      "provider": "ollama",
+      "contextWindow": 128000,
+      "inputCostPer1M": 0,
+      "outputCostPer1M": 0,
+      "capabilities": ["code", "json", "reasoning"],
+      "maxOutputTokens": 8192
+    },
+    {
+      "id": "phi3:3.8b",
+      "provider": "ollama",
+      "contextWindow": 128000,
+      "inputCostPer1M": 0,
+      "outputCostPer1M": 0,
+      "capabilities": ["code", "json", "fast"],
+      "maxOutputTokens": 4096
+    },
+    {
+      "id": "phi3:14b",
+      "provider": "ollama",
+      "contextWindow": 128000,
+      "inputCostPer1M": 0,
+      "outputCostPer1M": 0,
+      "capabilities": ["code", "json"],
+      "maxOutputTokens": 8192
+    },
+    {
+      "id": "mistral:7b",
+      "provider": "ollama",
+      "contextWindow": 32000,
+      "inputCostPer1M": 0,
+      "outputCostPer1M": 0,
+      "capabilities": ["code", "json"],
+      "maxOutputTokens": 4096
+    },
+    {
+      "id": "starcoder2:7b",
+      "provider": "ollama",
+      "contextWindow": 16000,
       "inputCostPer1M": 0,
       "outputCostPer1M": 0,
       "capabilities": ["code", "json"],

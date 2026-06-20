@@ -67,6 +67,27 @@ export function printCostTable(result: RunResult): void {
   }
 }
 
+export function printPreviewFile(
+  write: { path: string; lineCount: number; action: string; contentPreview: string },
+  showFull = false
+): void {
+  const icon = write.action === 'create' ? '📄' : write.action === 'update' ? '✏️ ' : '🗑️ ';
+  const actionLabel = chalk.dim(`[${write.action}]`);
+  console.log(
+    `\n${icon}  ${chalk.cyan(write.path)}  ${chalk.dim(`(${write.lineCount} lines)`)}  ${actionLabel}`
+  );
+  console.log(chalk.dim('─'.repeat(60)));
+  const lines = write.contentPreview.split('\n');
+  for (const line of lines) {
+    console.log(chalk.dim('  ') + line);
+  }
+  if (!showFull && write.lineCount > 30) {
+    console.log(
+      chalk.dim(`  ... (${write.lineCount - 30} more lines — use --preview-full to show all)`)
+    );
+  }
+}
+
 export function printContextStats(result: RunResult): void {
   const s: ContextStats | undefined = result.contextStats;
   if (!s || s.totalFilesScored === 0) return;

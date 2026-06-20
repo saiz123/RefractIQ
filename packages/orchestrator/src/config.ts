@@ -20,4 +20,5 @@ export interface OrchestratorConfig {
   contextEngine?: ContextEngine;
   refractiqConfig?: RefractIQConfig; // for task overrides
   averageLatencyByModel?: Record<string, number>; // for latency-aware routing
+  targetDir?: string; // when set, read existing files as context
 }

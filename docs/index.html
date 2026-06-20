@@ -26,22 +26,22 @@
 
       :root {
         /* ── RefractIQ brand palette ── */
-        --bg:        #0D1117;   /* primary background */
-        --bg-card:   #161B22;   /* card / surface */
-        --bg-card2:  #161B22;
-        --border:    #30363D;   /* dividers, borders */
-        --border-hi: #58A6FF;   /* highlighted border (blue accent) */
-        --blue:      #58A6FF;   /* primary accent — IQ blue */
-        --blue-l:    #79b8ff;   /* lighter blue for gradients */
-        --green:     #3FB950;   /* green accent */
-        --purple:    #A371F7;   /* purple accent */
-        --purple-l:  #c084fc;   /* lighter purple */
-        --amber:     #d29922;   /* warning / cost highlight */
-        --cyan:      #56d4dd;   /* keep for stage colors */
-        --rose:      #f85149;   /* error / repair */
-        --text:      #C9D1D9;   /* primary text */
-        --muted:     #8B949E;   /* secondary / dimmed text */
-        --dimmed:    #30363D;   /* very muted elements */
+        --bg: #0d1117; /* primary background */
+        --bg-card: #161b22; /* card / surface */
+        --bg-card2: #161b22;
+        --border: #30363d; /* dividers, borders */
+        --border-hi: #58a6ff; /* highlighted border (blue accent) */
+        --blue: #58a6ff; /* primary accent — IQ blue */
+        --blue-l: #79b8ff; /* lighter blue for gradients */
+        --green: #3fb950; /* green accent */
+        --purple: #a371f7; /* purple accent */
+        --purple-l: #c084fc; /* lighter purple */
+        --amber: #d29922; /* warning / cost highlight */
+        --cyan: #56d4dd; /* keep for stage colors */
+        --rose: #f85149; /* error / repair */
+        --text: #c9d1d9; /* primary text */
+        --muted: #8b949e; /* secondary / dimmed text */
+        --dimmed: #30363d; /* very muted elements */
       }
 
       html {
@@ -67,7 +67,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 0.875rem 2rem;
-        background: #161B22;
+        background: #161b22;
         border-bottom: 1px solid var(--border);
       }
       .nav-logo {
@@ -115,7 +115,7 @@
         transition: background 0.2s;
       }
       .btn-gh:hover {
-        background: #21262D;
+        background: #21262d;
       }
 
       /* ── Hero ── */
@@ -166,7 +166,7 @@
         letter-spacing: -0.04em;
         line-height: 1.1;
         margin-bottom: 1.25rem;
-        background: linear-gradient(135deg, #C9D1D9 0%, var(--blue) 55%, var(--purple) 100%);
+        background: linear-gradient(135deg, #c9d1d9 0%, var(--blue) 55%, var(--purple) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -478,7 +478,7 @@
         color: var(--muted);
       }
       pre {
-        background: #0D1117;
+        background: #0d1117;
         border: 1px solid var(--border);
         border-radius: 0.75rem;
         padding: 1.5rem;
@@ -575,7 +575,11 @@
     <!-- Nav -->
     <nav>
       <a class="nav-logo" href="#">
-        <img src="logo-icon.svg" alt="RefractIQ logo" style="width:52px;height:27px;object-fit:contain;" />
+        <img
+          src="logo-icon.svg"
+          alt="RefractIQ logo"
+          style="width: 52px; height: 27px; object-fit: contain"
+        />
       </a>
       <div class="nav-links">
         <a href="#how-it-works">How it works</a>
@@ -598,7 +602,12 @@
       <div class="hero-badge">
         ⚡ Open Source &nbsp;·&nbsp; Self-Hosted &nbsp;·&nbsp; MIT License
       </div>
-      <img class="hero-logo" src="logo.svg" alt="RefractIQ" style="width:320px;height:auto;max-width:90vw;" />
+      <img
+        class="hero-logo"
+        src="logo.svg"
+        alt="RefractIQ"
+        style="width: 320px; height: auto; max-width: 90vw"
+      />
       <h1>Build software with a team<br />of AI models.</h1>
       <p>
         Open-source, self-hosted AI software-team orchestrator. Routes each agent role to the
@@ -772,15 +781,15 @@
         </p>
         <div class="providers-grid">
           <div class="provider-pill">
-            <div class="provider-dot" style="background: #A371F7"></div>
+            <div class="provider-dot" style="background: #a371f7"></div>
             Anthropic Claude
           </div>
           <div class="provider-pill">
-            <div class="provider-dot" style="background: #3FB950"></div>
+            <div class="provider-dot" style="background: #3fb950"></div>
             OpenAI / GPT
           </div>
           <div class="provider-pill">
-            <div class="provider-dot" style="background: #58A6FF"></div>
+            <div class="provider-dot" style="background: #58a6ff"></div>
             Google Gemini
           </div>
           <div class="provider-pill">
@@ -811,7 +820,7 @@
         <div class="overflow-hidden rounded-lg border border-gray-800 mt-8">
           <table style="width: 100%; font-size: 0.82rem; border-collapse: collapse">
             <thead>
-              <tr style="border-bottom: 1px solid #30363D; background: #161B22">
+              <tr style="border-bottom: 1px solid #30363d; background: #161b22">
                 <th
                   style="text-align: left; padding: 0.75rem 1rem; color: #64748b; font-weight: 600"
                 ></th>
@@ -819,7 +828,7 @@
                   style="
                     text-align: center;
                     padding: 0.75rem 0.5rem;
-                    color: #A371F7;
+                    color: #a371f7;
                     font-weight: 700;
                   "
                 >
@@ -868,7 +877,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr style="border-bottom: 1px solid #30363D">
+              <tr style="border-bottom: 1px solid #30363d">
                 <td style="padding: 0.65rem 1rem; color: #94a3b8">Multi-provider routing</td>
                 <td style="text-align: center; padding: 0.65rem 0.5rem; color: #22c55e">
                   ✅ All providers
@@ -882,7 +891,7 @@
                 <td style="text-align: center; padding: 0.65rem 0.5rem; color: #f59e0b">⚠️ Some</td>
                 <td style="text-align: center; padding: 0.65rem 0.5rem; color: #64748b">Depends</td>
               </tr>
-              <tr style="border-bottom: 1px solid #30363D; background: #16202A30">
+              <tr style="border-bottom: 1px solid #30363d; background: #16202a30">
                 <td style="padding: 0.65rem 1rem; color: #94a3b8">Structured role handoffs</td>
                 <td style="text-align: center; padding: 0.65rem 0.5rem; color: #22c55e">
                   ✅ JSON artifacts
@@ -900,7 +909,7 @@
                   Framework
                 </td>
               </tr>
-              <tr style="border-bottom: 1px solid #30363D">
+              <tr style="border-bottom: 1px solid #30363d">
                 <td style="padding: 0.65rem 1rem; color: #94a3b8">Per-step cost tracking</td>
                 <td style="text-align: center; padding: 0.65rem 0.5rem; color: #22c55e">
                   ✅ Per stage
@@ -912,7 +921,7 @@
                 </td>
                 <td style="text-align: center; padding: 0.65rem 0.5rem; color: #64748b">Depends</td>
               </tr>
-              <tr style="border-bottom: 1px solid #30363D; background: #16202A30">
+              <tr style="border-bottom: 1px solid #30363d; background: #16202a30">
                 <td style="padding: 0.65rem 1rem; color: #94a3b8">Context pruning</td>
                 <td style="text-align: center; padding: 0.65rem 0.5rem; color: #22c55e">
                   ✅ File scoring
@@ -924,7 +933,7 @@
                 <td style="text-align: center; padding: 0.65rem 0.5rem; color: #f59e0b">⚠️</td>
                 <td style="text-align: center; padding: 0.65rem 0.5rem; color: #64748b">Depends</td>
               </tr>
-              <tr style="border-bottom: 1px solid #30363D">
+              <tr style="border-bottom: 1px solid #30363d">
                 <td style="padding: 0.65rem 1rem; color: #94a3b8">Self-hosted dashboard</td>
                 <td style="text-align: center; padding: 0.65rem 0.5rem; color: #22c55e">
                   ✅ Docker + Next.js
@@ -936,7 +945,7 @@
                 </td>
                 <td style="text-align: center; padding: 0.65rem 0.5rem; color: #ef4444">❌</td>
               </tr>
-              <tr style="background: #16202A30">
+              <tr style="background: #16202a30">
                 <td style="padding: 0.65rem 1rem; color: #94a3b8">Ready-to-run product</td>
                 <td style="text-align: center; padding: 0.65rem 0.5rem; color: #22c55e">
                   ✅ One command
@@ -955,7 +964,7 @@
           <a
             href="https://github.com/saiz123/RefractIQ/blob/main/docs/vs-competitors.md"
             target="_blank"
-            style="color: #A371F7"
+            style="color: #a371f7"
             >Read the full comparison →</a
           >
         </p>
@@ -1061,4 +1070,3 @@
     </footer>
   </body>
 </html>
-

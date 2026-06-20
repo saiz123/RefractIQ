@@ -29,6 +29,7 @@ import {
   reviewerAgent,
   docAgent,
 } from './agents/index.js';
+import { PATCH_BUILDER_SYSTEM } from './agents/prompts.js';
 
 export class Orchestrator {
   private lastBuilderProvider: string | undefined;
@@ -75,7 +76,13 @@ export class Orchestrator {
 
       if (runConfig.showPreview && tasks.length > 0) {
         logger.info('Preview mode: generating files without writing to disk...');
-        const allWrites: Array<{ path: string; lineCount: number; action: string }> = [];
+        const allWrites: Array<{
+          path: string;
+          lineCount: number;
+          action: string;
+          content: string;
+          contentPreview: string;
+        }> = [];
         for (const task of tasks) {
           try {
             const diff = await this.runBuild(task, requirements, stages);
@@ -84,6 +91,8 @@ export class Orchestrator {
                 path: fw.path,
                 lineCount: fw.content.split('\n').length,
                 action: fw.action,
+                content: fw.content,
+                contentPreview: fw.content.split('\n').slice(0, 30).join('\n'),
               });
             }
           } catch {
@@ -461,8 +470,13 @@ export class Orchestrator {
       }
     }
 
+    // Use patch builder prompt when in existing-project mode
+    const agentToUse = this.config.targetDir
+      ? { ...builderAgent, systemPrompt: PATCH_BUILDER_SYSTEM }
+      : builderAgent;
+
     return this.callAgent(
-      builderAgent,
+      agentToUse,
       { task, contextSummary: requirements.clarifiedGoal, contextPack },
       'build',
       0,

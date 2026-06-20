@@ -11,3 +11,5 @@ export {
   DEFAULT_ALLOWED_COMMANDS,
   createSanitizedEnv,
 } from './security.js';
+export { SandboxRunner } from './sandbox.js';
+export type { SandboxRunOptions } from './sandbox.js';

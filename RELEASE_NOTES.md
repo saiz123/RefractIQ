@@ -101,3 +101,38 @@ node apps/cli/dist/bin/cli.js build "a CLI that reverses a string"
 - **v0.2** — Prompt caching improvements, provider benchmarking, per-role model presets
 - **v0.3** — Docker sandbox execution, provider latency tracking, patch preview before apply
 - **v0.4** — Plugin system, MCP tool support, repo import mode
+
+---
+
+# AgentForge v0.3.0 — Release Notes
+
+**Release:** v0.3.0  
+**Status:** Stable alpha
+
+## What's New
+
+### Docker Sandbox Execution (`--sandbox`)
+Run generated test commands inside an isolated Docker container. No network access, memory-limited, auto-cleaned. Requires Docker installed on host.
+```bash
+refractiq build "my project" --sandbox
+```
+
+### File Content Preview (`--preview`)
+The `--preview` flag now shows actual generated file content — not just file names. Review every line before committing to a build. Use `--preview-full` for complete files.
+
+### Expanded Ollama Presets (14 models)
+Added codellama, deepseek-coder, deepseek-coder-v2, qwen2.5-coder (7b/32b), phi3 (3.8b/14b), mistral, starcoder2, llama3.1 (8b/70b). All free, zero cost.
+
+### Existing Project Mode (`--target-dir`)
+Run RefractIQ on an existing codebase to add features or fix bugs:
+```bash
+refractiq build "add JWT authentication" --target-dir ./my-app
+refractiq build "fix the memory leak in worker.ts" --patch
+```
+The context engine reads existing files and the builder agent patches only relevant files.
+
+### Pre-generated Example Output
+`examples/reverse-string-cli/output/` shows a complete real output from RefractIQ — TypeScript CLI, tests, and cost report. No API keys needed to see what RefractIQ produces.
+
+## Test Coverage
+245+ tests passing.

@@ -129,6 +129,17 @@ export class OllamaAdapter implements ProviderAdapter {
     };
   }
 
+  async listPulledModels(): Promise<string[]> {
+    try {
+      const response = await fetch(`${this.endpoint}/api/tags`);
+      if (!response.ok) return [];
+      const data = (await response.json()) as OllamaTagsResponse;
+      return data.models.map((m) => m.name);
+    } catch {
+      return [];
+    }
+  }
+
   async countTokens(messages: Message[]): Promise<number> {
     const totalChars = messages.reduce((sum, m) => sum + m.content.length, 0);
     return Math.ceil(totalChars / 4);
