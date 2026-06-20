@@ -1,6 +1,5 @@
 ﻿<div align="center">
-  <img src="docs/logo.svg" width="120" alt="RefractIQ logo"/>
-  <h1>RefractIQ</h1>
+  <img src="docs/logo.svg" width="400" alt="RefractIQ"/>
   <p><strong>Build software with a team of AI models, not one expensive chatbot.</strong></p>
   <p>Open-source, self-hosted AI software-team orchestrator. Routes each agent role to the cheapest capable model across all your providers. Structured artifact handoffs. Transparent cost per step.</p>
 
