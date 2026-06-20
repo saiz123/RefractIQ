@@ -104,7 +104,7 @@ node apps/cli/dist/bin/cli.js build "a CLI that reverses a string"
 
 ---
 
-# AgentForge v0.3.0 — Release Notes
+# RefractIQ v0.3.0 — Release Notes
 
 **Release:** v0.3.0  
 **Status:** Stable alpha
@@ -136,3 +136,4 @@ The context engine reads existing files and the builder agent patches only relev
 
 ## Test Coverage
 245+ tests passing.
+
